@@ -1,0 +1,53 @@
+{
+    "packages": {
+        "response": {
+            "functionCode": "GETVERIFYCODE",
+            "functionName": "获取验证码",
+            "responseData": {
+                "lastUpdatedBy": null,
+                "systemId": null,
+                "messageTitle": null,
+                "description": null,
+                "updateTime": "2019-03-15T02:07:13.491+0000",
+                "receiveDeviceNo": "13910511772",
+                "noticeId": "16f9b69dbd4041bb8aed22f199997eff",
+                "messageType": "FINDPWD",
+                "createTime": "2019-03-15T02:07:13.491+0000",
+                "createdBy": "BJLAPP-A",
+                "id": null,
+                "memberId": "1e3796d8a4104341a2ee144d34b73501",
+                "messageContent": "您正在找回密码，您的请求验证码是516285。此验证码5分钟内有效，请勿向他人泄露或转发。",
+                "status": "1"
+            },
+            "responseCode": "0",
+            "responseMsg": "获取验证码成功"
+        },
+        "header": {
+            "callBackType": "",
+            "loginType": "",
+            "networkOperator": "",
+            "openId": "",
+            "latitude": "",
+            "channel": "android",
+            "networkName": "",
+            "uploadSpeed": "",
+            "uuid": "de98d28c-2824-4476-9d2c-0673a11c5db1",
+            "deviceMemorySize": "",
+            "responseCode": "0",
+            "networkSignal": "",
+            "tagChannel": "",
+            "networkType": "",
+            "longitude": "",
+            "skipAuth": "false",
+            "deviceType": "",
+            "tokenCode": "testtoken",
+            "deviceMemoryUsageSize": "",
+            "clientSystemVer": "",
+            "downloadSpeed": "",
+            "asyn": "0",
+            "deviceNo": "78060855212a8bde",
+            "clientSystem": "android",
+            "cpuUsageRate": ""
+        }
+    }
+}

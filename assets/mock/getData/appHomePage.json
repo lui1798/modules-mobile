@@ -1,0 +1,109 @@
+{
+    "packages": {
+        "response": {
+            "functionCode": "APPHOMEPAGE",
+            "functionName": "APP首页",
+            "responseData": {
+                "images": [
+                    {
+                        "imgUrl": "/cms/u/cms/www/201902/20172250va1l.jpg",
+                        "bcLinearGradient": "#438BED",
+                        "color": "#4C47E7",
+                        "link": "http://show.n22.com.cn:8889/cms/index.jhtml",
+                        "linkType": null,
+                        "label": null,
+                        "content": null
+                    }
+                ],
+                "noticeList": [
+                    {
+                        "imgUrl": "http://axbucket01-10066809.cossh.myqcloud.com/u/cms/www/201901/14141814mptf.png",
+                        "bcLinearGradient": null,
+                        "color": null,
+                        "link": null,
+                        "linkType": null,
+                        "label": "test预发布资讯",
+                        "content": "test"
+                    },
+                    {
+                        "imgUrl": "http://axbucket01-10066809.cossh.myqcloud.com/u/cms/www/201812/19213529vxiz.jpg",
+                        "bcLinearGradient": null,
+                        "color": null,
+                        "link": null,
+                        "linkType": null,
+                        "label": "test标题标题",
+                        "content": "test标题标题"
+                    },
+                    {
+                        "imgUrl": "http://axbucket01-10066809.cossh.myqcloud.com/u/cms/www/201812/1911462533z8.png",
+                        "bcLinearGradient": null,
+                        "color": null,
+                        "link": null,
+                        "linkType": null,
+                        "label": "落魄时才懂愿拉你一把的人何其少",
+                        "content": "落魄时才懂愿拉你一把的人何其少"
+                    },
+                    {
+                        "imgUrl": "http://axbucket01-10066809.cossh.myqcloud.com/u/cms/www/201812/191414057wr5.png",
+                        "bcLinearGradient": null,
+                        "color": null,
+                        "link": null,
+                        "linkType": null,
+                        "label": "常常想想生命本来的意义",
+                        "content": "是想再一次提醒自己"
+                    }
+                ],
+                "data": [
+                    {
+                        "image": "http://pic30.photophoto.cn/20140324/0034034401728510_b.jpg",
+                        "meta": "",
+                        "dataClass": "",
+                        "state": "最高保额5000000万",
+                        "title": "测试产品"
+                    }
+                ],
+                "topic": [
+                    {
+                        "imgUrl": "/cms/u/cms/www/201902/21163622coee.png",
+                        "bcLinearGradient": "red",
+                        "color": "red",
+                        "link": "/trainAll",
+                        "linkType": null,
+                        "label": null,
+                        "content": null
+                    }
+                ],
+                "message": null
+            },
+            "responseCode": "0",
+            "responseMsg": "成功"
+        },
+        "header": {
+            "callBackType": "",
+            "loginType": "",
+            "networkOperator": "",
+            "openId": "",
+            "latitude": "",
+            "channel": "android",
+            "networkName": "",
+            "uploadSpeed": "",
+            "uuid": "de98d28c-2824-4476-9d2c-0673a11c5db1",
+            "deviceMemorySize": "",
+            "responseCode": "0",
+            "networkSignal": "",
+            "tagChannel": "",
+            "networkType": "",
+            "longitude": "",
+            "skipAuth": "false",
+            "deviceType": "",
+            "tokenCode": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJcIjEzOTEwNTExNzcyXCIiLCJpYXQiOjE1NTIwMzQ5MzYsImV4cCI6MTU1MjAzODUzNn0.NOJ4YuiQgmz8ITWijk5ffYteOxHuOClO6zFR5HxqyIqy5HG7mleQkwIukBCDIuE_EG256IValPbAjszhwN3sNA",
+            "deviceMemoryUsageSize": "",
+            "clientSystemVer": "",
+            "downloadSpeed": "",
+            "asyn": "0",
+            "deviceNo": "78060855212a8bde",
+            "clientSystem": "android",
+            "cpuUsageRate": ""
+        }
+    }
+}

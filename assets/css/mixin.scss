@@ -1,0 +1,209 @@
+// 背景图片地址和大小
+@mixin bis($url) {
+    background-image: url($url);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+//定位全屏
+@mixin allcover {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+//定位上下左右居中
+@mixin center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+//定位上下居中
+@mixin ct {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+//定位左右居中
+@mixin cl {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+//宽高
+@mixin wh($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+//字体大小、行高、字体
+@mixin font($size, $line-height: '14px', $family: 'Microsoft YaHei') {
+    @media only screen and (max-width: $max-width) {
+        font: #{$size}/#{$line-height} $family;
+    }
+    @media only screen and (min-width: $max-width) {
+        font: 14px $family;
+    }
+}
+
+//字体大小，颜色
+@mixin sc($size, $color) {
+    font-size: $size;
+    color: $color;
+}
+
+//flex 布局和 子元素 对其方式
+@mixin fj($type: space-between) {
+    display: flex;
+    justify-content: $type;
+}
+
+@mixin borderRadius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    -o-border-radius: $radius;
+    border-radius: $radius;
+}
+
+//处理input的placeholder样式
+@mixin placeholderStyle($classname,$name,$val) {
+    #{$classname}::-webkit-input-placeholder {/* WebKit, Blink, Edge */
+        #{$name}: $val;
+    }
+    #{$classname}:-moz-placeholder {/* Mozilla Firefox 4 to 18 */
+        #{$name}: $val;
+    }
+    #{$classname}::-moz-placeholder {/* Mozilla Firefox 19+ */
+        #{$name}: $val;
+    }
+    #{$classname}:-ms-input-placeholder {/* Internet Explorer 10-11 */
+        #{$name}: $val;
+    }
+}
+
+@mixin transition($transitions) {
+    -moz-transition: $transitions;
+      -o-transition: $transitions;
+     -ms-transition: $transitions;
+ -webkit-transition: $transitions;
+         transition: $transitions;
+}
+
+@mixin transform($transforms) {
+    -moz-transform: $transforms;
+      -o-transform: $transforms;
+     -ms-transform: $transforms;
+ -webkit-transform: $transforms;
+         transform: $transforms;
+}
+
+@mixin animation($val) {
+    animation: $val;
+    -webkit-animation: $val;
+    -moz-animation: $val;
+    -ms-animation: $val;
+    // -webkit-animation-fill-mode: $mode;
+    // animation-fill-mode: $mode;
+}
+
+@mixin keyframesfun($v1,$val2){
+    @if $v1 == 'transform' {
+        @include transform($val2)
+    } @else {
+        #{$v1}: $val2
+    } 
+}
+
+
+// 动画简化
+@mixin keyframes($name, $obj) {
+    @keyframes #{$name} {
+        @each $i,
+        $val in $obj {
+            #{$i} {
+                @each $v1,
+                $val2 in $val {
+                    @include keyframesfun($v1,$val2)
+                }
+            }
+        }
+    }
+    @-moz-keyframes #{$name} {
+        @each $i,
+        $val in $obj {
+            #{$i} {
+                @each $v1,
+                $val2 in $val {
+                    @include keyframesfun($v1,$val2)
+                }
+            }
+        }
+    }
+    @-webkit-keyframes #{$name} {
+        @each $i,
+        $val in $obj {
+            #{$i} {
+                @each $v1,
+                $val2 in $val {
+                    @include keyframesfun($v1,$val2)
+                }
+            }
+        }
+    }
+    @-ms-keyframes #{$name} {
+        @each $i,
+        $val in $obj {
+            #{$i} {
+                @each $v1,
+                $val2 in $val {
+                    @include keyframesfun($v1,$val2)
+                }
+            }
+        }
+	}
+}
+
+// 菜单动画
+@mixin animationall($footbars) {
+    @each $footbar, $val in $footbars {
+        .#{$footbar} {
+            @include animation($footbar 0.6s 1 ease-in-out forwards);
+            @include keyframes($footbar,$val);
+        }
+    }
+}
+
+
+@mixin hairline-common() {
+    content: ' ';
+    position: absolute;
+    pointer-events: none;
+    box-sizing: border-box;
+  }
+  
+  @mixin hairline($border-color: #ebedf0) {
+    @include hairline-common();
+  
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    transform: scale(0.5);
+    border: 0 solid $border-color;
+  }
+  
+  @mixin hairline-bottom($border-color: #ebedf0, $left: 0) {
+    @include hairline-common();
+  
+    left: $left;
+    right: 0;
+    bottom: 0;
+    transform: scaleY(0.5);
+    border-bottom: 1px solid $border-color;
+  }
+  
