@@ -52,7 +52,7 @@ exports.getPages = function() {
  * 获取模块配置输出目录
  */
 exports.getOutputDir = function() {
-  let outputDir = `../${buildModule}`;
+  let outputDir = `../dist/${buildModule}`;
   logger.log("当前打包输出目录>>>>>>>>  " + outputDir);
   return outputDir;
 };
