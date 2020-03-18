@@ -1,3 +1,4 @@
+/* eslint-disable */
 const prompt = require('inquirer').createPromptModule()
 const shellJs = require('shelljs')
 const path = require('path')
@@ -10,10 +11,11 @@ const exists = require('fs').existsSync //node自带的fs模块下的existsSync�
 const fs = bluebird.promisifyAll(require('fs'))
 
 const logger = require('./lib/logger') //自定义工具-用于日志打印
+const npmParams = require('./lib/npm-params') //获取打包命令
 
 // path
 const CWD = process.cwd()
-const MODULE_PATH = path.resolve(CWD, './src/routers')
+const MODULE_PATH = path.resolve(CWD, './src/modules/common/routers')
 
 /**
  * 创建页面view
@@ -28,10 +30,11 @@ function initRouterIndex(answers) {
 }
 
 function syncRouter(answers) {
-  const RouterIndexjs = path.resolve(CWD, `./src/routers/index.js`)
+  const RouterIndexjs = path.resolve(CWD, `./src/modules/common/routers/index.js`)
   return Promise.all([
-    syncToplatform(answers, path.resolve(CWD, `./src/main.js`)), //#### 1、修改syncToplatform
+    syncToplatform(answers, path.resolve(CWD, `./src/modules/common/main.js`)), //#### 1、修改syncToplatform
     syncToFile(answers, RouterIndexjs, true), //#### 2、同步router-children
+    logger.success("模块初始化完成!!!")
   ]).then(() => answers)
 }
 
@@ -243,22 +246,9 @@ function getEnv(param, buildParams) {
 }
 
 function launch() {
-  //处理参数
-  let npmParams = JSON.parse(process.env.npm_config_argv).original;
-  logger.success("打包参数>>>>>>>>>>>>>>>",npmParams);
-  //处理参数中的模块\打包platform
-  //eg. [ 'run', 'sta', '-m-n22module1,n22module2', '-p-native' ]
-  let buildModule = "";
-  let buildPlatform = "";
-  npmParams.forEach(bm => {
-    if (bm.startsWith("-m-")) {
-      buildModule = bm.replace("-m-","").split(",");
-      logger.success("打包模块>>>>>>>>>>>>>>>",buildModule);
-    }else if (bm.startsWith("-p-")) {
-      buildPlatform = bm.replace("-p-","");
-      logger.success("打包platform>>>>>>>>>>>",buildPlatform);
-    }
-  });
+  let buildParams = npmParams.getNpmParams();
+  logger.success("打包模块>>>>>>>>>>>>>>>", buildParams.buildModule);
+  logger.success("打包platform>>>>>>>>>>>", buildParams.buildPlatform);
   let param = {}
   process.argv.forEach(v => {
     if (v.indexOf("=") > -1) {
@@ -266,7 +256,7 @@ function launch() {
       param[vv[0]] = vv[1]
     }
   });
-  return getEnv(param, {buildModule:buildModule,buildPlatform:buildPlatform})
+  return getEnv(param, buildParams)
     .then(getModuleList)
     // .then(prompt)
     .then(init)

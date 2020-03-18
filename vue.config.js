@@ -1,9 +1,8 @@
-// vue.config.js
-
+/* eslint-disable */
 const path = require('path')
 const webpack = require('webpack')
 const WebpackBar = require('webpackbar')
-let BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // 压缩
 const CompressionPlugin = require('compression-webpack-plugin')
@@ -15,17 +14,12 @@ function resolves(dir) {
     return path.join(__dirname, '.', dir)
 }
 
+delete require.cache[require.resolve('./build/lib/auto-modules')];
+const { getPages, getOutputDir, dealHtmlCdn } = require('./build/lib/auto-modules') //获取打包命令
+
 module.exports = {
     configureWebpack: config => {
         // console.log("%c config","color:#00CD00",process)
-        config.externals = {//提高首屏加载速度--使用cdn加载，不将以下库打入chunk-vendors文件。从而减小chunk-vendors文件大小。
-            'allCodeData': 'allCodeData',
-            'jquery': 'jQuery',
-            'vue-': 'Vue',
-            'vue-router': 'VueRouter',
-            'vuex': 'Vuex',
-            // 'moment': 'moment'
-        };
         let plugins = [
             // Ignore all locale files of moment.js
             new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
@@ -48,6 +42,14 @@ module.exports = {
                 maxEntrypointSize: 1024*1024,
                 //生成文件的最大体积--目前设置为1024KB
                 maxAssetSize: 1024*1024,
+            };
+            config.externals = {//提高首屏加载速度--使用cdn加载，不将以下库打入chunk-vendors文件。从而减小chunk-vendors文件大小。
+                'allCodeData': 'allCodeData',
+                'jquery': 'jQuery',
+                'vue': 'Vue',
+                'vue-router': 'VueRouter',
+                'vuex': 'Vuex',
+                // 'moment': 'moment'
             };
             let myTerserPlugin = new TerserPlugin({
                 // cache: true,
@@ -77,11 +79,16 @@ module.exports = {
             }
         } else {
             // 为开发环境修改配置...
+            config.externals = {//提高首屏加载速度--使用cdn加载，不将以下库打入chunk-vendors文件。从而减小chunk-vendors文件大小。
+                'allCodeData': 'allCodeData',
+                'jquery': 'jQuery',
+            };
             return {
                 plugins: plugins
             }
         }
     },
+    pages: getPages(),
     //----默认情况下 babel-loader 会忽略所有 node_modules 中的文件。如果你想要通过 Babel 显式转译一个依赖，可以在这个选项中列出来。
     //跨域设置
     devServer: {
@@ -127,12 +134,20 @@ module.exports = {
             .test(/\.(woff2?|woff|eot|ttf|otf|svg)(\?.*)?$/i)
             .exclude.add(resolves('src/assets/icons')) //处理svg目录--排除自定义svg库
         config.resolve.alias
-            .set('@', resolve('src'))
+            .set('@', resolve('src'));
+        config.resolve.alias
+            .set('@@', resolve('src/modules/common'));
+        config.resolve.alias
+            .set('@m', resolve('src/modules'));
+        
+        //进行处理html中挂在的cdn--创建模块的时候会进行询问是否挂载cdn-默认是挂载
+        console.log("%c ##########################","color:#00CD00",)
+        dealHtmlCdn(config);
     },
     // ...other vue-cli plugin options...
     // baseUrl: './',//从 Vue CLI 3.3 起已弃用，请使用publicPath
     publicPath: './',
-    outputDir: '../www', // 构建输出目录
+    outputDir: getOutputDir() || '../www', // 构建输出目录
     assetsDir: 'assets', // 静态资源目录 (js, css, img, fonts)
     productionSourceMap: false, // 是否在构建生产包时生成 sourceMap 文件，false将提高构建速度
     css: {

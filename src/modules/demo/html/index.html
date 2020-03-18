@@ -18,7 +18,7 @@
     <script src="https://unpkg.com/vuex@3.1.2"></script> -->
     <% if(process.env.NODE_ENV==='production'){htmlWebpackPlugin.options.cdn.js.forEach(item => {%>
     <script src="<%= item %>"></script><%})}%>
-    <div id="app"></div>
+    <div id="demo-app"></div>
     <!-- built files will be auto injected -->
   </body>
 </html>

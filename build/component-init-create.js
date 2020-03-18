@@ -1,3 +1,4 @@
+/* eslint-disable */
 const program = require('commander') //命令行处理工具
 const prompt = require('inquirer').createPromptModule()
 const shellJs = require('shelljs')

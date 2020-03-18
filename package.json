@@ -10,21 +10,21 @@
     "init:module:no": "node build/init-module.js env=int select=no",
     "init:module:yes": "node build/init-module.js env=local select=yes",
     "serve": "vue-cli-service serve",
-    "dev": "vue-cli-service serve --mode dev",
-    "int": "npm run build:codedata && node build/init-module.js env=int select=yes && vue-cli-service build --mode int && npm run init:module:default",
-    "uat": "npm run build:codedata && node build/init-module.js env=uat select=yes && vue-cli-service build --mode uat && npm run init:module:default",
-    "sta": "npm run build:codedata && node build/init-module.js env=sta select=yes && vue-cli-service build --mode sta && npm run init:module:default",
-    "prod": "npm run build:codedata && node build/init-module.js env=prod select=yes && vue-cli-service build  --mode prod && npm run init:module:default",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "shell": "npm run build:codedata && node build/init-module.js env=int select=yes && node build/shell/shell.js",
+    "myserve": "node build/service/my-service.js",
+    "dev": "vue-cli-service serve --mode dev",
+    "int": "npm run build:codedata && node build/init-module.js env=int select=yes && node build/service/my-service.js --mode int && npm run init:module:default",
+    "uat": "npm run build:codedata && node build/init-module.js env=uat select=yes && node build/service/my-service.js --mode uat && npm run init:module:default",
+    "sta": "npm run build:codedata && node build/init-module.js env=sta select=yes && node build/service/my-service.js --mode sta && npm run init:module:default",
+    "prod": "npm run build:codedata && node build/init-module.js env=prod select=yes && node build/service/my-service.js  --mode prod && npm run init:module:default"
   },
   "dependencies": {
     "al-mobile": "0.0.9",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
-    "crypto-js": "^4.0.0",
-    "js-base64": "^2.5.2",
     "js-md5": "^0.7.3",
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
@@ -50,13 +50,7 @@
     "cssnano": "^4.1.10",
     "cssnano-preset-advanced": "^4.0.7",
     "eslint": "^6.7.2",
-    "eslint-plugin-html": "^6.0.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-json": "^2.1.0",
-    "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^6.1.2",
     "git-user-email": "^0.2.2",
     "git-user-name": "^2.0.0",
@@ -79,5 +73,8 @@
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-cli": "^3.3.11",
     "webpackbar": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=8"
   }
 }
