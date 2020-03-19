@@ -58,6 +58,7 @@
       <br />xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       <br />xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       <br />
+      {{ options }}
     </al-content>
     <n22-action-bar :actions="data" @click="onBtnClick">
       <span class="price">
@@ -70,6 +71,7 @@
 
 <script>
 import { AllHead, Content, ActionBar, Dialog } from "al-mobile";
+import code from "@@/utils/code/";
 
 export default {
   name: "demo-action-bar-demo",
@@ -80,6 +82,7 @@ export default {
   },
   data() {
     return {
+      options: code.getCodeData("", "", "test"),
       data: [
         {
           text: "主要按钮"

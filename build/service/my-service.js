@@ -1,10 +1,11 @@
 // 回调函数版
 // const { exec } = require("child_process");
-
-const { semver, done, error } = require("@vue/cli-shared-utils");
-
+const path = require("path");
+// path
+const CWD = process.cwd();
+const COMPONENT_JSON = path.resolve(CWD, "./build/assets/modules.json");
+const { semver, done, info, error } = require("@vue/cli-shared-utils");
 const requiredVersion = require("../../package.json").engines.node;
-
 const { getBuildModuleList } = require("../lib/auto-modules"); //获取打包命令
 
 if (!semver.satisfies(process.version, requiredVersion)) {
@@ -15,8 +16,11 @@ if (!semver.satisfies(process.version, requiredVersion)) {
   process.exit(1);
 }
 
-const Service = require("./Service");
+const Service = require("@vue/cli-service/lib/Service");
 const service = new Service(process.env.VUE_CLI_CONTEXT || process.cwd());
+
+const myService = require("./Service");
+const nyservice = new myService(process.env.VUE_CLI_CONTEXT || process.cwd());
 
 const rawArgv = process.argv.slice(2);
 const args = require("minimist")(rawArgv, {
@@ -35,10 +39,10 @@ const args = require("minimist")(rawArgv, {
     "verbose"
   ]
 });
-const command = args._[0] || "build";
+const command = args._[0] || "serve";
 // console.log("%c args", "color:#00CD00", args);
 // console.log("%c command", "color:#00CD00", command);
-// console.log("%c rawArgv", "color:#00CD00", rawArgv);
+console.log("%c rawArgv", "color:#00CD00", rawArgv);
 
 //异步进行打包
 // for (let i = 0; i < getBuildModuleList().length; i++) {
@@ -66,7 +70,7 @@ const dealRun = function() {
   }
 };
 const run = function() {
-  service
+  nyservice
     .run(command, args, rawArgv)
     .then(() => {
       successModules.push(getBuildModuleList()[i]);
@@ -81,7 +85,33 @@ const run = function() {
       // process.exit(1);
     });
 };
-run();
+
+if (command === "build") {
+  run();
+} else if (command === "serve") {
+  // console.log("%c args", "color:#00CD00", args);
+  // console.log("%c rawArgv", "color:#00CD00", rawArgv);
+  const json = require(COMPONENT_JSON);
+  let startModule = getBuildModuleList()[0] || "";
+  let port;
+  for (let i = 0; i < json[1].list.length; i++) {
+    const mo = json[1].list[i];
+    if (mo.name === startModule) {
+      port = mo.port;
+      break;
+    }
+  }
+  info("启动模块" + getBuildModuleList()[0]);
+  if (port) {
+    args.port = port;
+    rawArgv.push("--port");
+    rawArgv.push(port);
+  }
+  service.run(command, args, rawArgv).catch(err => {
+    error(err);
+    process.exit(1);
+  });
+}
 
 // exec("v-cli-service build", (error, stdout, stderr) => {
 //   if (error) {

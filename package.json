@@ -15,10 +15,10 @@
     "lint": "vue-cli-service lint",
     "shell": "npm run build:codedata && node build/init-module.js env=int select=yes && node build/shell/shell.js",
     "myserve": "node build/service/my-service.js",
-    "dev": "vue-cli-service serve --mode dev",
+    "dev": "node build/service/my-service.js serve --mode dev",
     "int": "npm run build:codedata && node build/init-module.js env=int select=yes && node build/service/my-service.js --mode int && npm run init:module:default",
     "uat": "npm run build:codedata && node build/init-module.js env=uat select=yes && node build/service/my-service.js --mode uat && npm run init:module:default",
-    "sta": "npm run build:codedata && node build/init-module.js env=sta select=yes && node build/service/my-service.js --mode sta && npm run init:module:default",
+    "sta": "npm run build:codedata && node build/service/my-service.js build --mode sta",
     "prod": "npm run build:codedata && node build/init-module.js env=prod select=yes && node build/service/my-service.js  --mode prod && npm run init:module:default"
   },
   "dependencies": {

@@ -16,8 +16,9 @@ const logger = require('./lib/logger') //自定义工具-用于日志打印
 
 // path
 const CWD = process.cwd()
-const templatePath = path.resolve(CWD, './build/assets/create-module-template')
-const MODULE_PATH = path.resolve(CWD, './src/views')
+const templatePath = path.resolve(CWD, './build/assets/module-template')
+const templatePathChildren = path.resolve(CWD, './build/assets/module-template-children')
+const MODULE_PATH = path.resolve(CWD, './src/modules')
 const MODULE_ENV_LOCAL = path.resolve(CWD, './.env.local')
 const MODULE_ENV_INT = path.resolve(CWD, './.env.int')
 const MODULE_ENV_UAT = path.resolve(CWD, './.env.uat')
@@ -31,28 +32,41 @@ const EXPECT_SHELL = path.resolve(CWD, './build/template.sh')
 const DEMO_INDEX_PATH = path.resolve(CWD, './examples/demo-index.js')
 const TYPES = path.resolve(CWD, './types/index.d.ts')
 const COMPONENT_INDEX = path.resolve(CWD, './components/index.js')
-const COMPONENT_JSON = path.resolve(CWD, './examples/components.json')
+const COMPONENT_JSON = path.resolve(CWD, './build/assets/modules.json')
 
 //创建模式
 const createType = [
   {
-    key: "view",
-    desc: "页面"
+    key: "module",
+    desc: "创建模块"
   },
   {
-    key: "module",
-    desc: "模块"
+    key: "view",
+    desc: "创建页面"
+  },
+  {
+    key: "vuex",
+    desc: "创建vuex"
   },
   {
     key: "component",
     desc: "基础组件"
-  },
-  {
-    key: "other",
-    desc: "其他"
-  },
+  }
 ]
-
+exports.initCreateTest = function(answersFirst,answers) {
+  getModuleList(answersFirst).then((answersFirst)=>{
+    if (answersFirst.template==="module") {
+      answers = dealModuleAnswers(answersFirst,answers);
+      initModule(answers);
+    } else if (answersFirst.template==="view") {
+      answers = dealViewAnswers(answersFirst,answers);
+      initView(answers);
+    } else if (answersFirst.template==="vuex") {
+      answers = dealVuexAnswers(answersFirst,answers);
+      initVuex(answers);
+    }
+  })
+}
 /**
  * 创建模块module
  * @param {*} answers 
@@ -63,7 +77,7 @@ function initModule (answers) {
     .then(create)
     .then(sync)
     .catch(err => {
-      logger.fatal(`${answers.moduleKebabUpper} already exists in the views.`, err)
+      logger.fatal(`${answers.moduleKebabUpper}  create error.`, err)
     })
 }
 /**
@@ -76,9 +90,22 @@ function initView (answers) {
     .then(create)
     .then(syncRouter)
     .catch(err => {
-      logger.fatal(`${answers[`${answers.template.key}KebabUpper`]} already exists in the views.`, err)
+      logger.fatal(`${answers[`${answers.template.key}KebabUpper`]} create error.`, err)
     })
 }
+/**
+ * 创建页面vuex
+ * @param {*} answers 
+ */
+function initVuex (answers) {
+  return Promise.resolve(answers)
+    .then(checkNoRepeatVuex)
+    .then(syncVuex)
+    .catch(err => {
+      logger.fatal(`${answers[`${answers.template.key}KebabUpper`]} create error.`, err)
+    })
+}
+
 /**
  * 创建基础组件component
  * @param {*} answers 
@@ -108,6 +135,19 @@ function checkNoRepeatView(answers) {
     })
 }
 /**
+ * 检查是否存在已有的vuex-state
+ * @param {*} answers 模块参数对象
+ */
+function checkNoRepeatVuex(answers) {
+  return fs.readFileAsync(answers.VUEX_PATH, 'utf8')
+    .then(str => {
+      if(str.indexOf(answers.vuexStateKebabUpper)>-1||str.indexOf(answers.vuexType)>-1){
+        return Promise.reject(answers.moduleName + `模块中已经存在名为${answers.vuexStateKebabUpper}的vuex-state！请仔细核对后重新创建.`) 
+      }
+    })
+    .then(() => answers)
+}
+/**
  * 检查是否存在已有的模块方法
  * @param {*} dir 文件夹
  * @param {*} file 文件
@@ -130,19 +170,26 @@ function checkFile(dir, file, answers) {
 function sync(answers) {
   const newRouterjs = path.resolve(CWD, `./src/routers/${answers.moduleKebabUpper}.js`)
   return Promise.all([
-    syncToFile(answers,MODULE_ENV_LOCAL,1),//#### 2、配置环境变量，修改环境变量文件（新增新模块的配置）
-    syncToFile(answers,MODULE_ENV_INT,1),
-    syncToFile(answers,MODULE_ENV_UAT,1),
-    syncToFile(answers,MODULE_ENV_STA,1),
-    syncToFile(answers,MODULE_ENV_PROD,1),
-    addToFile(answers,MODULE_ROUTER_TEMPLATE,newRouterjs),//#### 3、新增新路由js文件
-    syncToFile(answers,MODULE_ROUTER,2),//#### 4、路由router index.js新增新模块配置
+    // syncToFile(answers,MODULE_ENV_LOCAL,1),//#### 2、配置环境变量，修改环境变量文件（新增新模块的配置）
+    // syncToFile(answers,MODULE_ENV_INT,1),
+    // syncToFile(answers,MODULE_ENV_UAT,1),
+    // syncToFile(answers,MODULE_ENV_STA,1),
+    // syncToFile(answers,MODULE_ENV_PROD,1),
+    // addToFile(answers,MODULE_ROUTER_TEMPLATE,newRouterjs),//#### 3、新增新路由js文件
+    // syncToFile(answers,MODULE_ROUTER,2),//#### 4、路由router index.js新增新模块配置
+    syncToComponentJson(answers),// 创建模块记录json
   ]).then(() =>answers)
 }
 function syncRouter(answers) {
   const newRouterjs = path.resolve(CWD, `./src/routers/${answers.moduleName}.js`)
   return Promise.all([
     answers.isCreateRouter=='true'&&syncToFile(answers,newRouterjs,3),//#### 3、同步router-children
+  ]).then(() =>answers)
+}
+function syncVuex(answers) {
+  const newRouterjs = path.resolve(CWD, `./src/modules/${answers.moduleName}/vuex/${answers.moduleName}.js`)
+  return Promise.all([
+    syncVuexToFile(answers,newRouterjs,2),// 替换vuex js
   ]).then(() =>answers)
 }
 
@@ -160,6 +207,18 @@ function syncToFile(answers,filePath,is) {
       }else if(is===3){
         return compilerouter(answers, str)
       }
+    })
+    .then(str => fs.writeFileAsync(filePath, str, 'utf8'))
+    .then(() => answers)
+}
+/**
+ * 同步vuex
+ * @param {*} answers 
+ */
+function syncVuexToFile(answers,filePath) {
+  fs.readFileAsync(filePath, 'utf8')
+    .then(str => {
+      return compileVuex(answers, str)
     })
     .then(str => fs.writeFileAsync(filePath, str, 'utf8'))
     .then(() => answers)
@@ -184,6 +243,19 @@ function compile(metaData, fileStr) {
       return metaData[innP1]
     })) + '\r' +match
   })
+}
+function compileVuex(metaData, fileStr) {
+  let val = String.prototype.replace.call(fileStr, /\/\*.*@init<%(.*)%>.*\*\//g, function (match, p1) {
+    return (String.prototype.replace.call(p1, /\${(\w*)}/g, function (innMatch, innP1) {
+      return metaData[innP1]
+    })) + '\r' +match
+  })
+  val = String.prototype.replace.call(val, /\/\*.*@moreLine<%([\s\S]*)moreLine%>.*\*\//g, function (match, p1) {
+    return (String.prototype.replace.call(p1, /\${(\w*)}/g, function (innMatch, innP1) {
+      return metaData[innP1]
+    })) + '\r' +match
+  })
+  return val
 }
 
 function compileEnv(metaData, fileStr) {
@@ -251,6 +323,44 @@ function create(answers) {
 }
 
 /**
+ * 记录模块json
+ */
+function syncToComponentJson(answers) {
+  const json = require(COMPONENT_JSON)
+  console.log("%c json","color:#00CD00",json)
+  let index = json.findIndex(item => item.category === answers.componentType)
+  if (index === -1) {
+    index = json.length
+    json.push({
+      category: answers.componentType,
+      list: [],
+    })
+  }
+  let l = json[index].list.length;
+  let nextPort = "8180";
+  if(json[index].list[l-1]&&json[index].list[l-1].port){
+    nextPort = Number(json[index].list[l-1].port)+1;
+  }
+  json[index].list.push({
+    name: answers.moduleKebabUpper,
+    path: `/${answers.moduleKebabUpper}`,
+    text: answers.moduleCnName,
+    desc: answers.moduleDesc,
+    port: nextPort+"",
+  })
+  Array.prototype.forEach.call(json, element => {
+    Array.prototype.sort.call(element.list, function(a, b) {
+      return a.name > b.name ? 1 : -1
+    })
+  })
+  Array.prototype.sort.call(json, (a, b) => {
+    return a.category > b.category ? 1: -1
+  })
+  return fs.writeFileAsync(COMPONENT_JSON, JSON.stringify(json), 'utf8')
+            .then(answers => answers)
+}
+
+/**
  * 字符串首字母转大写
  * @param {*} str 
  */
@@ -305,9 +415,55 @@ function getUserInfo() {
   return user
 }
 
+function dealModuleAnswers(answersFirst,answers) {
+  answers = Object.assign(answers, {
+    template: createType.filter((v)=> v.key===answersFirst.template)[0],//创建type
+    files: answersFirst.files,//view下的模块数组
+    moduleNameVal: changeKebabToLine(answers.moduleName), //模块驼峰转‘-’
+    moduleKebabUpper: changeKebabToCamel(answers.moduleName),//首字母小写的驼峰 myExample
+    moduleKebabNameUpper: upperFirst(changeKebabToCamel(answers.moduleName)),//首字母大写的驼峰 MyExample
+    moduleKebabToDown: changeKebabToDown(answers.moduleName),//小写 -转_ my_example
+    moduleKebabToNull: String.prototype.toUpperCase.call(changeKebabToNull(answers.moduleName)),//小写 -转 myexample
+    viewKebabUpper: changeKebabToCamel(answers.viewName),//页面-首字母小写的驼峰 myExample
+    viewKebabNameUpper: upperFirst(changeKebabToCamel(answers.viewName)),//页面-首字母大写的驼峰 MyExample
+    viewKebabToDown: changeKebabToDown(answers.viewName),//页面-小写 -转_ my_example
+    routerName: changeKebabToCamel(answers.moduleName) + upperFirst(changeKebabToCamel(answers.viewName)), //子路由name
+    webpackChunkName: '/* webpackChunkName: "'+changeKebabToCamel(answers.moduleName)+'" */',//import引入的webpackChunkName
+    dest: `${MODULE_PATH}/${changeKebabToCamel(answers.moduleName)}`,
+  })
+  return answers;
+}
+function dealViewAnswers(answersFirst,answers) {
+  answers = Object.assign(answers, {
+    template: createType.filter((v)=> v.key===answersFirst.template)[0],//创建type
+    moduleNameVal: changeKebabToLine(answers.moduleName), //模块驼峰转‘-’
+    viewKebabUpper: changeKebabToCamel(answers.viewName),//首字母小写的驼峰 myExample
+    viewKebabNameUpper: upperFirst(changeKebabToCamel(answers.viewName)),//首字母大写的驼峰 MyExample
+    viewKebabToDown: changeKebabToDown(answers.viewName),//小写 -转_ my_example
+    moduleKebabUpper: changeKebabToCamel(answers.moduleName),//首字母小写的驼峰 myExample
+    webpackChunkName: '/* webpackChunkName: "'+changeKebabToCamel(answers.moduleName)+changeKebabToCamel(answers.viewName)+'" */',//import引入的webpackChunkName
+    routerName: changeKebabToCamel(answers.moduleName) + upperFirst(changeKebabToCamel(answers.viewName)), //子路由name
+    VIEW_PATH: path.resolve(CWD, `./src/modules/${answers.moduleName}`),//需要创建的页面所对应的path
+    dest:  path.resolve(CWD, `./src/modules/${answers.moduleName}`),
+  })
+  return answers;
+}
+function dealVuexAnswers(answersFirst,answers) {
+  answers = Object.assign(answers, {
+    template: createType.filter((v)=> v.key===answersFirst.template)[0],// 创建type
+    vuexStateKebabUpper: changeKebabToCamel(answers.vuexState),// 首字母小写的驼峰 myExample
+    vuexType: String.prototype.toUpperCase.call(changeKebabToNull(answers.vuexState)),// 小写 -转 MYEXAMPLE
+    VUEX_PATH: path.resolve(CWD, `./src/modules/${answers.moduleName}/vuex/${answers.moduleName}.js`),//需要创建的页面所对应的path
+  })
+  console.log("%c dealVuexAnswers","color:#00CD00",answers)
+  return answers;
+}
 
-function init(answersa) {
-  if(answersa.template==="module"){
+/**
+ * 初始化创建模块、页面、组件...
+ */
+function init(answersFirst) {
+  if(answersFirst.template==="module"){
     let promptparam = [
       {
         type: 'input',
@@ -325,7 +481,23 @@ function init(answersa) {
         message: '请输入要创建的模块中文名称(中文):',
         required: true,
         default: "aaa",
-      },  
+      }, 
+      {
+        type: 'input',
+        name: 'viewName',
+        message: '请输入要创建的该模块的第一个页面名称(eg: my-view):',
+        required: true,
+        default: "aaa",
+        validate: function (str) {
+          return /^[a-z][a-z|-]*[a-z]$/.test(str)
+        }
+      },
+      {
+        type: 'input',
+        name: 'viewCnName',
+        message: '请输入要创建的页面中文名称(中文):',
+        required: true,
+      },
       {
         type: 'list',
         choices: [
@@ -358,24 +530,15 @@ function init(answersa) {
     ]
     return prompt(promptparam)
       .then(answers => {
-        answers = Object.assign(answers, {
-          template: createType.filter((v)=> v.key===answersa.template)[0],//创建type
-          files: answersa.files,//view下的模块数组
-          moduleKebabUpper: changeKebabToCamel(answers.moduleName),//首字母小写的驼峰 myExample
-          moduleKebabNameUpper: upperFirst(changeKebabToCamel(answers.moduleName)),//首字母大写的驼峰 MyExample
-          moduleKebabToDown: changeKebabToDown(answers.moduleName),//小写 -转_ my_example
-          moduleKebabToNull: String.prototype.toUpperCase.call(changeKebabToNull(answers.moduleName)),//小写 -转 myexample
-          webpackChunkName: '/* webpackChunkName: "'+changeKebabToCamel(answers.moduleName)+'" */',//import引入的webpackChunkName
-          dest: `${MODULE_PATH}/${changeKebabToCamel(answers.moduleName)}`,
-        })
+        answers = dealModuleAnswers(answersFirst,answers);
         return initModule(answers)
       })
-  }else if(answersa.template==="view"){
+  }else if(answersFirst.template==="view"){
     let promptparam = [
       {
         type: 'list',
         name: 'moduleName',
-        choices: answersa.files,
+        choices: answersFirst.files,
         message: '请选择您要创建哪个模块的页面:',
         required: true,
       },
@@ -408,22 +571,46 @@ function init(answersa) {
     ]
     return prompt(promptparam)
       .then(answers => {
-        answers = Object.assign(answers, {
-          template: createType.filter((v)=> v.key===answersa.template)[0],//创建type
-          moduleNameVal: changeKebabToLine(answers.moduleName), //模块驼峰转‘-’
-          viewKebabUpper: changeKebabToCamel(answers.viewName),//首字母小写的驼峰 myExample
-          viewKebabNameUpper: upperFirst(changeKebabToCamel(answers.viewName)),//首字母大写的驼峰 MyExample
-          viewKebabToDown: changeKebabToDown(answers.viewName),//小写 -转_ my_example
-          moduleKebabUpper: changeKebabToCamel(answers.moduleName),//首字母小写的驼峰 myExample
-          webpackChunkName: '/* webpackChunkName: "'+changeKebabToCamel(answers.moduleName)+changeKebabToCamel(answers.viewName)+'" */',//import引入的webpackChunkName
-          routerName: changeKebabToCamel(answers.moduleName) + upperFirst(changeKebabToCamel(answers.viewName)), //子路由name
-          VIEW_PATH: path.resolve(CWD, `./src/views/${answers.moduleName}`),//需要创建的页面所对应的path
-          dest:  path.resolve(CWD, `./src/views/${answers.moduleName}`),
-        })
+        answers = dealViewAnswers(answersFirst,answers);
         return initView(answers)
       })
-  }else{
-
+  }else if(answersFirst.template==="vuex"){
+    let promptparam = [
+      {
+        type: 'list',
+        name: 'moduleName',
+        choices: answersFirst.files,
+        message: '请选择您要创建哪个模块的vuex:',
+        required: true,
+      },
+      {
+        type: 'input',
+        name: 'vuexState',
+        message: '请输入要创建的vuex-state名称(eg: my-example):',
+        required: true,
+        validate: function (str) {
+          return /^[a-z][a-z|-]*[a-z]$/.test(str)
+        }
+      },
+      {
+        type: 'input',
+        name: 'vuexDesc',
+        message: '请输入要创建vuex的注释描述:',
+        required: true,
+      },
+      {
+        type: 'input',
+        name: 'vuexStateDefault',
+        message: '请输入要创建vuex-state的默认值:',
+        default: "",
+        required: true,
+      },
+    ]
+    return prompt(promptparam)
+      .then(answers => {
+        answers = dealVuexAnswers(answersFirst,answers);
+        return initVuex(answers)
+      })
   }
 }
 
@@ -438,6 +625,9 @@ function getModuleList(answers) {
     })
 }
 
+/**
+ * 获取需要创建的模式
+ */
 function launch() {
   let promptparamType = [
     {
@@ -453,4 +643,4 @@ function launch() {
     .then(init)
 }
 
-launch()
+// launch()

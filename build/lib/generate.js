@@ -1,3 +1,4 @@
+/* eslint-disable */
 const Metalsmith = require('metalsmith')
 const Handlebars = require('handlebars')
 const async = require('async')
@@ -38,7 +39,7 @@ module.exports = function generate (answers,name, src, dest, done) {
   metalsmith
     // .use(askQuestions(opts.prompts))
     // .use(filterFiles(opts.filters))
-    .use(renderTemplateFiles(name))
+    .use(renderTemplateFiles(name, answers))
 
   metalsmith.clean(false)
     .source('.') // start from template root instead of `./src` which is Metalsmith's default for `source`
@@ -59,11 +60,20 @@ module.exports = function generate (answers,name, src, dest, done) {
  * @param {Function} done
  */
 
-function renderTemplateFiles (name) {
+function renderTemplateFiles (name,answers) {
   return (files, metalsmith, done) => {
-    //替换index.vue模板为当前模块的名称
-    files[`${name}.vue`] = files['index.vue']
-    delete files['index.vue']
+    //替换views入口模板为当前模块的名称
+    files[`views/${answers.moduleKebabNameUpper}.vue`] = files['views/viewIndexTemplate.vue']
+    delete files['views/viewIndexTemplate.vue']
+    //替换views第一个页面模板为当前模块的名称
+    files[`views/${answers.viewKebabNameUpper}.vue`] = files['views/viewTemplate.vue']
+    delete files['views/viewTemplate.vue']
+    //替换vuex模板为当前模块的名称
+    files[`vuex/${answers.moduleKebabUpper}.js`] = files['vuex/vuexTemplate.js']
+    delete files['vuex/vuexTemplate.js']
+    //替换router模板为当前模块的名称
+    files[`routers/${answers.moduleKebabUpper}.js`] = files['routers/routerTemplate.js']
+    delete files['routers/routerTemplate.js']
     
     const keys = Object.keys(files)
     const metalsmithMetadata = metalsmith.metadata()

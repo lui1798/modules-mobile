@@ -1,9 +1,13 @@
+---
+title: 模块入口模版
+date: 2014-12-01
+---
 <template>
-  <div class="n22-home">
+  <div class="n22-{{moduleName}}">
     <transition name="n22-base-fade">
       <router-view
         v-if="isShowRouterView"
-        class="n22-home-child-view"
+        class="n22-{{moduleName}}-child-view"
       ></router-view>
     </transition>
   </div>
@@ -12,7 +16,7 @@
 <script>
 //import { mapState, mapActions } from "vuex";//引入组件样例--★★此处为引入vuex推荐此方法引入vuex的各个方法属性使用
 export default {
-  name: "home", //使用xx-xx-xx命名方式具体看操作文档
+  name: "{{moduleName}}", //使用xx-xx-xx命名方式具体看操作文档
   props: {
     //headBottom: {//props定义样例
     //   type: Boolean,
@@ -26,7 +30,7 @@ export default {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
   },
   mounted() {
-    console.log("%c home-生命周期-mounted", "color:green;", "");
+    console.log("%c {{moduleKebabUpper}}-生命周期-mounted", "color:green;", "");
     let _this = this;
     setTimeout(() => {
       _this.isShowRouterView = true;

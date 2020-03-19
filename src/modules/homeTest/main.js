@@ -187,34 +187,19 @@ Vue.mixin({
     };
   },
   methods: {
-    go(url, params, type, module="") {
-      const json = require("../../../build/assets/modules.json");
-      if (module) {
-        let runType = process.env.VUE_APP_ENV;
-        for (let moi = 0; moi < json[1].list.length; moi++) {
-          const mol = json[1].list[moi];
-          if (module === mol.name) {
-            if (runType === "local") {
-              window.location.href = `${window.location.protocol}//${window.location.hostname}:${mol.port}/#/${url}/`;
-            } else {
-              window.location.href = `${window.location.origin}/${module}/#/${url}/`;
-            }
+    go(url, params, type) {
+      if (params) {
+        for (let key in params) {
+          if (typeof params[key] !== "string") {
+            params[key] = JSON.stringify(params[key]);
           }
         }
+        this.$router.push({ name: url, params: params });
       } else {
-        if (params) {
-          for (let key in params) {
-            if (typeof params[key] !== "string") {
-              params[key] = JSON.stringify(params[key]);
-            }
-          }
-          this.$router.push({ name: url, params: params });
+        if (url.startsWith("/") || url.indexOf("/") > -1 || type === "push") {
+          this.$router.push(`/${url}`);
         } else {
-          if (url.startsWith("/") || url.indexOf("/") > -1 || type === "push") {
-            this.$router.push(`/${url}`);
-          } else {
-            this.$router.push({ name: url });
-          }
+          this.$router.push({ name: url });
         }
       }
     },
@@ -295,7 +280,7 @@ Vue.mixin({
     router,
     store,
     render: h => h(App)
-  }).$mount("#demo-app");
+  }).$mount("#home-test-app");
   // Vue.prototype.axiosHttp = axiosHttp;
   //挂载http的时候执行引入vue的方法
   // Vue.prototype.axiosHttp.initContext(vue); // 传入vue实例

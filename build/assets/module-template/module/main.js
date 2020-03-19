@@ -295,7 +295,7 @@ Vue.mixin({
     router,
     store,
     render: h => h(App)
-  }).$mount("#demo-app");
+  }).$mount("#{{moduleName}}-app");
   // Vue.prototype.axiosHttp = axiosHttp;
   //挂载http的时候执行引入vue的方法
   // Vue.prototype.axiosHttp.initContext(vue); // 传入vue实例

@@ -10,8 +10,9 @@
 import createDemoModule from "./components/create-demo-module";
 import ActionBarDemo from "./components/actionBar/ActionBarDemo";
 import NativeDemo from "./components/native/NativeDemo";
+import GotoDemo from "./components/goTo/GotoDemo";
 
 export default {
-  ...createDemoModule("demo-demo-detail", [ActionBarDemo, NativeDemo])
+  ...createDemoModule("demo-demo-detail", [ActionBarDemo, NativeDemo, GotoDemo])
 };
 </script>

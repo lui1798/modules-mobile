@@ -7,7 +7,7 @@ import ui from "./ui";
 // import n22des3 from "./N22DES3";
 import utilsPlugin from "./utilsPlugin";
 //码表
-import code from "./code/";
+// import code from "./code/";
 //导入错误码表数据
 import errorCode from "@@/data/error/errorCode";
 
@@ -33,8 +33,8 @@ const utils = {
   // n22des3: n22des3,
   ui,
   utilsPlugin,
-  //码表
-  code,
+  //码表-移植进行单独导入
+  // code,
   errorCode
 };
 

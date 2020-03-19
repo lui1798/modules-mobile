@@ -1,14 +1,18 @@
 const logger = require("./logger"); // 自定义工具-用于日志打印
-// const { getNpmParams } = require("./npm-params"); // 获取打包命令参数
-const getNpmParams = function() {
-  return {
-    buildModule: ["demo", "home"]
-  };
-};
-const buildModule = getNpmParams().buildModule[process.env.myModules]; // 当前打包命令中的打包模块-数组
+const { getNpmParams } = require("./npm-params"); // 获取打包命令参数
+//debug-测试模块打包参数--调试时候将上面注释-下面放开
+// const getNpmParams = function() {
+//   return {
+//     buildModule: ["demo", "home"]
+//   };
+// };
+const buildModule = getNpmParams().buildModule[
+  process.env.myModules === undefined ? 0 : process.env.myModules
+]; // 当前打包命令中的打包模块-数组
 const fs = require("fs"); // 文件模块
 
 console.log("%c getNpmParams", "color:#00CD00", getNpmParams());
+console.log("%c process.env.myModules", "color:#00CD00", process.env.myModules);
 
 /**
  * 获取模块配置pages
@@ -21,8 +25,9 @@ exports.getPages = function() {
     logger.log("模块不存在自己的入口那么取公用的入口main.js");
     entry = "src/modules/common/main.js";
   }
-  // 如果模块不存在自己的模版那么取公用的入口main.js
+  // 如果模块不存在自己的模版那么取公用的页面模版
   if (!fs.existsSync(template)) {
+    logger.log("模块不存在自己的模版那么取公用的页面模版");
     template = "public/index.html";
   }
   let pages = {};
@@ -31,7 +36,7 @@ exports.getPages = function() {
     entry: entry,
     // 模板来源
     template: template,
-    // 在 dist/index.html 的输出
+    // 在 dist/module-name/index.html 的输出
     filename: "index.html",
     // 当使用 title 选项时，
     // template 中的 title 标签需要是 <title><%= htmlWebpackPlugin.options.title %></title>
