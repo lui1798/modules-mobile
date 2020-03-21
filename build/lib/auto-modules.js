@@ -11,8 +11,8 @@ const buildModule = getNpmParams().buildModule[
 ]; // 当前打包命令中的打包模块-数组
 const fs = require("fs"); // 文件模块
 
-console.log("%c getNpmParams", "color:#00CD00", getNpmParams());
-console.log("%c process.env.myModules", "color:#00CD00", process.env.myModules);
+// console.log("%c getNpmParams", "color:#00CD00", getNpmParams());
+// console.log("%c process.env.myModules", "color:#00CD00", process.env.myModules);
 
 /**
  * 获取模块配置pages
@@ -49,7 +49,7 @@ exports.getPages = function() {
       `${buildModule}Index` || "commonIdex"
     ]
   };
-  logger.log("输出pages " + JSON.stringify(pages));
+  // logger.log("输出pages " + JSON.stringify(pages));
   return pages;
 };
 

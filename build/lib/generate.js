@@ -62,18 +62,24 @@ module.exports = function generate (answers,name, src, dest, done) {
 
 function renderTemplateFiles (name,answers) {
   return (files, metalsmith, done) => {
-    //替换views入口模板为当前模块的名称
-    files[`views/${answers.moduleKebabNameUpper}.vue`] = files['views/viewIndexTemplate.vue']
-    delete files['views/viewIndexTemplate.vue']
-    //替换views第一个页面模板为当前模块的名称
-    files[`views/${answers.viewKebabNameUpper}.vue`] = files['views/viewTemplate.vue']
-    delete files['views/viewTemplate.vue']
-    //替换vuex模板为当前模块的名称
-    files[`vuex/${answers.moduleKebabUpper}.js`] = files['vuex/vuexTemplate.js']
-    delete files['vuex/vuexTemplate.js']
-    //替换router模板为当前模块的名称
-    files[`routers/${answers.moduleKebabUpper}.js`] = files['routers/routerTemplate.js']
-    delete files['routers/routerTemplate.js']
+    if (answers.template.key === "module") {
+      //替换views入口模板为当前模块的名称
+      files[`views/${answers.moduleKebabNameUpper}.vue`] = files['views/viewIndexTemplate.vue']
+      delete files['views/viewIndexTemplate.vue']
+      //替换views第一个页面模板为当前模块的名称
+      files[`views/${answers.viewKebabNameUpper}.vue`] = files['views/viewTemplate.vue']
+      delete files['views/viewTemplate.vue']
+      //替换vuex模板为当前模块的名称
+      files[`vuex/${answers.moduleKebabUpper}.js`] = files['vuex/vuexTemplate.js']
+      delete files['vuex/vuexTemplate.js']
+      //替换router模板为当前模块的名称
+      files[`routers/${answers.moduleKebabUpper}.js`] = files['routers/routerTemplate.js']
+      delete files['routers/routerTemplate.js']
+    } else if (answers.template.key === "view") {
+      //替换viewTemplate模板为当前模块的名称
+      files[`${answers.viewKebabNameUpper}.vue`] = files['viewTemplate.vue']
+      delete files['viewTemplate.vue']
+    }
     
     const keys = Object.keys(files)
     const metalsmithMetadata = metalsmith.metadata()

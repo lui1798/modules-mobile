@@ -10,12 +10,7 @@
         "handle": "/demo/demoDetail/?nav=action-bar-demo"
     },
     {
-        "name": "item1-1",
-        "title": "img",
-        "handle": "/demo/demoDetail/?nav=action-bar-demo"
-    },
-    {
-        "name": "item1-1",
+        "name": "item1-2",
         "title": "goTo",
         "handle": "/demo/demoDetail/?nav=go-to-demo"
     }

@@ -1,3 +1,5 @@
+import code from "@@/utils/code/";
+
 const handler = {
   /** deprecated 拍照相册，跟iOS统一，用npm仓库插件 */
   capturePhoto(reqData, callback, callbackFail) {
@@ -214,12 +216,7 @@ const handler = {
             }
           );
         } else {
-          const url = window.utils.code.getCodeTextOrVal(
-            type,
-            "nativeModal",
-            "url",
-            "code"
-          );
+          const url = code.getCodeTextOrVal(type, "nativeModal", "url", "code");
           let str = `${url}?${JSON.stringify(reqData)}`;
           console.log(
             "%c 调用原生通用模板>>>>>>> url >>>>>> type",
@@ -239,7 +236,7 @@ const handler = {
           "color:green;",
           `h5模拟调用待补充,调用模块${type}`
         );
-        const modal = window.utils.code.getCodeTextOrVal(
+        const modal = code.getCodeTextOrVal(
           type,
           "nativeModal",
           "modal",

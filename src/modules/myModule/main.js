@@ -199,9 +199,6 @@ Vue.mixin({
             } else {
               window.location.href = `${window.location.origin}/${module}/#/${url}/`;
             }
-          } else if (moi === json[1].list.length-1) {
-            console.error(`>>>>模块/build/assets/module.json配置中,不存在当前${module}模块，请检查！！！`);
-            this.$router.push(`/404`);
           }
         }
       } else {
@@ -298,7 +295,7 @@ Vue.mixin({
     router,
     store,
     render: h => h(App)
-  }).$mount("#demo-app");
+  }).$mount("#my-module-app");
   // Vue.prototype.axiosHttp = axiosHttp;
   //挂载http的时候执行引入vue的方法
   // Vue.prototype.axiosHttp.initContext(vue); // 传入vue实例

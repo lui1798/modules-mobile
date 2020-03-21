@@ -11,14 +11,14 @@
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <script src="<%= BASE_URL %>static/codedata/codedata.js"></script>
+    <!-- <script src="<%= BASE_URL %>static/codedata/codedata.js"></script> -->
     <script src="<%= BASE_URL %>static/lib/jQuery/jquery-3.4.1.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
     <script src="https://unpkg.com/vue-router@3.1.5/dist/vue-router.js"></script>
     <script src="https://unpkg.com/vuex@3.1.2"></script> -->
     <% if(process.env.NODE_ENV==='production'){htmlWebpackPlugin.options.cdn.js.forEach(item => {%>
     <script src="<%= item %>"></script><%})}%>
-    <div id="demo-app"></div>
+    <div id="my-module-app"></div>
     <!-- built files will be auto injected -->
   </body>
 </html>

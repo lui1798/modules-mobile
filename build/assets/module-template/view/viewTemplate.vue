@@ -1,24 +1,27 @@
+---
+title: 页面模版
+date: 2014-12-01
+---
 <template>
-  <div class="demo-native-demo">
-    <al-all-head v-if="runningEnvironment != 'AlipayJSBridge'"></al-all-head>
+  <div class="{{moduleKebabUpper}}-{{viewName}}">
+    <al-all-head></al-all-head>
     <al-content
-      class="demo-native-demo-content"
+      class="{{moduleKebabUpper}}-{{viewName}}-content"
       ref="insureMessage"
       :tabs="tabs"
       :isMescrollDown="true"
       :isToTop="true"
     >
-      <n22-button @click="goToFun">模块之间跳转</n22-button>
+      [我是内容区xxxxxxxxxxxx]
     </al-content>
   </div>
 </template>
 
 <script>
 //import { mapState, mapActions } from "vuex";//引入组件样例--★★此处为引入vuex推荐此方法引入vuex的各个方法属性使用
-import { AllHead, Content, Button } from "al-mobile";
-
+import { AllHead, Content } from "al-mobile";
 export default {
-  name: "demo-go-to-demo", //使用xx-xx-xx命名方式具体看操作文档
+  name: "{{moduleNameVal}}-{{viewName}}", //使用xx-xx-xx命名方式具体看操作文档
   props: {
     //headBottom: {//props定义样例
     //   type: Boolean,
@@ -28,14 +31,13 @@ export default {
   components: {
     //[xxxx.name]: xxx,//引入组件样例如此
     [AllHead.name]: AllHead,
-    [Content.name]: Content,
-    [Button.name]: Button
+    [Content.name]: Content
   },
   computed: {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
   },
   mounted() {
-    console.log("%c demo-生命周期-mounted", "color:green;", "");
+    console.log("%c {{moduleKebabUpper}}-生命周期-mounted", "color:green;", "");
   },
   watch: {},
   data() {
@@ -60,17 +62,13 @@ export default {
     //...mapMutations([//提交vuex-state更改样例
     //    'USER_INFO',
     //]),
-    goToFun() {
-      console.log("%c 跳转》》》》》》》》", "color:#00CD00", "");
-      this.go("myModule/myView", "", "", "myModule");
-    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.demo-native-demo {
-  .demo-native-demo-content {
+.{{moduleKebabUpper}}-{{viewName}} {
+  .{{moduleKebabUpper}}-{{viewName}}-content {
   }
 }
 </style>

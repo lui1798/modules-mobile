@@ -1,5 +1,6 @@
-// 回调函数版
-// const { exec } = require("child_process");
+const fs = require("fs"); // 文件模块
+const chalk = require("chalk");
+const logger = require("../lib/logger"); // 自定义工具-用于日志打印
 const path = require("path");
 // path
 const CWD = process.cwd();
@@ -39,10 +40,10 @@ const args = require("minimist")(rawArgv, {
     "verbose"
   ]
 });
-const command = args._[0] || "serve";
+const command = args._[0];
 // console.log("%c args", "color:#00CD00", args);
 // console.log("%c command", "color:#00CD00", command);
-console.log("%c rawArgv", "color:#00CD00", rawArgv);
+// console.log("%c rawArgv", "color:#00CD00", rawArgv);
 
 //异步进行打包
 // for (let i = 0; i < getBuildModuleList().length; i++) {
@@ -58,39 +59,57 @@ process.env.myModules = 0;
 let errorModules = [];
 let successModules = [];
 const dealRun = function() {
+  i++;
   if (i < getBuildModuleList().length) {
     process.env.myModules = i;
     run();
   } else {
-    done("打包成功模块：" + successModules);
+    info(`成功:${successModules.length} 失败:${errorModules.length} 共:${i}`);
+    done("打包成功模块：" + chalk.bgGreen.black(successModules));
     errorModules.length > 0 &&
       error(
-        "打包失败模块:[" + errorModules + "],请检查日志并重新打相关模块包！"
+        "打包失败模块:" +
+          chalk.bgRed.black(errorModules) +
+          ",请检查日志并重新打相关模块包！"
       );
+    process.exit();
   }
 };
 const run = function() {
+  console.log(
+    chalk.bgCyan.black(
+      " >>>>>>>>>>> 开始打包模块" + getBuildModuleList()[i] + " >>>>>>>>>>>"
+    )
+  );
+  let entryMoName = `src/modules/${getBuildModuleList()[i]}`; // 入口
+  // 检查是否存在当前模块
+  if (getBuildModuleList()[i] && !fs.existsSync(entryMoName)) {
+    error(
+      `不存在当前${
+        getBuildModuleList()[i]
+      }运行模块，请检查打包命令中模块名称是否正确，正确打包命令如下:`
+    );
+    logger.log("npm run sta -m-demo,home -p-web");
+    errorModules.push(getBuildModuleList()[i]);
+    dealRun();
+  }
   nyservice
     .run(command, args, rawArgv)
     .then(() => {
       successModules.push(getBuildModuleList()[i]);
-      i++;
       dealRun();
     })
     .catch(err => {
       error(err);
       errorModules.push(getBuildModuleList()[i]);
-      i++;
       dealRun();
       // process.exit(1);
     });
 };
 
-if (command === "build") {
+if (command === "build" || command === "lint") {
   run();
 } else if (command === "serve") {
-  // console.log("%c args", "color:#00CD00", args);
-  // console.log("%c rawArgv", "color:#00CD00", rawArgv);
   const json = require(COMPONENT_JSON);
   let startModule = getBuildModuleList()[0] || "";
   let port;
@@ -101,7 +120,12 @@ if (command === "build") {
       break;
     }
   }
-  info("启动模块" + getBuildModuleList()[0]);
+  console.log(
+    chalk.bgMagenta.black(
+      " >>>>>>>>>>>启动模块" + getBuildModuleList()[0] + " >>>>>>>>>>>"
+    )
+  );
+  // info("启动模块" + getBuildModuleList()[0]);
   if (port) {
     args.port = port;
     rawArgv.push("--port");

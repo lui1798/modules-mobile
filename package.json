@@ -12,17 +12,17 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint",
+    "lint": "node build/service/my-service.js lint",
     "shell": "npm run build:codedata && node build/init-module.js env=int select=yes && node build/shell/shell.js",
     "myserve": "node build/service/my-service.js",
     "dev": "node build/service/my-service.js serve --mode dev",
-    "int": "npm run build:codedata && node build/init-module.js env=int select=yes && node build/service/my-service.js --mode int && npm run init:module:default",
-    "uat": "npm run build:codedata && node build/init-module.js env=uat select=yes && node build/service/my-service.js --mode uat && npm run init:module:default",
+    "int": "npm run build:codedata && node build/service/my-service.js build --mode int",
+    "uat": "npm run build:codedata && node build/service/my-service.js build --mode uat",
     "sta": "npm run build:codedata && node build/service/my-service.js build --mode sta",
-    "prod": "npm run build:codedata && node build/init-module.js env=prod select=yes && node build/service/my-service.js  --mode prod && npm run init:module:default"
+    "prod": "npm run build:codedata && node build/service/my-service.js build --mode prod"
   },
   "dependencies": {
-    "al-mobile": "0.0.9",
+    "al-mobile": "0.0.11",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "js-md5": "^0.7.3",

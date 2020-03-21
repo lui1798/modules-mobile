@@ -7,9 +7,7 @@
 import commonCodeData from "./common";
 
 //如果有不同模块的进行合并
-Object.assign(
-  commonCodeData,
-);
+Object.assign(commonCodeData);
 
 var allCodeData = commonCodeData;
 // module.exports = allCodeData;

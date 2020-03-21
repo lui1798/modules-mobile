@@ -7,24 +7,24 @@ const { initCreateTest } = require("../component-init-create"); // 自定义工�
 /**
  * 测试模块创建
  */
-let answersM = {
-  moduleName: 'home-test',
-  moduleCnName: '模块测试',
-  viewName: 'my-view',
-  viewCnName: '第一个页面测试',
-  componentType: 'business',
-  moduleDesc: '放到沙发上',
-  author: 'xuyuanliang',
-  time: '2020年03月19日'
-};
-initCreateTest({ template: 'module'},answersM);
 // let answersM = {
-//   moduleName: 'demo',
-//   viewName: 'test-view',
-//   viewCnName: '页面创建测试',
-//   isCreateRouter: 'true'
-// }
-// initCreateTest({ template: 'view'}, answersV);
+//   moduleName: 'home-test',
+//   moduleCnName: '模块测试',
+//   viewName: 'my-view',
+//   viewCnName: '第一个页面测试',
+//   componentType: 'business',
+//   moduleDesc: '放到沙发上',
+//   author: 'xuyuanliang',
+//   time: '2020年03月19日'
+// };
+// initCreateTest({ template: 'module'},answersM);
+let answersV = {
+  moduleName: 'homeTest',
+  viewName: 'show-content',
+  viewCnName: '页面创建测试',
+  isCreateRouter: 'true'
+}
+initCreateTest({ template: 'view'}, answersV);
 // let answersVuex = {
 //   moduleName: 'homeTest',
 //   vuexState: 'routers',

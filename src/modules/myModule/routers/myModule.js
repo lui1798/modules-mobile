@@ -13,16 +13,16 @@
  * @参数：path 入口文件路径 
  */
 
-const {{moduleKebabUpper}} = () => import( /* webpackChunkName: "{{moduleKebabNameUpper}}" */ "@m/{{moduleKebabUpper}}/views/{{moduleKebabNameUpper}}.vue")
-const {{viewKebabUpper}} = () => import( /* webpackChunkName: "{{viewKebabNameUpper}}" */ "@m/{{moduleKebabUpper}}/views/{{viewKebabNameUpper}}.vue")
-/* @init<%const ${viewKebabUpper} = () => import( ${webpackChunkName} "@m/${moduleKebabUpper}/views/${viewKebabNameUpper}.vue")%> */
+const myModule = () => import( /* webpackChunkName: "MyModule" */ "@m/myModule/views/MyModule.vue")
+const myView = () => import( /* webpackChunkName: "MyView" */ "@m/myModule/views/MyView.vue")
+const firstView = () => import( /* webpackChunkName: "myModulefirstView" */ "@m/myModule/views/FirstView.vue")/* @init<%const ${viewKebabUpper} = () => import( ${webpackChunkName} "@m/${moduleKebabUpper}/views/${viewKebabNameUpper}.vue")%> */
 export default [
     {
-        name: "{{moduleKebabUpper}}",
-        path: "/{{moduleKebabUpper}}",
-        component: {{moduleKebabUpper}},
+        name: "myModule",
+        path: "/myModule",
+        component: myModule,
         meta: {
-            title: "{{moduleCnName}}",//标题
+            title: "我的模块",//标题
             login: false,//是否需要登陆权限
             transition: true,//是否滑动切换页面
             footer: false,//是否需要底部footer菜单
@@ -32,15 +32,15 @@ export default [
         },
         children: [
             {
-                path: "/{{moduleKebabUpper}}",
-                redirect: "/{{moduleKebabUpper}}/{{viewKebabUpper}}"
+                path: "/myModule",
+                redirect: "/myModule/myView"
             },
             {
-                name: "{{routerName}}",
-                path: "{{viewKebabUpper}}",
-                component: {{viewKebabUpper}},
+                name: "myModuleMyView",
+                path: "myView",
+                component: myView,
                 meta: {
-                    title: "{{viewCnName}}",//标题
+                    title: "我的页面",//标题
                     login: true, //是否需要登陆权限
                     transition: true,//是否滑动切换页面
                     footer: false,//是否需要底部footer菜单
@@ -49,7 +49,20 @@ export default [
                     isquery: false,//是否可被全局search组件搜索到
                 }
             },
-/* @children<%            {
+            {
+                name: "myModuleFirstView",
+                path: "firstView",
+                component: firstView,
+                meta: {
+                    title: "第二个页面",//标题
+                    login: true, //是否需要登陆权限
+                    transition: true,//是否滑动切换页面
+                    footer: false,//是否需要底部footer菜单
+                    scrollToTop: false,//是否返回顶部
+                    zoom: false,//是否可缩放
+                    isquery: false,//是否可被全局search组件搜索到
+                }
+            },/* @children<%            {
                 name: "${routerName}",
                 path: "${viewKebabUpper}",
                 component: ${viewKebabUpper},

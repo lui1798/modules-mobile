@@ -17,7 +17,6 @@ const logger = require('./lib/logger') //自定义工具-用于日志打印
 // path
 const CWD = process.cwd()
 const templatePath = path.resolve(CWD, './build/assets/module-template')
-const templatePathChildren = path.resolve(CWD, './build/assets/module-template-children')
 const MODULE_PATH = path.resolve(CWD, './src/modules')
 const MODULE_ENV_LOCAL = path.resolve(CWD, './.env.local')
 const MODULE_ENV_INT = path.resolve(CWD, './.env.int')
@@ -129,9 +128,9 @@ function checkNoRepeat(answers) {
  * @param {*} answers 模块参数对象
  */
 function checkNoRepeatView(answers) {
-  return fs.readdirAsync(answers.VIEW_PATH)
+  return fs.readdirAsync(answers.dest)
     .then(files => {
-      return Promise.all(files.map(file => checkFile(answers.VIEW_PATH, file, answers))).then(() => answers)
+      return Promise.all(files.map(file => checkFile(answers.dest, file, answers))).then(() => answers)
     })
 }
 /**
@@ -160,7 +159,7 @@ function checkFile(dir, file, answers) {
     .then(stat => {
       if (stat.isDirectory()) {
         if (answers[_name] === (answers.template.key==="view"?file.replace(".vue",""):file)) {
-          return Promise.reject(answers.template.desc+`中已经存在名为${answers[_name]}！请仔细核对后重新创建.`)
+          return Promise.reject(answers.moduleName + `模块中已经存在名为${answers[_name]}的页面！请仔细核对后重新创建.`)
         }
       }
       return
@@ -181,7 +180,7 @@ function sync(answers) {
   ]).then(() =>answers)
 }
 function syncRouter(answers) {
-  const newRouterjs = path.resolve(CWD, `./src/routers/${answers.moduleName}.js`)
+  const newRouterjs = path.resolve(CWD, `./src/modules/${answers.moduleName}/routers/${answers.moduleName}.js`)
   return Promise.all([
     answers.isCreateRouter=='true'&&syncToFile(answers,newRouterjs,3),//#### 3、同步router-children
   ]).then(() =>answers)
@@ -443,8 +442,8 @@ function dealViewAnswers(answersFirst,answers) {
     moduleKebabUpper: changeKebabToCamel(answers.moduleName),//首字母小写的驼峰 myExample
     webpackChunkName: '/* webpackChunkName: "'+changeKebabToCamel(answers.moduleName)+changeKebabToCamel(answers.viewName)+'" */',//import引入的webpackChunkName
     routerName: changeKebabToCamel(answers.moduleName) + upperFirst(changeKebabToCamel(answers.viewName)), //子路由name
-    VIEW_PATH: path.resolve(CWD, `./src/modules/${answers.moduleName}`),//需要创建的页面所对应的path
-    dest:  path.resolve(CWD, `./src/modules/${answers.moduleName}`),
+    // VIEW_PATH: path.resolve(CWD, `./src/modules/${answers.moduleName}/views/`),//需要创建的页面所对应的path
+    dest:  path.resolve(CWD, `./src/modules/${answers.moduleName}/views`),//需要创建的页面所对应的path
   })
   return answers;
 }
@@ -495,7 +494,7 @@ function init(answersFirst) {
       {
         type: 'input',
         name: 'viewCnName',
-        message: '请输入要创建的页面中文名称(中文):',
+        message: '请输入要创建的该模块的第一个页面中文名称(中文):',
         required: true,
       },
       {
@@ -615,7 +614,7 @@ function init(answersFirst) {
 }
 
 /**
- * 获取views下的所有模块名称
+ * 获取modules下的所有模块名称
  */
 function getModuleList(answers) {
   return fs.readdirAsync(MODULE_PATH)
@@ -643,4 +642,4 @@ function launch() {
     .then(init)
 }
 
-// launch()
+launch()
