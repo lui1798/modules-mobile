@@ -25,9 +25,10 @@
       - App--入口
       - main.js--配置
     - 其他模块
++ env
+  - .env.[env]各个环境的配置参数
 + tests--测试管理器
 + .browserslistrc--控制兼容性版本
-+ .env.xxx--webpack打包环境标识配置
 
 # 模块目录结构
 - src/modules/模块名/下新增homeTest文件夹--模板如下

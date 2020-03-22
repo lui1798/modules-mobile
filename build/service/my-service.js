@@ -17,11 +17,11 @@ if (!semver.satisfies(process.version, requiredVersion)) {
   process.exit(1);
 }
 
-const Service = require("@vue/cli-service/lib/Service");
-const service = new Service(process.env.VUE_CLI_CONTEXT || process.cwd());
+// const Service = require("@vue/cli-service/lib/Service");
+// const service = new Service(process.env.VUE_CLI_CONTEXT || process.cwd());
 
 const myService = require("./Service");
-const nyservice = new myService(process.env.VUE_CLI_CONTEXT || process.cwd());
+const myservice = new myService(process.env.VUE_CLI_CONTEXT || process.cwd());
 
 const rawArgv = process.argv.slice(2);
 const args = require("minimist")(rawArgv, {
@@ -40,7 +40,7 @@ const args = require("minimist")(rawArgv, {
     "verbose"
   ]
 });
-const command = args._[0];
+const command = args._[0] || "serve";
 // console.log("%c args", "color:#00CD00", args);
 // console.log("%c command", "color:#00CD00", command);
 // console.log("%c rawArgv", "color:#00CD00", rawArgv);
@@ -81,7 +81,7 @@ const run = function() {
       " >>>>>>>>>>> 开始打包模块" + getBuildModuleList()[i] + " >>>>>>>>>>>"
     )
   );
-  let entryMoName = `src/modules/${getBuildModuleList()[i]}`; // 入口
+  let entryMoName = `src/modules/${getBuildModuleList()[i]}`; // 模块文件路径
   // 检查是否存在当前模块
   if (getBuildModuleList()[i] && !fs.existsSync(entryMoName)) {
     error(
@@ -93,7 +93,7 @@ const run = function() {
     errorModules.push(getBuildModuleList()[i]);
     dealRun();
   }
-  nyservice
+  myservice
     .run(command, args, rawArgv)
     .then(() => {
       successModules.push(getBuildModuleList()[i]);
@@ -112,6 +112,24 @@ if (command === "build" || command === "lint") {
 } else if (command === "serve") {
   const json = require(COMPONENT_JSON);
   let startModule = getBuildModuleList()[0] || "";
+  let entryMoName = `src/modules/${startModule}`; // 模块文件路径
+  // 检查是否存在当前模块
+  if (startModule) {
+    let isI = json[1].list.findIndex(mo => mo.name === startModule);
+    if (isI < 0 || !fs.existsSync(entryMoName)) {
+      error(
+        `不存在当前${
+          getBuildModuleList()[i]
+        }运行模块，请检查打包命令中模块名称是否正确，正确打包命令如下:`
+      );
+      logger.log("npm run dev -m-myModule");
+      logger.log("注意模块名称是以首字母小写的驼峰命名");
+      logger.log(
+        `如果以上检查都没问题，请检查${COMPONENT_JSON}目录下list[1]节点是否存在当前${startModule}模块名称。注意驼峰命名`
+      );
+      process.exit();
+    }
+  }
   let port;
   for (let i = 0; i < json[1].list.length; i++) {
     const mo = json[1].list[i];
@@ -131,7 +149,7 @@ if (command === "build" || command === "lint") {
     rawArgv.push("--port");
     rawArgv.push(port);
   }
-  service.run(command, args, rawArgv).catch(err => {
+  myservice.run(command, args, rawArgv).catch(err => {
     error(err);
     process.exit(1);
   });

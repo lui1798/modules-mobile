@@ -37,7 +37,7 @@ export default {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
   },
   mounted() {
-    console.log("%c {{moduleKebabUpper}}-生命周期-mounted", "color:green;", "");
+    console.log("%c {{viewName}}>生命周期>mounted", "color:green;", "");
   },
   watch: {},
   data() {

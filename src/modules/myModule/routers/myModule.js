@@ -15,14 +15,14 @@
 
 const myModule = () => import( /* webpackChunkName: "MyModule" */ "@m/myModule/views/MyModule.vue")
 const myView = () => import( /* webpackChunkName: "MyView" */ "@m/myModule/views/MyView.vue")
-const firstView = () => import( /* webpackChunkName: "myModulefirstView" */ "@m/myModule/views/FirstView.vue")/* @init<%const ${viewKebabUpper} = () => import( ${webpackChunkName} "@m/${moduleKebabUpper}/views/${viewKebabNameUpper}.vue")%> */
+/* @init<%const ${viewKebabUpper} = () => import( ${webpackChunkName} "@m/${moduleKebabUpper}/views/${viewKebabNameUpper}.vue")%> */
 export default [
     {
         name: "myModule",
         path: "/myModule",
         component: myModule,
         meta: {
-            title: "我的模块",//标题
+            title: "我的模块一",//标题
             login: false,//是否需要登陆权限
             transition: true,//是否滑动切换页面
             footer: false,//是否需要底部footer菜单
@@ -40,7 +40,7 @@ export default [
                 path: "myView",
                 component: myView,
                 meta: {
-                    title: "我的页面",//标题
+                    title: "我的页面一",//标题
                     login: true, //是否需要登陆权限
                     transition: true,//是否滑动切换页面
                     footer: false,//是否需要底部footer菜单
@@ -49,20 +49,7 @@ export default [
                     isquery: false,//是否可被全局search组件搜索到
                 }
             },
-            {
-                name: "myModuleFirstView",
-                path: "firstView",
-                component: firstView,
-                meta: {
-                    title: "第二个页面",//标题
-                    login: true, //是否需要登陆权限
-                    transition: true,//是否滑动切换页面
-                    footer: false,//是否需要底部footer菜单
-                    scrollToTop: false,//是否返回顶部
-                    zoom: false,//是否可缩放
-                    isquery: false,//是否可被全局search组件搜索到
-                }
-            },/* @children<%            {
+/* @children<%            {
                 name: "${routerName}",
                 path: "${viewKebabUpper}",
                 component: ${viewKebabUpper},

@@ -25,59 +25,19 @@ app端直接使用cordova的定制壳子进行原生发布
 h5端部署到后台服务器--参考发布解决方案[传送门](https://www.cnblogs.com/koleyang/p/4816853.html)
 
 # 运行
-## Project setup
-```
-npm install
-
-npm install --registry=https://registry.npm.taobao.org
-```
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-### Compiles and minifies for production
-
-#### 生产打包build（其他环境int/uat/sta。例如打包int命令为：npm run int）
-1、配置不同环境的文件.env.int===具体内容见文件内部
-注：打包环境需要根据process.env.VUE_APP_ENV在main.js里面配置不同环境的参数
-```
-npm run build
-```
-### Run your tests 运行测试
-```
-npm run test
-```
-### Lints and fixes files
-```
-npm run lint
-```
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
-### Run your unit tests
-```
-npm run test:unit
-```
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
+[ 传送门 ]( ./COMMAND.md )
 
 *******************************************************************************************
-
 
 # 项目结构
 [ 传送门 ]( ./doc/Directory.md )
 
 *******************************************************************************************
 
-
 # 规范化
 [ 传送门 ]( ./doc/PRORULES.md )
 
-
 *******************************************************************************************
-
 
 # 相关网址
 http://www.alloyteam.com/nav/
@@ -85,13 +45,10 @@ https://lanhuapp.com/web/#/item/project/board
 http://show.n22.com.cn:8784/swagger-ui.html#!/auth45controller/loginUsingPOST
 https://m.ccode.live/lentoo/list/9
 
-
 *******************************************************************************************
-
 
 # 自动化（模块新增、组件新增、.vue页面新增）
 [ 传送门 ]( ./doc/AUTOCREATE.md )
-
 
 *******************************************************************************************
 
@@ -137,9 +94,7 @@ FastClick.attach(document.body)
 ```
   -- icon-class即为你的svg文件名字
 
-
 *******************************************************************************************
-
 
 # 移动端适配方案 -- vw适配方案
 link(https://www.w3cplus.com/mobile/vw-layout-in-vue.html)
@@ -161,84 +116,28 @@ eg：我调试的是iPhone6/7/8为375x667，谷歌中看到的6vw即为6vw*375%1
 所以新的npm为
 npm i --save-dev postcss-aspect-ratio-mini postcss-px-to-viewport postcss-write-svg postcss-cssnext cssnano
 
-
 *******************************************************************************************
-
 
 # 内置css
 [ 传送门 ]( ./doc/PROCSS.md )
 
-
 *******************************************************************************************
-
-
-### 参考组件
-#### 骨架屏svg  https://github.com/michalsnik/vue-content-placeholders(使用第二个npm)
-```
-npm install vue-content-placeholders --save
-npm install --save-dev page-skeleton-webpack-plugin
-npm install --save-dev html-webpack-plugin
-```
-表单验证   https://github.com/baianat/vee-validate
-专场特效参考不使用https://github.com/jaweii/vueg.git
 
 #### 目前使用的骨架屏方案
 ```
 npm install vue-content-loader --save
 ```
-
-
 *******************************************************************************************
-
 
 # 兼容性
 [ 传送门 ]( ./doc/COMPATIBLE.md )
 
-
 *******************************************************************************************
-
 
 # vuelidate - 为Vue.js进行简单，轻量级的基于模型的验证
 [ 传送门 ]( https://monterail.github.io/vuelidate/ )
 
-
 *******************************************************************************************
-
-
-# cordova相关文档
-[ 传送门 ]( ./doc/CORDOVA.md )
-
-
-*******************************************************************************************
-
-
-# ios端视频默认全屏解决办法
-deplay 默认情况下加入了下面两个属性
-### Fix fullscreen problem on IOS 8 and 9
-```
-this.videoElement.setAttribute('webkit-playsinline', 'webkit-playsinline');
-```
-### Fix fullscreen problem on IOS 10
-```
-this.videoElement.setAttribute('playsinline', 'playsinline'); 
-```
-
-### 如果项目基于cordova构建，还需在config.xml加如下属性（应用访问类似iframe外部链接）
-```
-<preference name="AllowInlineMediaPlayback" value="true" />
-```
-
-
-
-*******************************************************************************************
-
-
-# 数据采集相关文档
-[ 传送门 ]( ./doc/SCADA.md )
-
-
-*******************************************************************************************
-
 
 # npm audit fix的相关介绍(npm漏洞相关)。
 
@@ -262,9 +161,7 @@ $ npm audit fix --dry-run --json
 $ npm audit --json
 ```
 
-
 *******************************************************************************************
-
 
 # quicklink 
 谷歌开源的预加载api
@@ -272,23 +169,17 @@ $ npm audit --json
 2、具体描述见 QUICKLINK.md
 [传送门](https://github.com/GoogleChromeLabs/quicklink/tree/master/translations/zh-cn)
 
-
 *******************************************************************************************
-
 
 # 项目更新日志
 [ 传送门 ]( ./CHANGELOG.md )
 
-
 *******************************************************************************************
-
 
 # 后序
 1、demo.vue中启动最新的ts以及vue3倡导的写法从而更贴合TypeScript
 
-
 *******************************************************************************************
-
 
 # 查看vue cli3最终的配置文件
 vue inspect > output.js

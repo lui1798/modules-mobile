@@ -1,20 +1,10 @@
 /* eslint-disable */
-/*
- * @Author: aliang
- * @Date: 2018-11-19 17:21:00
- * @Last Modified by: liwenbin
- * @Last Modified time: 2019-12-30 19:07:40
- */
-
 import Vue from "vue";
 import Router from "vue-router";
 import store from "@m/demo/vuex";
 import NProgress from "nprogress";
 NProgress.configure({ showSpinner: false });
 
-// import quicklink from "quicklink/dist/quicklink.mjs";
-
-console.log("%c 开始配置路由》》》》》》》》","color:#00CD00",)
 Vue.use(Router);
 const router = new Router({
   // mode: 'history',
@@ -84,10 +74,10 @@ router.beforeEach((to, from, next) => {
     store.commit("ROUTERS", routersvuex);
     console.log(
       "%c 我从这>>>" +
-        store.state.common.routers.from.name +
+        store.state.fromRouter.name +
         "跳转到这>>>" +
-        store.state.common.routers.to.name,
-      "color:#C0FF3E",
+        store.state.toRouter.name,
+      "color:#C0FF3E;background-color:black;",
       "store"
     );
     // 配置微信的信息
@@ -117,32 +107,19 @@ router.afterEach((to, from) => {
 });
 
 function callback() {
-  // demo,test,login,home,center,insured,messageNoti,train
-  //注：search组件中引入了train的路由，所以train模块此处有点特殊。
   require([
-    // @a_init<#
-    "./demo",
-/* @init<%    "./${moduleKebabUpper}",%> */
-// @a_end#>
+    "./demo"
   ], (
-    // @b_init<#
-      demo,
-/* @init<%      ${moduleKebabUpper},%> */
-// @b_end#>
+    demo
   ) => {
-    console.log("%c >>>>>>>>>>", "color:orange;", demo);
     router.addRoutes([
-      // @c_init<#
-        ...demo.default,
-/* @init<%        ...${moduleKebabUpper}.default,%> */
-// @c_end#>
+      ...demo.default
     ]);
     router.addRoutes([{ path: "*", redirect: "/404", hidden: true }]);
   }).catch(err => {
     console.log(err.message);
   });
 }
-/* eslint-disable */
 
 //https://router.vuejs.org/zh/api/#router-addroutes
 router.onReady(callback);

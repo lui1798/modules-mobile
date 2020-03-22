@@ -134,6 +134,8 @@ module.exports = {
             .test(/\.(woff2?|woff|eot|ttf|otf|svg)(\?.*)?$/i)
             .exclude.add(resolves('src/assets/icons')) //处理svg目录--排除自定义svg库
         config.resolve.alias
+            .set('@g', resolve('./'));
+        config.resolve.alias
             .set('@', resolve('src'));
         config.resolve.alias
             .set('@@', resolve('src/modules/common'));
@@ -141,7 +143,6 @@ module.exports = {
             .set('@m', resolve('src/modules'));
         
         //进行处理html中挂在的cdn--创建模块的时候会进行询问是否挂载cdn-默认是挂载
-        console.log("%c ##########################","color:#00CD00",)
         dealHtmlCdn(config);
     },
     // ...other vue-cli plugin options...

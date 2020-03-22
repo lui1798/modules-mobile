@@ -61,7 +61,6 @@ export default {
     //    'USER_INFO',
     //]),
     goToFun() {
-      console.log("%c 跳转》》》》》》》》", "color:#00CD00", "");
       this.go("myModule/myView", "", "", "myModule");
     }
   }

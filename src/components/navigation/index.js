@@ -25,7 +25,7 @@ export default {
     
     // init router`s keyName
     router.beforeEach((to, from, next) => {
-      console.log('%c xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-navigation', 'color:green;', "navigation");
+      // console.log('%c xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-navigation', 'color:green;', "navigation");
       if (!to.query[keyName]) {
         const query = { ...to.query }
         // go to the same route will be set the same key

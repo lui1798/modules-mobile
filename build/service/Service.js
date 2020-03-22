@@ -53,10 +53,10 @@ module.exports = class Service {
     return pkg
   }
 
-  init (mode = process.env.VUE_CLI_MODE) {
-    // if (this.initialized) {
-    //   return
-    // }
+  init (name,mode = process.env.VUE_CLI_MODE) {
+    if (this.initialized && name!="build") {
+      return
+    }
     this.initialized = true
     this.mode = mode
 
@@ -91,7 +91,7 @@ module.exports = class Service {
 
   loadEnv (mode) {
     const logger = debug('vue:env')
-    const basePath = path.resolve(this.context, `.env${mode ? `.${mode}` : ``}`)
+    const basePath = path.resolve(this.context, `env/.env${mode ? `.${mode}` : ``}`)
     const localPath = `${basePath}.local`
 
     const load = envPath => {
@@ -214,7 +214,7 @@ module.exports = class Service {
     this.setPluginsToSkip(args)
 
     // load env variables, load user config, apply plugins
-    this.init(mode)
+    this.init(name,mode)
 
     args._ = args._ || []
     let command = this.commands[name]

@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import myModule from "./myModule";
 //公用模块
 import common from "@@/vuex/modules/common";
+import myModule from "./myModule";
 
 Vue.use(Vuex);
 

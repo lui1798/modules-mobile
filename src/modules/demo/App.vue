@@ -5,6 +5,12 @@
     class="nprogress-wrap app_class"
     :class="_module"
   >
+    <al-all-head
+      v-if="common.isShowRouterView && transitionName === 'slide-in'"
+      :headBottom="false"
+      :zIndex="5"
+      :title="$route.meta.title"
+    />
     <transition :name="transitionName">
       <navigation>
         <router-view
@@ -32,7 +38,7 @@ import { mapState, mapMutations } from "vuex";
 import { AllHead, Foot } from "al-mobile";
 
 export default {
-  name: "DemoApp",
+  name: "demo",
   provide() {
     return {
       reload: this.reload
@@ -96,7 +102,7 @@ export default {
     };
   },
   created() {
-    console.log("%c this.$store.state", "color:green;", this.$store.state);
+    // console.log("%c this.$store.state", "color:green;", this.$store.state);
     console.log("%c App-router", "color:green;", this.$route.query);
     if (this.$route && this.$route.query && this.$route.query.token) {
       window.utils.cache.set("token", this.$route.query.token);
@@ -283,15 +289,14 @@ export default {
         ? (this.transitionName = "slide-out")
         : (this.transitionName = "n22-base-slide-down");
     });
-    this.$navigation.on("refresh", (to, from) => {
-      console.log("%c refresh", "color:green;", to);
-      console.log("%c back", "color:green;", from);
-    });
-    this.$navigation.on("reset", (to, from) => {
-      console.log("%c reset", "color:green;", to);
-      console.log("%c back", "color:green;", from);
-    });
-    console.log("%c appvue", "color:green;", "appvue");
+    // this.$navigation.on("refresh", (to, from) => {
+    //   console.log("%c refresh", "color:green;", to);
+    //   console.log("%c back", "color:green;", from);
+    // });
+    // this.$navigation.on("reset", (to, from) => {
+    //   console.log("%c reset", "color:green;", to);
+    //   console.log("%c back", "color:green;", from);
+    // });
   },
   watch: {
     // '$route' (value){

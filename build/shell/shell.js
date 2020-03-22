@@ -18,13 +18,19 @@ const { initCreateTest } = require("../component-init-create"); // 自定义工�
 //   time: '2020年03月19日'
 // };
 // initCreateTest({ template: 'module'},answersM);
-let answersV = {
-  moduleName: 'homeTest',
-  viewName: 'show-content',
-  viewCnName: '页面创建测试',
-  isCreateRouter: 'true'
-}
-initCreateTest({ template: 'view'}, answersV);
+/**
+ * 测试页面创建
+ */
+// let answersV = {
+//   moduleName: 'homeTest',
+//   viewName: 'show-content',
+//   viewCnName: '页面创建测试',
+//   isCreateRouter: 'true'
+// }
+// initCreateTest({ template: 'view'}, answersV);
+/**
+ * 测试vuex创建
+ */
 // let answersVuex = {
 //   moduleName: 'homeTest',
 //   vuexState: 'routers',
@@ -35,6 +41,22 @@ initCreateTest({ template: 'view'}, answersV);
 //   vuexType: 'ROUTERS'
 // }
 // initCreateTest({ template: 'vuex'}, answersVuex);
+
+/**
+ * 测试serve创建
+ */
+// process.env.myModules = 1;
+exec(
+  "node build/service/my-service.js serve -m-demo --mode dev",
+  (error, stdout, stderr) => {
+    if (error) {
+      console.error(`执行出错: ${error}`);
+      return;
+    }
+    logger.success(`stdout: ${stdout}`);
+    logger.success(`stderr: ${stderr}`);
+  }
+);
 
 /**
  * 测试build创建

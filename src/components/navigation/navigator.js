@@ -81,7 +81,7 @@ export default (bus, store, moduleName, keyName) => {
     if (replaceFlag) {
       replace(name, toRoute, fromRoute)
     } else {
-      console.log('%c navigation-record-Routes', 'color:green;', Routes);
+      // console.log('%c navigation-record-Routes', 'color:green;', Routes);
       const toIndex = Routes.lastIndexOf(name)
       if (toIndex === -1) {
         forward(name, toRoute, fromRoute)

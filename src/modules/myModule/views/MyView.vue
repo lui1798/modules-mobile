@@ -9,14 +9,13 @@
       :isToTop="true"
     >
       [我是内容区xxxxxxxxxxxx]
-      <n22-button @click="goLink()">跳转第二个页面</n22-button>
     </al-content>
   </div>
 </template>
 
 <script>
 //import { mapState, mapActions } from "vuex";//引入组件样例--★★此处为引入vuex推荐此方法引入vuex的各个方法属性使用
-import { AllHead, Content, Button } from "al-mobile";
+import { AllHead, Content } from "al-mobile";
 export default {
   name: "my-module-my-view", //使用xx-xx-xx命名方式具体看操作文档
   props: {
@@ -28,8 +27,7 @@ export default {
   components: {
     //[xxxx.name]: xxx,//引入组件样例如此
     [AllHead.name]: AllHead,
-    [Content.name]: Content,
-    [Button.name]: Button
+    [Content.name]: Content
   },
   computed: {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
@@ -60,9 +58,6 @@ export default {
     //...mapMutations([//提交vuex-state更改样例
     //    'USER_INFO',
     //]),
-    goLink() {
-      this.$router.push("/myModule/firstView");
-    }
   }
 };
 </script>

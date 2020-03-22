@@ -49,7 +49,7 @@ exports.getPages = function() {
       `${buildModule}Index` || "commonIdex"
     ]
   };
-  // logger.log("输出pages " + JSON.stringify(pages));
+  logger.log("输出pages " + JSON.stringify(pages));
   return pages;
 };
 

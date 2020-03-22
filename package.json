@@ -22,7 +22,7 @@
     "prod": "npm run build:codedata && node build/service/my-service.js build --mode prod"
   },
   "dependencies": {
-    "al-mobile": "0.0.11",
+    "al-mobile": "0.0.12",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "js-md5": "^0.7.3",

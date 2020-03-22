@@ -191,13 +191,18 @@ function callback() {
   // demo,test,login,home,center,insured,messageNoti,train
   //注：search组件中引入了train的路由，所以train模块此处有点特殊。
   require([
-    // @a_init<#    "./demo",    "./home",/* @init<%    "./${moduleKebabUpper}",%> */// @a_end#>
+    // @a_init<#
+/* @init<%    "./${moduleKebabUpper}",%> */
+// @a_end#>
   ], (
-    // @b_init<#      demo,      home,/* @init<%      ${moduleKebabUpper},%> */// @b_end#>
+    // @b_init<#
+/* @init<%      ${moduleKebabUpper},%> */
+// @b_end#>
   ) => {
-    console.log("%c >>>>>>>>>>", "color:orange;", demo);
     router.addRoutes([
-      // @c_init<#        ...demo.default,        ...home.default,/* @init<%        ...${moduleKebabUpper}.default,%> */// @c_end#>
+      // @c_init<#
+/* @init<%        ...${moduleKebabUpper}.default,%> */
+// @c_end#>
     ]);
     router.addRoutes([{ path: "*", redirect: "/404", hidden: true }]);
   }).catch(err => {
