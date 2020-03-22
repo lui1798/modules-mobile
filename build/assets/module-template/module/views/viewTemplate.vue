@@ -11,6 +11,7 @@ date: 2014-12-01
       :tabs="tabs"
       :isMescrollDown="true"
       :isToTop="true"
+      :needSwiper="false"
     >
       [我是内容区xxxxxxxxxxxx]
     </al-content>

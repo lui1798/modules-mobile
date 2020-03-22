@@ -1,28 +1,41 @@
----
-title: 页面模版
-date: 2014-12-01
----
 <template>
-  <div class="{{moduleKebabUpper}}-{{viewName}}">
-    <al-all-head></al-all-head>
+  <div class="demo-tab-list">
+    <al-all-head>
+      <div slot="head_bottom">
+        <n22-tab-bar
+          ref="listMenu"
+          v-model="curIndex"
+          :items="tabs"
+          :maxLength="5"
+          fill-color="#FC7353"
+          font-color="#000"
+          secMenuAnm="n22-base-slide-right"
+        >
+        </n22-tab-bar>
+      </div>
+    </al-all-head>
     <al-content
-      class="{{moduleKebabUpper}}-{{viewName}}-content"
-      ref="insureMessage"
+      class="demo-tab-list-content"
+      v-model="curIndex"
+      ref="listSwiper"
+      :swiperTop="44"
       :tabs="tabs"
       :isMescrollDown="true"
       :isToTop="true"
-      :needSwiper="false"
+      isMescrollLoadList
     >
-      [我是内容区xxxxxxxxxxxx]
+      <div v-for="(item, i) in 100" :key="i">
+        [我是内容区xxxxxxxxxxxx]
+      </div>
     </al-content>
   </div>
 </template>
 
 <script>
 //import { mapState, mapActions } from "vuex";//引入组件样例--★★此处为引入vuex推荐此方法引入vuex的各个方法属性使用
-import { AllHead, Content } from "al-mobile";
+import { AllHead, Content, TabBar } from "al-mobile";
 export default {
-  name: "{{moduleNameVal}}-{{viewName}}", //使用xx-xx-xx命名方式具体看操作文档
+  name: "tab-list-demo", //使用xx-xx-xx命名方式具体看操作文档
   props: {
     //headBottom: {//props定义样例
     //   type: Boolean,
@@ -32,23 +45,33 @@ export default {
   components: {
     //[xxxx.name]: xxx,//引入组件样例如此
     [AllHead.name]: AllHead,
-    [Content.name]: Content
+    [Content.name]: Content,
+    [TabBar.name]: TabBar
   },
   computed: {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
   },
   mounted() {
-    console.log("%c {{viewName}}>生命周期>mounted", "color:green;", "");
+    console.log("%c tab-list>生命周期>mounted", "color:green;", "");
   },
   watch: {},
   data() {
     return {
+      curIndex: 0,
       tabs: [
         //content组件对象
         {
-          label: "默认单个列表不展示",
+          label: "aaaa",
           name: 0,
-          listType: "1",
+          mescroll: null,
+          list: [],
+          isListInit: false,
+          isMescrollUp: true,
+          upCallbackFun: ""
+        },
+        {
+          label: "bbbb",
+          name: 1,
           mescroll: null,
           list: [],
           isListInit: false,
@@ -68,8 +91,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.{{moduleKebabUpper}}-{{viewName}} {
-  .{{moduleKebabUpper}}-{{viewName}}-content {
+.demo-tab-list {
+  .demo-tab-list-content {
   }
 }
 </style>

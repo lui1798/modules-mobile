@@ -54,6 +54,7 @@ module.exports = class Service {
   }
 
   init (name,mode = process.env.VUE_CLI_MODE) {
+    console.log("%c namenamenamenamename","color:#00CD00",name)
     if (this.initialized && name!="build") {
       return
     }

@@ -13,5 +13,10 @@
         "name": "item1-2",
         "title": "goTo",
         "handle": "/demo/demoDetail/?nav=go-to-demo"
+    },
+    {
+        "name": "item1-3",
+        "title": "tabList",
+        "handle": "/demo/demoDetail/?nav=tab-list-demo"
     }
 ]

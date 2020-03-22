@@ -9,6 +9,12 @@
       :isToTop="true"
     >
       <n22-button @click="goToFun">模块之间跳转</n22-button>
+      <n22-button @click="sss = !sss">动画</n22-button>
+      <transition name="n22-base-slide-up">
+        <div v-if="sss">
+          xxxxx
+        </div>
+      </transition>
     </al-content>
   </div>
 </template>
@@ -40,6 +46,7 @@ export default {
   watch: {},
   data() {
     return {
+      sss: false,
       tabs: [
         //content组件对象
         {

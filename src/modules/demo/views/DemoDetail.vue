@@ -11,8 +11,14 @@ import createDemoModule from "../components/create-demo-module";
 import ActionBarDemo from "../components/actionBar/ActionBarDemo";
 import NativeDemo from "../components/native/NativeDemo";
 import GotoDemo from "../components/goTo/GotoDemo";
+import TabList from "../components/tabList/TabList";
 
 export default {
-  ...createDemoModule("demo-demo-detail", [ActionBarDemo, NativeDemo, GotoDemo])
+  ...createDemoModule("demo-demo-detail", [
+    ActionBarDemo,
+    NativeDemo,
+    GotoDemo,
+    TabList
+  ])
 };
 </script>

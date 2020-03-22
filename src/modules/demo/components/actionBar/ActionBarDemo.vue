@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <al-all-head title="action-bar" :headBottom="true"></al-all-head>
-    <al-content>
+    <al-content :needSwiper="false">
       <n22-field ref="myinput" :isOnlyErrorLine="true">
         <n22-input-item
           title="简单输入"

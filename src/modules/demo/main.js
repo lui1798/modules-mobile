@@ -33,6 +33,7 @@ Vue.use(require("vue-wechat-title"));
 //自定义组件库全局样式
 import "@/assets/css/base.scss";
 import "@/assets/css/normalize.css";
+import '@/assets/css/base-translate.scss'
 
 /*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓--导航插件--[保存游览历史的页面数据]--↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
 Vue.use(Navigation, {
