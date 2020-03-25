@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no,viewport-fit=cover">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %>pppp</title>
+    <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
     <noscript>
@@ -18,7 +18,7 @@
     <script src="https://unpkg.com/vuex@3.1.2"></script> -->
     <% if(process.env.NODE_ENV==='production'){htmlWebpackPlugin.options.cdn.js.forEach(item => {%>
     <script src="<%= item %>"></script><%})}%>
-    <div id="app"></div>
+    <div id="proposal-book-app"></div>
     <!-- built files will be auto injected -->
   </body>
 </html>

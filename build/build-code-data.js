@@ -4,7 +4,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   mode: "development", //打包为开发模式
-  entry: "./src/modules/common/data/codedata/index.js", //入口文件,从项目根目录指定
+  entry: "./modules/common/data/codedata/index.js", //入口文件,从项目根目录指定
   output: {
     //输出路径和文件名，使用path模块resolve方法将输出路径解析为绝对路径
     // libraryTarget: 'window',

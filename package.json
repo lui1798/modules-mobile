@@ -22,10 +22,11 @@
     "prod": "npm run build:codedata && node build/service/my-service.js build --mode prod"
   },
   "dependencies": {
-    "al-mobile": "0.0.12",
+    "al-mobile": "0.0.13",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "js-md5": "^0.7.3",
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
     "vue": "^2.6.11",

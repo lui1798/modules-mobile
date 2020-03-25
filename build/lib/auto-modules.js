@@ -18,12 +18,12 @@ const fs = require("fs"); // 文件模块
  * 获取模块配置pages
  */
 exports.getPages = function() {
-  let entry = `src/modules/${buildModule}/main.js`; // 入口
-  let template = `src/modules/${buildModule}/html/index.html`; // 模版
+  let entry = `modules/${buildModule}/main.js`; // 入口
+  let template = `modules/${buildModule}/html/index.html`; // 模版
   // 如果模块不存在自己的入口那么取公用的入口main.js
   if (!fs.existsSync(entry)) {
     logger.log("模块不存在自己的入口那么取公用的入口main.js");
-    entry = "src/modules/common/main.js";
+    entry = "modules/common/main.js";
   }
   // 如果模块不存在自己的模版那么取公用的页面模版
   if (!fs.existsSync(template)) {

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Vue from "vue";
 import Router from "vue-router";
-import store from "@m/{{moduleKebabUpper}}/vuex";
+import store from "@m/proposalBook/vuex";
 import NProgress from "nprogress";
 NProgress.configure({ showSpinner: false });
 
@@ -20,7 +20,7 @@ const router = new Router({
           "color:blue;",
           window.globalConfig.platform
         );
-        return "{{moduleKebabUpper}}";
+        return "proposalBook";
       },
       meta: {
         title: "保险商城测试",
@@ -108,12 +108,12 @@ router.afterEach((to, from) => {
 
 function callback() {
   require([
-    "./{{moduleKebabUpper}}"
+    "./proposalBook"
   ], (
-    {{moduleKebabUpper}}
+    proposalBook
   ) => {
     router.addRoutes([
-      ...{{moduleKebabUpper}}.default
+      ...proposalBook.default
     ]);
     router.addRoutes([{ path: "*", redirect: "/404", hidden: true }]);
   }).catch(err => {

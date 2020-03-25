@@ -17,7 +17,7 @@ const logger = require('./lib/logger') //自定义工具-用于日志打印
 // path
 const CWD = process.cwd()
 const templatePath = path.resolve(CWD, './build/assets/module-template')
-const MODULE_PATH = path.resolve(CWD, './src/modules')
+const MODULE_PATH = path.resolve(CWD, './modules')
 const MODULE_ENV_LOCAL = path.resolve(CWD, './.env.local')
 const MODULE_ENV_INT = path.resolve(CWD, './.env.int')
 const MODULE_ENV_UAT = path.resolve(CWD, './.env.uat')
@@ -167,7 +167,7 @@ function checkFile(dir, file, answers) {
 }
 
 function sync(answers) {
-  const newRouterjs = path.resolve(CWD, `./src/routers/${answers.moduleKebabUpper}.js`)
+  // const newRouterjs = path.resolve(CWD, `./src/routers/${answers.moduleKebabUpper}.js`)
   return Promise.all([
     // syncToFile(answers,MODULE_ENV_LOCAL,1),//#### 2、配置环境变量，修改环境变量文件（新增新模块的配置）
     // syncToFile(answers,MODULE_ENV_INT,1),
@@ -180,13 +180,13 @@ function sync(answers) {
   ]).then(() =>answers)
 }
 function syncRouter(answers) {
-  const newRouterjs = path.resolve(CWD, `./src/modules/${answers.moduleName}/routers/${answers.moduleName}.js`)
+  const newRouterjs = path.resolve(CWD, `./modules/${answers.moduleName}/routers/${answers.moduleName}.js`)
   return Promise.all([
     answers.isCreateRouter=='true'&&syncToFile(answers,newRouterjs,3),//#### 3、同步router-children
   ]).then(() =>answers)
 }
 function syncVuex(answers) {
-  const newRouterjs = path.resolve(CWD, `./src/modules/${answers.moduleName}/vuex/${answers.moduleName}.js`)
+  const newRouterjs = path.resolve(CWD, `./modules/${answers.moduleName}/vuex/${answers.moduleName}.js`)
   return Promise.all([
     syncVuexToFile(answers,newRouterjs,2),// 替换vuex js
   ]).then(() =>answers)
@@ -442,8 +442,8 @@ function dealViewAnswers(answersFirst,answers) {
     moduleKebabUpper: changeKebabToCamel(answers.moduleName),//首字母小写的驼峰 myExample
     webpackChunkName: '/* webpackChunkName: "'+changeKebabToCamel(answers.moduleName)+changeKebabToCamel(answers.viewName)+'" */',//import引入的webpackChunkName
     routerName: changeKebabToCamel(answers.moduleName) + upperFirst(changeKebabToCamel(answers.viewName)), //子路由name
-    // VIEW_PATH: path.resolve(CWD, `./src/modules/${answers.moduleName}/views/`),//需要创建的页面所对应的path
-    dest:  path.resolve(CWD, `./src/modules/${answers.moduleName}/views`),//需要创建的页面所对应的path
+    // VIEW_PATH: path.resolve(CWD, `./modules/${answers.moduleName}/views/`),//需要创建的页面所对应的path
+    dest:  path.resolve(CWD, `./modules/${answers.moduleName}/views`),//需要创建的页面所对应的path
   })
   return answers;
 }
@@ -452,7 +452,7 @@ function dealVuexAnswers(answersFirst,answers) {
     template: createType.filter((v)=> v.key===answersFirst.template)[0],// 创建type
     vuexStateKebabUpper: changeKebabToCamel(answers.vuexState),// 首字母小写的驼峰 myExample
     vuexType: String.prototype.toUpperCase.call(changeKebabToNull(answers.vuexState)),// 小写 -转 MYEXAMPLE
-    VUEX_PATH: path.resolve(CWD, `./src/modules/${answers.moduleName}/vuex/${answers.moduleName}.js`),//需要创建的页面所对应的path
+    VUEX_PATH: path.resolve(CWD, `./modules/${answers.moduleName}/vuex/${answers.moduleName}.js`),//需要创建的页面所对应的path
   })
   console.log("%c dealVuexAnswers","color:#00CD00",answers)
   return answers;

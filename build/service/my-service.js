@@ -72,7 +72,7 @@ const dealRun = function() {
           chalk.bgRed.black(errorModules) +
           ",请检查日志并重新打相关模块包！"
       );
-    process.exit();
+    // process.exit();
   }
 };
 const run = function() {
@@ -81,7 +81,7 @@ const run = function() {
       " >>>>>>>>>>> 开始打包模块" + getBuildModuleList()[i] + " >>>>>>>>>>>"
     )
   );
-  let entryMoName = `src/modules/${getBuildModuleList()[i]}`; // 模块文件路径
+  let entryMoName = `modules/${getBuildModuleList()[i]}`; // 模块文件路径
   // 检查是否存在当前模块
   if (getBuildModuleList()[i] && !fs.existsSync(entryMoName)) {
     error(
@@ -112,7 +112,7 @@ if (command === "build" || command === "lint") {
 } else if (command === "serve") {
   const json = require(COMPONENT_JSON);
   let startModule = getBuildModuleList()[0] || "";
-  let entryMoName = `src/modules/${startModule}`; // 模块文件路径
+  let entryMoName = `modules/${startModule}`; // 模块文件路径
   // 检查是否存在当前模块
   if (startModule) {
     let isI = json[1].list.findIndex(mo => mo.name === startModule);
@@ -154,26 +154,3 @@ if (command === "build" || command === "lint") {
     process.exit(1);
   });
 }
-
-// exec("v-cli-service build", (error, stdout, stderr) => {
-//   if (error) {
-//     console.error(`执行出错: ${error}`);
-//     return;
-//   }
-//   console.log(`stdout: ${stdout}`);
-//   console.log(`stderr: ${stderr}`);
-// });
-// exec(
-//   "node build/init-module.js env=int select=default",
-//   (error, stdout, stderr) => {
-//     if (error) {
-//       console.error(`执行出错: ${error}`);
-//       return;
-//     }
-//     console.log(`stdout: ${stdout}`);
-//     console.log(`stderr: ${stderr}`);
-//   }
-// );
-
-// const shellJs = require("shelljs");
-// shellJs.exec("node build/init-module.js env=int select=default");

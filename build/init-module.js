@@ -15,7 +15,7 @@ const npmParams = require('./lib/npm-params') //获取打包命令
 
 // path
 const CWD = process.cwd()
-const MODULE_PATH = path.resolve(CWD, './src/modules/common/routers')
+const MODULE_PATH = path.resolve(CWD, './modules/common/routers')
 
 /**
  * 创建页面view
@@ -30,9 +30,9 @@ function initRouterIndex(answers) {
 }
 
 function syncRouter(answers) {
-  const RouterIndexjs = path.resolve(CWD, `./src/modules/common/routers/index.js`)
+  const RouterIndexjs = path.resolve(CWD, `./modules/common/routers/index.js`)
   return Promise.all([
-    syncToplatform(answers, path.resolve(CWD, `./src/modules/common/main.js`)), //#### 1、修改syncToplatform
+    syncToplatform(answers, path.resolve(CWD, `./modules/common/main.js`)), //#### 1、修改syncToplatform
     syncToFile(answers, RouterIndexjs, true), //#### 2、同步router-children
     logger.success("模块初始化完成!!!")
   ]).then(() => answers)
