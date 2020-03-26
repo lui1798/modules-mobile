@@ -31,7 +31,7 @@
     "modules/**/*.{vue,js,jsx,json,css,scss,md}": [
       "eslint --fix --ext .js,.vue",
       "prettier --write",
-      "git add"
+      "git commit"
     ]
   },
   "dependencies": {
