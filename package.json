@@ -15,11 +15,18 @@
     "lint": "node build/service/my-service.js lint",
     "shell": "npm run build:codedata && node build/init-module.js env=int select=yes && node build/shell/shell.js",
     "myserve": "node build/service/my-service.js",
+    "precommit": "lint-staged",
     "dev": "node build/service/my-service.js serve --mode dev",
     "int": "npm run build:codedata && node build/service/my-service.js build --mode int",
     "uat": "npm run build:codedata && node build/service/my-service.js build --mode uat",
     "sta": "npm run build:codedata && node build/service/my-service.js build --mode sta",
     "prod": "npm run build:codedata && node build/service/my-service.js build --mode prod"
+  },
+  "lint-staged": {
+    "modules/**/*.{vue,js,jsx,json,css,scss,md}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "dependencies": {
     "al-mobile": "0.0.15",
@@ -56,6 +63,8 @@
     "git-user-email": "^0.2.2",
     "git-user-name": "^2.0.0",
     "handlebars": "^4.7.3",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.9",
     "metalsmith": "^2.3.0",
     "mockjs": "^1.1.0",
     "postcss-aspect-ratio-mini": "^1.0.1",

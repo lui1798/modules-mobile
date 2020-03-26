@@ -4,6 +4,7 @@ const logger = require("../lib/logger"); // 自定义工具-用于日志打印
 const path = require("path");
 // path
 const CWD = process.cwd();
+const MODULE_PATH = path.resolve(CWD, "./modules");
 const COMPONENT_JSON = path.resolve(CWD, "./build/assets/modules.json");
 const { semver, done, info, error } = require("@vue/cli-shared-utils");
 const requiredVersion = require("../../package.json").engines.node;
@@ -58,9 +59,9 @@ let i = 0;
 process.env.myModules = 0;
 let errorModules = [];
 let successModules = [];
-const dealRun = function() {
+const dealRun = function(modulels) {
   i++;
-  if (i < getBuildModuleList().length) {
+  if (i < modulels.length) {
     process.env.myModules = i;
     run();
   } else {
@@ -76,33 +77,47 @@ const dealRun = function() {
   }
 };
 const run = function() {
+  let modulels = [];
+  if (command === "lint") {
+    const json = require(COMPONENT_JSON);
+    for (let i = 0; i < json[1].list.length; i++) {
+      const mo = json[1].list[i];
+      if (mo.name !== "common") modulels.push(mo.name);
+    }
+  } else if (command === "build") {
+    modulels = getBuildModuleList();
+  }
   console.log(
     chalk.bgCyan.black(
-      " >>>>>>>>>>> 开始打包模块" + getBuildModuleList()[i] + " >>>>>>>>>>>"
+      ` >>>>>>>>>>> 开始${command === "lint" ? "检查" : "打包"}模块 ${
+        modulels[i]
+      } >>>>>>>>>>>`
     )
   );
-  let entryMoName = `modules/${getBuildModuleList()[i]}`; // 模块文件路径
+  if (modulels.length === 0) {
+    error(`请输入打包模块，正确打包命令如下:`);
+    logger.log("npm run sta -m-demo,home -p-web");
+  }
+  let entryMoName = `modules/${modulels[i]}`; // 模块文件路径
   // 检查是否存在当前模块
-  if (getBuildModuleList()[i] && !fs.existsSync(entryMoName)) {
+  if (modulels[i] && !fs.existsSync(entryMoName)) {
     error(
-      `不存在当前${
-        getBuildModuleList()[i]
-      }运行模块，请检查打包命令中模块名称是否正确，正确打包命令如下:`
+      `不存在当前${modulels[i]}运行模块，请检查打包命令中模块名称是否正确，正确打包命令如下:`
     );
     logger.log("npm run sta -m-demo,home -p-web");
-    errorModules.push(getBuildModuleList()[i]);
-    dealRun();
+    errorModules.push(modulels[i]);
+    dealRun(modulels);
   }
   myservice
     .run(command, args, rawArgv)
     .then(() => {
-      successModules.push(getBuildModuleList()[i]);
-      dealRun();
+      successModules.push(modulels[i]);
+      dealRun(modulels);
     })
     .catch(err => {
       error(err);
-      errorModules.push(getBuildModuleList()[i]);
-      dealRun();
+      errorModules.push(modulels[i]);
+      dealRun(modulels);
       // process.exit(1);
     });
 };
