@@ -22,9 +22,14 @@
     "sta": "npm run build:codedata && node build/service/my-service.js build --mode sta",
     "prod": "npm run build:codedata && node build/service/my-service.js build --mode prod"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged"
+    }
+  },
   "lint-staged": {
     "modules/**/*.{vue,js,jsx,json,css,scss,md}": [
-      "eslint --fix --ext .js,.vue modules",
+      "eslint --fix --ext .js,.vue",
       "prettier --write",
       "git add"
     ]

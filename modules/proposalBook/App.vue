@@ -176,8 +176,7 @@ export default {
       }
     },
     getUserInfo(value) {
-      console.log("%c 监听到 getUserInfo 改变xxxx", "color:#FF00FF;",   value    );
-      console.log("%c 监听到 getUserInfo 改变xxxx", "color:#FF00FF;",   宝贝宝贝);
+      console.log("%c 监听到 getUserInfo 改变xxxx", "color:#FF00FF;",      value);
       if (!window.utils.utilsPlugin.isEmptyObject(value)) {
         this.showlogin = false;
       }
