@@ -12,7 +12,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "node build/service/my-service.js lint",
+    "lint": "eslint --ext .js,.vue modules",
     "shell": "npm run build:codedata && node build/init-module.js env=int select=yes && node build/shell/shell.js",
     "myserve": "node build/service/my-service.js",
     "precommit": "lint-staged",
@@ -24,7 +24,8 @@
   },
   "lint-staged": {
     "modules/**/*.{vue,js,jsx,json,css,scss,md}": [
-      "eslint --fix",
+      "eslint --fix --ext .js,.vue modules",
+      "prettier --write",
       "git add"
     ]
   },
