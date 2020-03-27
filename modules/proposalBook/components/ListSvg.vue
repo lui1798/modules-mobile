@@ -45,11 +45,11 @@ export default {
     typeSvg: {
       //props定义样例
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   components: {
-    [ContentLoader.name]: ContentLoader
+    [ContentLoader.name]: ContentLoader,
   },
   computed: {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
@@ -64,7 +64,7 @@ export default {
     //]),
   },
   mounted() {},
-  watch: {}
+  watch: {},
 };
 </script>
 

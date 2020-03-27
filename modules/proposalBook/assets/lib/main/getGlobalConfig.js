@@ -7,11 +7,7 @@ let globalConfig = {
   animation: true, // 页面切换动画
   isMock: process.env.VUE_APP_DEBUG_MOCK == 2, // mock模式
   platform: "web", // web、native、wechat、phoneWeb
-  runningEnvironment: window.cordova
-    ? "cordova"
-    : window.AlipayJSBridge
-    ? "AlipayJSBridge"
-    : "N22JSBridge",
+  runningEnvironment: window.cordova ? "cordova" : window.AlipayJSBridge ? "AlipayJSBridge" : "N22JSBridge",
   timeout: 1000 * 30, // 默认http请求超时时间30秒
   loginType: "extraExtCheck", // 登录方式--extraExtCheck
   from: "N22", // header--from
@@ -23,7 +19,7 @@ let globalConfig = {
     //本地保存的版本号会不会被更新掉 vXX.XX.XX 第一个表示大版本升级 第二个是小版本升级 第三个是bug修复的
     native: process.env.VUE_APP_VERSION_NATIVE_ANDROID, // 原生门户INT V1.001.002  UAT V1.001.002
     plist: process.env.VUE_APP_VERSION_NATIVE_IOS, // iOS原生门户INT V1.001.004  UAT V1.001.001
-    all: process.env.VUE_APP_VERSION_H5 // H5升级INT V1.001.014  UAT V1.001.009
+    all: process.env.VUE_APP_VERSION_H5, // H5升级INT V1.001.014  UAT V1.001.009
   },
   httpEnvironment: httpEnvironment,
   downloadApp_Android: "",
@@ -34,7 +30,7 @@ let globalConfig = {
   uploadFileGetTokenConfigId: `ifp-train-service-config-${
     httpEnvironment == "local" ? "int" : httpEnvironment || "int"
   }`,
-  keyboardDescription: process.env.VUE_APP_NAME + "专属安全键盘"
+  keyboardDescription: process.env.VUE_APP_NAME + "专属安全键盘",
 };
 //@module模块占位符
 if (httpEnvironment === "local") {

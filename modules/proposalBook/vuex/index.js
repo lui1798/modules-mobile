@@ -11,8 +11,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   modules: {
     common,
-    proposalBook
-  }
+    proposalBook,
+  },
   // strict: debug,
   // plugins: debug ? [createLogger()] : []
 });

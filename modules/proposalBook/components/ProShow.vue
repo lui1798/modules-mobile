@@ -1,41 +1,58 @@
 <template>
   <div class="proposalBook-pro-show">
-    <div class="pro-title">
-      <div>{{ masterProData[0] && masterProData[0].name }}</div>
-      <div v-show="isShow">
-        <span @click="deletePro(masterProData[0])">删除</span>
-        <span>｜</span>
-        <span @click="changePro(masterProData[0])">修改</span>
+    <div v-if="isEdit">
+      <div class="pro-title">
+        <div>{{ masterProData[0] && masterProData[0].name }}</div>
+        <div v-show="isShow">
+          <span @click="deletePro(masterProData[0])">删除</span>
+          <span>｜</span>
+          <span @click="changePro(masterProData[0])">修改</span>
+        </div>
       </div>
+      <div class="pro-amount">首期保费：{{ masterProData[0].amount }}元</div>
     </div>
-    <div class="pro-amount">首期保费：{{ masterProData[0].amount }}元</div>
     <div class="ph-area" v-if="isShow">
       <div class="ph-area-header">
-        <span>险种</span>
-        <span>保额</span>
-        <span>保费</span>
-        <span>交费期</span>
+        <span v-for="(item, i) in tableTitle" :key="i">
+          {{ item }}
+        </span>
       </div>
       <div>
         <div v-for="(item, i) in fjProData" :key="i" class="ph-area-data">
-          <div v-if="item.isCheck">
+          <div v-if="item.isCheck && i < showLength">
             <div class="area">
-              <span>{{ item.name }}</span>
+              <span>
+                <slot name="first" :item="item">
+                  {{ item.name }}
+                </slot>
+              </span>
             </div>
             <div class="area">
-              <span>{{ item.amount }}</span>
+              <span>
+                <slot name="second" :item="item">
+                  {{ item.amount }}
+                </slot>
+              </span>
             </div>
             <div class="area">
-              <span>{{ item.premium }}</span>
+              <span>
+                <slot name="three" :item="item">
+                  {{ item.premium }}
+                </slot>
+              </span>
             </div>
             <div class="area">
-              <span>{{ item.nj }}</span>
+              <span>
+                <slot name="four" :item="item">
+                  {{ item.jfqj }}
+                </slot>
+              </span>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="pro-add">
+    <div v-if="isEdit" class="pro-add">
       <n22-button @click="addPro" type="primary" icon="add_pro" plain inline>
         新增附加险
       </n22-button>
@@ -49,32 +66,44 @@ import { AllHead, Content, Button } from "al-mobile";
 export default {
   name: "proposal-book-pro-show", //使用xx-xx-xx命名方式具体看操作文档
   props: {
-    masterProData: {
-      // props定义样例
+    showLength: {
+      type: Number,
+      default: 999,
+    },
+    isEdit: {
+      type: Boolean,
+      default: false,
+    },
+    tableTitle: {
       type: Array,
       default: () => {
         return [];
-      }
+      },
+    },
+    masterProData: {
+      type: Array,
+      default: () => {
+        return [];
+      },
     },
     fjProData: {
-      // props定义样例
       type: Array,
       default: () => {
         return [];
-      }
-    }
+      },
+    },
   },
   components: {
     //[xxxx.name]: xxx,//引入组件样例如此
     [AllHead.name]: AllHead,
     [Content.name]: Content,
-    [Button.name]: Button
+    [Button.name]: Button,
   },
   computed: {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
     isShow() {
       return this.fjProData.findIndex(item => item.isCheck === true) > -1;
-    }
+    },
   },
   mounted() {
     console.log("%c pro-show>生命周期>mounted", "color:green;", "");
@@ -96,8 +125,8 @@ export default {
     },
     deletePro(item) {
       this.$emit("deletePro", item);
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -3,12 +3,7 @@
     <!-- 手写签名测试区 -->
     <!-- <n22-sign ref="signcfun" :data-params="itemObject"></n22-sign> -->
     <!-- 头部信息 -->
-    <al-all-head
-      leftText=" "
-      @click-left="goBack"
-      :zIndex="3"
-      title="链接已失效~ "
-    />
+    <al-all-head leftText=" " @click-left="goBack" :zIndex="3" title="链接已失效~ " />
     <al-content ref="invalid" :headBottom="false">
       <div class="invalid-content">
         <svg-icon icon-class="warning"></svg-icon>
@@ -33,14 +28,14 @@ export default {
   },
   components: {
     [AllHead.name]: AllHead, //引入组件样例如此
-    [Content.name]: Content
+    [Content.name]: Content,
   },
   computed: {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
   },
   data() {
     return {
-      message: "亲爱的用户，您访问的页面已失效，请联系您的销售人员！"
+      message: "亲爱的用户，您访问的页面已失效，请联系您的销售人员！",
     };
   },
   methods: {
@@ -50,10 +45,10 @@ export default {
     //]),
     goBack() {
       window.wx.closeWindow();
-    }
+    },
   },
   mounted() {},
-  watch: {}
+  watch: {},
 };
 </script>
 

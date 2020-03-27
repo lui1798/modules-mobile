@@ -1,4 +1,4 @@
-import address from "./address";
+// import address from "./address";
 import occupation from "./occupation";
 import certificateType from "./certificateType";
 import nativeModal from "./nativeModal";
@@ -10,10 +10,10 @@ import nationality from "./nationality";
 import education from "./education";
 import bank from "./bank";
 import nation from "./nation";
-import bankNameYBRZ from "./bankNameYBRZ";
+import product from "./product";
 
 export {
-  address,
+  // address,
   occupation,
   certificateType,
   nativeModal,
@@ -24,5 +24,5 @@ export {
   education,
   bank,
   nation,
-  bankNameYBRZ
+  product,
 };

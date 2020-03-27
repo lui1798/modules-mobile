@@ -9,8 +9,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    common
-  }
+    common,
+  },
   // strict: debug,
   // plugins: debug ? [createLogger()] : []
 });

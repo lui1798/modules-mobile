@@ -1,10 +1,7 @@
 <template>
   <div class="n22-proposal-book">
     <transition name="n22-base-fade">
-      <router-view
-        v-if="isShowRouterView"
-        class="n22-proposal-book-child-view"
-      ></router-view>
+      <router-view v-if="isShowRouterView" class="n22-proposal-book-child-view"></router-view>
     </transition>
   </div>
 </template>
@@ -27,6 +24,8 @@ export default {
   },
   mounted() {
     console.log("%c proposalBook-生命周期-mounted", "color:green;", "");
+    // window.StatusBar && window.StatusBar.overlaysWebView(false);
+    window.StatusBar && window.StatusBar.styleDefault();
     let _this = this;
     setTimeout(() => {
       _this.isShowRouterView = true;
@@ -35,7 +34,7 @@ export default {
   watch: {},
   data() {
     return {
-      isShowRouterView: false
+      isShowRouterView: false,
     };
   },
   methods: {
@@ -43,7 +42,7 @@ export default {
     //...mapMutations([//提交vuex-state更改样例
     //    'USER_INFO',
     //]),
-  }
+  },
 };
 </script>
 

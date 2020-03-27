@@ -2,11 +2,7 @@
   <!-- 培训列表模板 -->
   <div>
     <div class="common_list" v-if="dataList && dataList.length > 0">
-      <ul
-        @click="$emit('commonListGo', item)"
-        v-for="(item, $index) in dataList"
-        :key="item.id || $index"
-      >
+      <ul @click="$emit('commonListGo', item)" v-for="(item, $index) in dataList" :key="item.id || $index">
         <div v-if="!item.isDelete">
           <slot name="all" :item="item" :index="$index">
             <!-- 上总 -->
@@ -16,11 +12,7 @@
               <li>
                 <!-- <img src="static/images/train2/test/zhanwei.jpg"> -->
                 <img v-lazy="item.imgPath" />
-                <div
-                  v-if="item.istag"
-                  :style="{ top: '3.458vw', 'background-color': '#4091fb' }"
-                  class="common_status"
-                >
+                <div v-if="item.istag" :style="{ top: '3.458vw', 'background-color': '#4091fb' }" class="common_status">
                   已参加
                 </div>
                 <div v-if="item.isline" class="isline" style="">
@@ -58,15 +50,10 @@
                 </p>
                 <p v-if="$scopedSlots.top_right_three">
                   <!-- 上右3 -->
-                  <slot name="top_right_three" :item="item" :index="$index">
-                  </slot>
+                  <slot name="top_right_three" :item="item" :index="$index"> </slot>
                 </p>
                 <!-- 上右3-默认 -->
-                <span
-                  v-else
-                  class="top-price"
-                  :class="[item.money == '0' ? 'price_c' : 'price_c_no']"
-                >
+                <span v-else class="top-price" :class="[item.money == '0' ? 'price_c' : 'price_c_no']">
                   <span v-if="item.money != '0'" class="tag">¥</span>
                   <n22-amount
                     class="bottom_right_all_amount"
@@ -84,12 +71,7 @@
                 </span>
               </li>
             </slot>
-            <slot
-              v-if="$scopedSlots.bottom_all"
-              name="bottom_all"
-              :item="item"
-              :index="$index"
-            >
+            <slot v-if="$scopedSlots.bottom_all" name="bottom_all" :item="item" :index="$index">
               <!-- 上下分割线 -->
               <div class="cut_line"></div>
               <!-- 下 -->
@@ -124,13 +106,8 @@
                 </slot>
                 <!-- 下右总 -->
                 <slot name="bottom_right_all" :item="item" :index="$index">
-                  <span
-                    class="price"
-                    :class="[item.money == '0' ? 'price_c' : 'price_c_no']"
-                  >
-                    <span v-if="item.money != '0'" style="font-size: 12px;"
-                      >¥</span
-                    >
+                  <span class="price" :class="[item.money == '0' ? 'price_c' : 'price_c_no']">
+                    <span v-if="item.money != '0'" style="font-size: 12px;">¥</span>
                     <!-- <n22-amount
                       class="bottom_right_all_amount"
                       v-if="isInitNumAnm"
@@ -168,16 +145,16 @@ export default {
       type: Array,
       default: () => {
         return [];
-      }
+      },
     },
     swiperIndex: {
       //   type: String,
-      default: "0"
-    }
+      default: "0",
+    },
   },
   components: {
     //[xxxx.name]: xxx,//引入组件样例如此
-    [Amount.name]: Amount
+    [Amount.name]: Amount,
     // [ListSvg.name]: ListSvg
   },
   computed: {
@@ -208,14 +185,14 @@ export default {
             code: "2",
             des: "通过",
             top: "3.458vw",
-            bgcorlor: "#12B887"
+            bgcorlor: "#12B887",
           },
           {
             code: "3",
             des: "未通过",
             top: "3.458vw",
-            bgcorlor: "#ccc"
-          }
+            bgcorlor: "#ccc",
+          },
         ];
         for (let index = 0; index < codeStatusList.length; index++) {
           const el = codeStatusList[index];
@@ -230,12 +207,12 @@ export default {
         const codeStatusList = [
           {
             code: "0",
-            des: "线上"
+            des: "线上",
           },
           {
             code: "1",
-            des: "线下"
-          }
+            des: "线下",
+          },
         ];
         for (let index = 0; index < codeStatusList.length; index++) {
           const el = codeStatusList[index];
@@ -244,13 +221,13 @@ export default {
           }
         }
       };
-    }
+    },
   },
   filters: {},
   data() {
     return {
       amountNum: 1000,
-      isInitNumAnm: true
+      isInitNumAnm: true,
     };
   },
   activated() {
@@ -266,7 +243,7 @@ export default {
       setTimeout(() => {
         this.isInitNumAnm = true;
       }, 300);
-    }
+    },
   },
   mounted() {
     console.log("%c this.$slots", "color:green;", this.$slots);
@@ -276,8 +253,8 @@ export default {
     swiperIndex(val) {
       console.log("%c idswiperIndex", "color:green;", val);
       this.initNumAnm();
-    }
-  }
+    },
+  },
 };
 </script>
 

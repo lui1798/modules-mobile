@@ -1,4 +1,5 @@
 import codemapping from "./codemapping";
+const __getAge = require("@t/getAge");
 // 码表data
 //******2020-01-02修改 codeData取不到值
 import codeData from "allCodeData";
@@ -13,11 +14,7 @@ import codeData from "allCodeData";
 //   });
 //******2020-01-02修改 codeData取不到值
 // require('allCodeData')
-console.log(
-  "%c commonCodeDatacommonCodeData",
-  "color:green;",
-  window.allCodeData
-);
+console.log("%c commonCodeDatacommonCodeData", "color:green;", window.allCodeData);
 // console.log("%c commonCodeDatacommonCodeData", "color:green;", allCodeData);
 
 const code = {};
@@ -33,19 +30,14 @@ code.getCodeData = function(item, retValue, type, product, value, whereFrom) {
   if (item) {
     if (
       item[type === "options" ? "optionList" : type] &&
-      !window.utils.utilsPlugin.isEmptyArray(
-        item[type === "options" ? "optionList" : type]
-      )
+      !window.utils.utilsPlugin.isEmptyArray(item[type === "options" ? "optionList" : type])
     ) {
       retValue[type] = item[type === "options" ? "optionList" : type];
     } else if (item.fieldCode) {
       if (product) {
         // 产品的码表取产品定义的返回数据
         if (codemapping[item.fieldCode] && codemapping[item.fieldCode][type]) {
-          if (
-            product[codemapping[item.fieldCode][type]] ||
-            product[codemapping[item.fieldCode][type]] == 0
-          ) {
+          if (product[codemapping[item.fieldCode][type]] || product[codemapping[item.fieldCode][type]] == 0) {
             retValue[type] = product[codemapping[item.fieldCode][type]];
           } else if (product[codemapping[item.fieldCode][type]] === undefined) {
             retValue[type] = codeData[codemapping[item.fieldCode][type]];
@@ -53,52 +45,33 @@ code.getCodeData = function(item, retValue, type, product, value, whereFrom) {
             retValue[type] = "";
           }
         } else if (product[item.fieldCode]) {
-          retValue[type] =
-            product[
-              type === "options" ? `${item.fieldCode}` : `${item.fieldCode}Code`
-            ];
+          retValue[type] = product[type === "options" ? `${item.fieldCode}` : `${item.fieldCode}Code`];
         } else if (codeData[item.fieldCode]) {
           // 非产品的码表没有映射直接取码表中的值
           if (typeof codeData[item.fieldCode] && type === "options") {
             retValue[type] = codeData[item.fieldCode];
           }
         } else {
-          console.log(
-            "%c codemapping不存在当前键值对",
-            "color:green;",
-            `${item.fieldCode}===${type}`
-          );
+          console.log("%c codemapping不存在当前键值对", "color:green;", `${item.fieldCode}===${type}`);
         }
       } else if (codemapping[item.fieldCode]) {
         // 非产品的码表先找映射码表
-        if (
-          typeof codemapping[item.fieldCode] === "string" &&
-          type === "options"
-        ) {
+        if (typeof codemapping[item.fieldCode] === "string" && type === "options") {
           retValue[type] = codeData[codemapping[item.fieldCode]];
         } else if (codemapping[item.fieldCode][type]) {
           retValue[type] = codeData[codemapping[item.fieldCode][type]];
-        } else if (
-          typeof codemapping[item.fieldCode] === "string" &&
-          type === "defaultValue"
-        ) {
+        } else if (typeof codemapping[item.fieldCode] === "string" && type === "defaultValue") {
           retValue[type] = item.defaultVal;
         } else {
           // console.log(`%c 未处理的if逻辑：当前code:${item.fieldCode}-type:${type}`,'color:red;','1、可能不影响当前流程。2、也可能是程序出错');
         }
       } else if (codeData[item.fieldCode]) {
         // 非产品的码表没有映射直接取码表中的值
-        if (
-          typeof codeData[item.fieldCode] === "string" &&
-          type === "options"
-        ) {
+        if (typeof codeData[item.fieldCode] === "string" && type === "options") {
           retValue[type] = codeData[item.fieldCode];
         } else if (codeData[item.fieldCode][type]) {
           retValue[type] = codeData[item.fieldCode][type];
-        } else if (
-          codeData[item.fieldCode] === "address" &&
-          type === "options"
-        ) {
+        } else if (codeData[item.fieldCode] === "address" && type === "options") {
           retValue[type] = codeData[item.fieldCode];
         } else {
           type === "options" && (retValue.options = codeData[item.fieldCode]);
@@ -112,22 +85,22 @@ code.getCodeData = function(item, retValue, type, product, value, whereFrom) {
           console.log(
             "%c 未匹配到相应的码表值：",
             "color:red;",
-            `3、可能是后台服务未配置${item.fieldCode}字段的映射码表数据，请检查返回的option码表数组`
+            `3、可能是后台服务未配置${item.fieldCode}字段的映射码表数据，请检查返回的option码表数组`,
           );
           // console.groupEnd()
           retValue.options = [
             {
               text: "测试1",
-              value: "T2019001"
+              value: "T2019001",
             },
             {
               text: "测试2",
-              value: "T2019002"
+              value: "T2019002",
             },
             {
               text: "出现此选项组--证明码表未取到正确值(△仅用于测试)",
-              value: "T2019003"
-            }
+              value: "T2019003",
+            },
           ];
         } else if (type === "defaultValue") {
           //  console.log('%c 未匹配到相应defaultValue的码表值：','color:red;',`1、可能是未配置${item.fieldCode}字段的映射码表defaultValue数据，请前往@/data/codedata/common 按说明进行相应的配置`);
@@ -143,35 +116,19 @@ code.getCodeData = function(item, retValue, type, product, value, whereFrom) {
   }
 };
 // 产品计算因子转换获取
-code.getProductCodeData = function(
-  retValue,
-  type,
-  value,
-  field,
-  item,
-  opten = "payFreq"
-) {
-  console.log(
-    "%c utils--field",
-    "color:green;",
-    retValue,
-    type,
-    value,
-    field,
-    item,
-    opten
-  );
+code.getProductCodeData = function(retValue, type, value, field, item, opten = "payFreq") {
+  console.log("%c utils--field", "color:green;", retValue, type, value, field, item, opten);
   if (!retValue) {
     retValue = {
       text: "",
-      value: ""
+      value: "",
     };
   } else if (retValue === "filter") {
     type = "text";
     retValue = {
       text: "",
       value: "",
-      type: "filter"
+      type: "filter",
     };
   }
   //  console.log(codeData.product[opten][value])
@@ -265,13 +222,7 @@ code.getProductCodeData = function(
   }
 };
 
-code.getCodeTextOrVal = function(
-  tv,
-  codeType,
-  getType = "text",
-  comType = "value",
-  fieldType
-) {
+code.getCodeTextOrVal = function(tv, codeType, getType = "text", comType = "value", fieldType) {
   let codeArray = [];
   if (fieldType === "200203") {
     //职业特殊处理
@@ -279,16 +230,14 @@ code.getCodeTextOrVal = function(
     codeType = "occupation";
   }
   if (codeType === "age") {
-    return window.utils.utilsPlugin.calcAge(tv);
+    return __getAge(tv);
   }
   if (codemapping[codeType]) {
     codeArray = codeData[codemapping[codeType]];
   } else if (codeData[codeType]) {
     codeArray = codeData[codeType];
   } else {
-    console.error(
-      `未匹配到<${codeType}>相应的码表值：请检查/src/data/codedata下是否存在<${codeType}>的option码表数组`
-    );
+    console.error(`未匹配到<${codeType}>相应的码表值：请检查/src/data/codedata下是否存在<${codeType}>的option码表数组`);
     return;
   }
   if (fieldType === "200202") {

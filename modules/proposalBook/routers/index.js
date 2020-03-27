@@ -98,12 +98,18 @@ router.beforeEach((to, from, next) => {
     if (window.globalConfig.platform === "wechat" && to.meta.title) {
       window.document.title = to.meta.title;
     }
+    setTimeout(() => {
+      store.commit("IS_SHOW_ROUTER_VIEW", false);
+    }, 600);
     NProgress.start();
     next();
   }
 });
 router.afterEach((to, from) => {
   NProgress.done();
+  setTimeout(() => {
+    store.commit("IS_SHOW_ROUTER_VIEW", true);
+  }, 10);
 });
 
 function callback() {

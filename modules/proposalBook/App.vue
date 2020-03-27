@@ -1,10 +1,11 @@
 <template>
-  <div
-    id="proposal-book-app"
-    ref="app"
-    class="nprogress-wrap app_class"
-    :class="_module"
-  >
+  <div id="proposal-book-app" ref="app" class="proposal-book-app nprogress-wrap app_class" :class="_module">
+    <al-all-head
+      v-if="common.isShowRouterView && transitionName === 'slide-in'"
+      :headBottom="false"
+      :zIndex="5"
+      :title="$route.meta.title"
+    />
     <transition :name="transitionName">
       <navigation>
         <router-view
@@ -21,15 +22,18 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import { AllHead } from "al-mobile";
 
 export default {
   name: "proposal-book",
   provide() {
     return {
-      reload: this.reload
+      reload: this.reload,
     };
   },
-  components: {},
+  components: {
+    [AllHead.name]: AllHead,
+  },
   data() {
     return {
       showlogin: false,
@@ -37,7 +41,7 @@ export default {
       transitionName: "",
       searchTransitionName: "n22-base-fade",
       isRouterAlive: true,
-      activeDate: ""
+      activeDate: "",
     };
   },
   created() {
@@ -51,7 +55,7 @@ export default {
   methods: {
     ...mapMutations([
       //提交vuex-state更改样例
-      "USER_INFO"
+      "USER_INFO",
     ]),
     //页面重载--用于页面不做跳转但是需要重渲染页面的情况（实现原理：利用v-if重新渲染）
     reload() {
@@ -60,7 +64,7 @@ export default {
       this.$nextTick(function() {
         this.isRouterAlive = true;
       });
-    }
+    },
   },
   computed: {
     ...mapState(["common"]),
@@ -79,39 +83,30 @@ export default {
     _module: {
       get: function() {
         if (
-          (window.utils.ui.isIPhoneX ||
-            window.utils.ui.isIPhoneXSMax ||
-            window.utils.ui.isIPhoneXR) &&
+          (window.utils.ui.isIPhoneX || window.utils.ui.isIPhoneXSMax || window.utils.ui.isIPhoneXR) &&
           window.globalConfig.platform === "native"
         ) {
           return "platform-ios-x";
         } else if (
-          (window.utils.ui.isIPhoneX ||
-            window.utils.ui.isIPhoneXSMax ||
-            window.utils.ui.isIPhoneXR) &&
+          (window.utils.ui.isIPhoneX || window.utils.ui.isIPhoneXSMax || window.utils.ui.isIPhoneXR) &&
           window.globalConfig.platform == "phoneWeb"
         ) {
           return "platform-ios-x-phoneWeb";
         } else if (
           window.navigator.platform === "iPhone" &&
-          (window.globalConfig.platform === "native" ||
-            window.globalConfig.platform == "phoneWeb")
+          (window.globalConfig.platform === "native" || window.globalConfig.platform == "phoneWeb")
         ) {
           return "platform-ios";
         } else {
           return "platform-android";
         }
-      }
-    }
+      },
+    },
   },
   mounted() {
     console.log("%c this.$route", "color:green;", this.$route);
     this.$navigation.on("forward", (to, from) => {
-      console.log(
-        "%c window.performance--TO",
-        "color:green;",
-        window.performance
-      );
+      console.log("%c window.performance--TO", "color:green;", window.performance);
       console.log("%c forward", "color:green;", to);
       console.log("%c forward", "color:green;", from);
       let toTra = to.route.meta.transition;
@@ -122,18 +117,12 @@ export default {
         (this.transitionName = "slide-in");
     });
     this.$navigation.on("back", (to, from) => {
-      console.log(
-        "%c window.performance--BACK",
-        "color:green;",
-        window.performance
-      );
+      console.log("%c window.performance--BACK", "color:green;", window.performance);
       console.log("%c back", "color:green;", to);
       console.log("%c back", "color:green;", from);
       let toTra = to.route.meta.transition;
       let fromTra = from.route.meta.transition;
-      window.globalConfig.animation &&
-      (toTra || fromTra) &&
-      typeof fromTra == "boolean"
+      window.globalConfig.animation && (toTra || fromTra) && typeof fromTra == "boolean"
         ? (this.transitionName = "slide-out")
         : (this.transitionName = "n22-base-slide-down");
     });
@@ -180,11 +169,26 @@ export default {
       if (!window.utils.utilsPlugin.isEmptyObject(value)) {
         this.showlogin = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 @import "./App";
+.proposal-book-app {
+  ::v-deep .n22-icon-back {
+    color: #ffba03;
+  }
+  ::v-deep .n22-nav-bar {
+    background-color: #ffffff;
+  }
+  ::v-deep .n22-nav-bar__title {
+    color: #333333;
+    font-size: 19px;
+  }
+  ::v-deep .size-xs span {
+    font-weight: 400;
+  }
+}
 </style>

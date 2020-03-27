@@ -58,6 +58,7 @@
 `@`: src/ 目录
 `@m`: modules/ 目录
 `@@`: modules/common/ 目录
+`@t`: modules/common/utils/tool 工具类目录
 `@g`: 根目录-即整个工程的根目录，可以直接由此访问 @g/modules（但是因为modules本身存在自己的别名，所以@g尽量减少是用，访问build目录下可以使用）
 
 # 注

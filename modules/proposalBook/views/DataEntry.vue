@@ -37,36 +37,37 @@
           @click="$_onClick"
         ></n22-radio-item>
         <n22-drop-select
+          class="my-birthday-c"
           v-model="insured.birthday"
           title="年龄"
           pickerTitle="生日(选填)"
+          arrow="calendar"
+          :itemObject="{ name: 'insured.birthday' }"
           :options="options"
           :isAppendTo="true"
+          selectDefaultValue="1998-01-01"
           is-show-required
           ispickerValue="生日(选填)"
-          data-vv-as="xxxx"
           type="date"
-          name="certificateType"
+          @changeData="$_changeData"
+          @onDatePickerConfirm="$_onPickerConfirm"
         ></n22-drop-select>
-        <!-- <n22-drop-select
-          v-model="modelDropSelectDate"
-          title="来了"
-          pickerTitle="请选择xxxx"
-          :options="options"
-          vvalidateModal=""
-          ispickerValue="请选择xxxx"
-          data-vv-as="xxxx"
-          type="date"
-          name="certificateType"
-          :isAppendTo="false"
-        ></n22-drop-select> -->
+        <n22-drop-select
+          class="my-age-c"
+          v-model="insured.age"
+          pickerTitle="请选择年龄"
+          :itemObject="{ name: 'insured.age' }"
+          :selectDefaultValue="30"
+          :options="ageOptions"
+          ispickerValue="请选择年龄"
+          type="single"
+          :isAppendTo="true"
+          @changeData="$_changeData"
+          @onPickerConfirm="$_onPickerConfirm"
+        ></n22-drop-select>
       </n22-field>
-      <n22-field class="holder-info-c" title="投保人信息">
-        <div
-          class="action-container"
-          slot="action"
-          @click="holderIsCheck = !holderIsCheck"
-        >
+      <n22-field class="holder-info-c" title="投保人信息" @headerClick="holderIsCheck = !holderIsCheck">
+        <div class="action-container" slot="action">
           <n22-icon :name="holderIsCheck ? 'checked' : 'check'"></n22-icon>
         </div>
         <transition name="n22-base-slide-down">
@@ -100,123 +101,129 @@
               @click="$_onClick"
             ></n22-radio-item>
             <n22-drop-select
+              class="my-birthday-c"
               v-model="holder.birthday"
               title="年龄"
               pickerTitle="生日(选填)"
+              arrow="calendar"
               :options="options"
-              :isAppendTo="false"
+              :isAppendTo="true"
               is-show-required
               ispickerValue="生日(选填)"
-              data-vv-as="xxxx"
               type="date"
-              name="certificateType"
             ></n22-drop-select>
-            <!-- <n22-drop-select
-              v-model="modelDropSelectDate"
-              title="来了"
-              pickerTitle="请选择xxxx"
-              :options="options"
-              vvalidateModal=""
-              ispickerValue="请选择xxxx"
-              data-vv-as="xxxx"
+            <n22-drop-select
+              class="my-age-c"
+              v-model="holder.age"
+              pickerTitle="请选择年龄"
+              :selectDefaultValue="18"
+              :options="ageOptions"
+              ispickerValue="请选择年龄"
               type="single"
-              name="certificateType"
-              :isAppendTo="false"
-            ></n22-drop-select> -->
+              :isAppendTo="true"
+            ></n22-drop-select>
           </div>
         </transition>
       </n22-field>
       <n22-field title="险种设置">
         <proposal-book-pro-show
+          :tableTitle="['险种', '保额', '保费', '交费期']"
           :masterProData="masterProData"
           :fjProData="fjProData"
           @addPro="$_addPro"
           @changePro="$_changePro"
           @deletePro="$_deletePro"
+          is-edit
         ></proposal-book-pro-show>
       </n22-field>
       <n22-field class="doc-info">
         <div class="doc-arrea">
-          <div>
+          <div @click="goWordShow">
             <img src="../assets/images/product_tk.png" />
             <span>产品条款</span>
           </div>
-          <div>
+          <div @click="goWordShow">
             <img src="../assets/images/product_sms.png" />
             <span>产品说明书</span>
           </div>
         </div>
       </n22-field>
-      <n22-action-bar class="action-bar-c" :actions="buttonArray">
-        <div class="price">
-          <span class="bar-text-desc">首年总保费:</span>
-          <span>
-            <n22-amount value="3000" has-separator :precision="2"></n22-amount>
-          </span>
-          <small>&nbsp;元</small>
-        </div>
-      </n22-action-bar>
     </al-content>
-    <n22-popup
-      v-model="isPopupShow"
-      position="bottom"
-      @maskClick="riskMaskClick"
-      class="pro-popup"
-    >
+    <n22-action-bar class="action-bar-c" :actions="buttonArray">
+      <div class="price">
+        <span class="bar-text-desc">首年总保费:</span>
+        <span>
+          <n22-amount value="3000" has-separator :precision="2"></n22-amount>
+        </span>
+        <small>&nbsp;元</small>
+      </div>
+    </n22-action-bar>
+    <n22-popup v-model="isPopupShow" position="bottom" @maskClick="riskMaskClick" class="pro-popup">
       <n22-popup-title-bar title="福运至尊 相伴人生" @confirm="riskMaskClick">
         <template slot="confirm">
           <n22-icon name="close" size="lg"></n22-icon>
         </template>
       </n22-popup-title-bar>
-      <div
-        class="pro-select-popup-content"
-        :style="{ height: '500px', 'overflow-y': 'auto' }"
-      >
-        <n22-field :title="item.name" v-for="(item, i) in fjProData" :key="i">
-          <div
-            class="action-container"
-            slot="action"
-            @click="selectFjPro(item, i)"
-          >
+      <div class="pro-select-popup-content">
+        <n22-field :title="item.name" v-for="(item, i) in fjProData" :key="i" @headerClick="selectFjPro(item, i)">
+          <div class="action-container" slot="action">
             <n22-icon :name="item.isCheck ? 'checked' : 'check'"></n22-icon>
           </div>
           <transition name="n22-base-fade">
             <div class="pro-popup-cont" v-if="item.isCheck">
+              <n22-input-item
+                title="保额"
+                v-model="item.amount"
+                data-vv-as="姓名"
+                placeholder="请输入保额"
+                align="right"
+                is-highlight
+                clearable
+                @changeData="$_changeData"
+                @click="$_onClick"
+                @focus="$_onFocus"
+                @blur="$_onBlur"
+              ></n22-input-item>
               <n22-drop-select
-                v-model="holder.birthday"
+                v-model="item.bxqj"
                 title="保险期间"
                 :options="options"
                 :isAppendTo="false"
                 ispickerValue="请选择"
                 type="single"
+                @hide="isShowConfirm = !isShowConfirm"
+                @dropSelectClick="isShowConfirm = !isShowConfirm"
               ></n22-drop-select>
               <n22-drop-select
-                v-model="holder.birthday"
+                v-model="item.jfqj"
                 title="交费期间"
                 :options="options"
                 :isAppendTo="false"
                 ispickerValue="请选择"
                 type="single"
+                @hide="isShowConfirm = !isShowConfirm"
+                @dropSelectClick="isShowConfirm = !isShowConfirm"
               ></n22-drop-select>
               <n22-drop-select
-                v-model="holder.birthday"
+                v-model="item.jffs"
                 title="交费方式"
                 :options="options"
                 :isAppendTo="false"
                 ispickerValue="请选择"
                 type="single"
+                @hide="isShowConfirm = !isShowConfirm"
+                @dropSelectClick="isShowConfirm = !isShowConfirm"
               ></n22-drop-select>
             </div>
           </transition>
         </n22-field>
         <div class="button-yl-h"></div>
-        <n22-button
-          @click="riskMaskClick"
-          type="primary"
-          class="pro-popup-button"
-          >确定</n22-button
-        >
       </div>
+      <transition name="n22-base-slide-up">
+        <n22-button v-if="isShowConfirm" @click="confirmPro" type="primary" class="pro-popup-button">
+          确定
+        </n22-button>
+      </transition>
     </n22-popup>
   </div>
 </template>
@@ -236,10 +243,11 @@ import {
   ActionBar,
   Popup,
   PopupTitleBar,
-  Button
+  Button,
 } from "al-mobile";
 import ProShow from "../components/ProShow";
 import code from "@@/utils/code/";
+const __getAge = require("@t/getAge");
 export default {
   name: "proposal-book-data-entry", //使用xx-xx-xx命名方式具体看操作文档
   props: {
@@ -263,13 +271,19 @@ export default {
     [Popup.name]: Popup,
     [PopupTitleBar.name]: PopupTitleBar,
     [ProShow.name]: ProShow,
-    [Button.name]: Button
+    [Button.name]: Button,
   },
   computed: {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
   },
   mounted() {
     console.log("%c data-entry>生命周期>mounted", "color:green;", "");
+    for (let i = 0; i < 180; i++) {
+      this.ageOptions.push({
+        text: `${i}岁`,
+        value: i + "",
+      });
+    }
     // this.fjProData = this.proData;
   },
   watch: {},
@@ -285,8 +299,8 @@ export default {
           list: [],
           isListInit: false,
           isMescrollUp: true,
-          upCallbackFun: ""
-        }
+          upCallbackFun: "",
+        },
       ],
       insured: {
         //姓名
@@ -294,7 +308,8 @@ export default {
         //年龄
         birthday: "",
         //性别
-        sex: "1"
+        sex: "1",
+        age: "",
       },
       holder: {
         //姓名
@@ -302,12 +317,14 @@ export default {
         //年龄
         birthday: "",
         //性别
-        sex: "2"
+        sex: "2",
+        age: "",
       },
       sexOptions: code.getCodeData("", "", "sex"),
       //简单下拉菜单
       modelDropSelectSingle: "",
       options: code.getCodeData("", "", "test"),
+      ageOptions: [],
       holderIsCheck: false,
       //主险信息-对象
       masterProData: [
@@ -315,8 +332,10 @@ export default {
           name: "光大永明福运至尊年金保险",
           amount: 88888.88,
           premium: 88888.88,
-          nj: "10年交"
-        }
+          bxqj: "",
+          jffs: "",
+          jfqj: "10年交",
+        },
       ],
       //附加险信息-数组
       fjProData: [
@@ -324,32 +343,42 @@ export default {
           name: "光大永明福运至尊年金保险",
           amount: 888.88,
           premium: 888.88,
-          nj: "10年交"
+          bxqj: "",
+          jffs: "",
+          jfqj: "10年交",
         },
         {
           name: "百万安康(2019版)医疗保险",
           amount: 888.88,
           premium: 888.88,
-          nj: "10年交"
+          bxqj: "",
+          jffs: "",
+          jfqj: "10年交",
         },
         {
           name: "增利宝（庆典版）年金保险（万能型）",
           amount: 888.88,
           premium: 888.88,
-          nj: "10年交"
+          bxqj: "",
+          jffs: "",
+          jfqj: "10年交",
         },
         {
           name: "无忧住院津贴",
           amount: 888.88,
           premium: 888.88,
-          nj: "10年交"
+          bxqj: "",
+          jffs: "",
+          jfqj: "10年交",
         },
         {
           name: "附加投保人豁免保险费（加强版）重大 疾病保险",
           amount: 888.88,
           premium: 888.88,
-          nj: "10年交"
-        }
+          bxqj: "",
+          jffs: "",
+          jfqj: "10年交",
+        },
       ],
       //按钮组
       buttonArray: [
@@ -357,10 +386,11 @@ export default {
         {
           text: "生成建议书",
           value: "create",
-          onClick: this.onBtnClick2
-        }
+          onClick: this.createPlan,
+        },
       ],
-      isPopupShow: false
+      isPopupShow: false,
+      isShowConfirm: true,
     };
   },
   methods: {
@@ -382,9 +412,20 @@ export default {
     },
     //更改回调
     // eslint-disable-next-line no-unused-vars
-    $_changeData(val, item, key, type) {
+    $_changeData({ name }, val, oldval, isHand, type, key) {
+      console.log("%c $_changeData-name", "color:green;", name);
       console.log("%c $_changeData", "color:green;", val);
-      // this.$emit("changeData",val,item,key,type)
+    },
+    // eslint-disable-next-line no-unused-vars
+    $_onPickerConfirm({ name }, val, oldval, isHand, type, key) {
+      console.log("%c $_onPickerConfirm-name", "color:green;", name);
+      console.log("%c $_onPickerConfirm", "color:green;", val);
+      if (name === "insured.birthday") {
+        this.insured.age = __getAge(val) === 0 ? "0" : __getAge(val);
+        console.log("%c this.insured.age", "color:red", this.insured.age);
+      } else if (name === "insured.age") {
+        this.insured.birthday && (this.insured.birthday = "");
+      }
     },
     $_addPro() {
       console.log("%c add", "color:#00CD00", "add");
@@ -404,15 +445,26 @@ export default {
         this.$set(this.fjProData, i, pro);
       }
     },
+    goWordShow() {
+      this.go("proposalBook/wordShow");
+    },
     riskMaskClick() {
       //蒙层点击取消
+      this.isPopupShow = false;
+    },
+    // 确定选择险种
+    confirmPro() {
+      //关闭popup
       this.isPopupShow = false;
     },
     selectFjPro(item, i) {
       item.isCheck = !item.isCheck;
       this.$set(this.fjProData, i, item);
-    }
-  }
+    },
+    createPlan() {
+      this.go("proposalBook/planShow");
+    },
+  },
 };
 </script>
 
@@ -430,6 +482,21 @@ export default {
     }
   }
   .proposalBook-data-entry-content {
+    .my-birthday-c {
+      width: 200px;
+      float: left;
+      ::v-deep .n22-field-item-right-addon {
+        width: 75px;
+      }
+    }
+    .my-age-c {
+      width: 100px;
+      float: right;
+      margin-right: 10px;
+      ::v-deep .n22-field-item-right-addon {
+        width: 75px;
+      }
+    }
     .insured-info-c {
       position: relative;
       z-index: 3;
@@ -445,41 +512,8 @@ export default {
         background-color: #ffffff;
       }
     }
-    .action-bar-c {
-      ::v-deep .n22-button {
-        flex: none;
-        height: 46px;
-        width: 125px;
-        margin-left: 50px;
-      }
-      .bar-text-desc {
-        font-size: 12px;
-        display: block;
-        color: #666666;
-        margin-bottom: 5px;
-      }
-      ::v-deep .n22-action-bar-text {
-        height: auto;
-      }
-      ::v-deep .n22-button-content span {
-        font-size: 16px;
-      }
-      .price {
-        margin-top: 5px;
-        // margin-bottom: 8px;
-        // height: 50px;
-        font-weight: 500;
-        font-size: 20px;
-        color: #ff4002;
-        small {
-          margin-left: 2px;
-          font-size: 16px;
-          color: #ff4002;
-        }
-      }
-    }
     .doc-info {
-      margin-bottom: 35px;
+      margin-bottom: 55px;
       .doc-arrea {
         display: flex;
         div {
@@ -502,7 +536,44 @@ export default {
       }
     }
   }
+  .action-bar-c {
+    ::v-deep .n22-button {
+      flex: none;
+      height: 46px;
+      width: 125px;
+      margin-left: 50px;
+    }
+    .bar-text-desc {
+      font-size: 12px;
+      display: block;
+      color: #666666;
+      margin-bottom: 5px;
+    }
+    ::v-deep .n22-action-bar-text {
+      height: auto;
+    }
+    ::v-deep .n22-button-content span {
+      font-size: 16px;
+    }
+    .price {
+      margin-top: 5px;
+      // margin-bottom: 8px;
+      // height: 50px;
+      font-weight: 500;
+      font-size: 20px;
+      color: #ff4002;
+      small {
+        margin-left: 2px;
+        font-size: 16px;
+        color: #ff4002;
+      }
+    }
+  }
   .pro-popup {
+    .pro-select-popup-content {
+      overflow-y: auto;
+      height: 400px;
+    }
     ::v-deep .n22-field-header-bottom {
       margin-bottom: 0;
     }
@@ -525,7 +596,8 @@ export default {
       height: 56px;
     }
     .pro-popup-button {
-      position: fixed;
+      // z-index: 1;
+      position: absolute;
       bottom: 0;
       height: 46px;
       width: 356px;

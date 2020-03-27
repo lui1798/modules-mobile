@@ -21,10 +21,7 @@
                 {{ tab.name }}
               </li>
             </ul>
-            <div
-              class="tab-bar"
-              :style="{ width: barWidth + 'px', left: barLeft }"
-            ></div>
+            <div class="tab-bar" :style="{ width: barWidth + 'px', left: barLeft }"></div>
           </div>
         </div>
       </div>
@@ -51,11 +48,7 @@
       </swiper-slide>
       <!-- 奶粉 可不配down-->
       <swiper-slide>
-        <mescroll-vue
-          ref="mescroll1"
-          :up="getMescrollUp(1)"
-          @init="mescrollInit(1, arguments)"
-        >
+        <mescroll-vue ref="mescroll1" :up="getMescrollUp(1)" @init="mescrollInit(1, arguments)">
           <ul id="dataList1">
             <li class="data-li" v-for="pd in tabs[1].list" :key="pd.id">
               <img class="pd-img" :src="pd.pdImg" />
@@ -68,11 +61,7 @@
       </swiper-slide>
       <!-- 面膜-->
       <swiper-slide>
-        <mescroll-vue
-          ref="mescroll2"
-          :up="getMescrollUp(2)"
-          @init="mescrollInit(2, arguments)"
-        >
+        <mescroll-vue ref="mescroll2" :up="getMescrollUp(2)" @init="mescrollInit(2, arguments)">
           <ul id="dataList2">
             <li class="data-li" v-for="pd in tabs[2].list" :key="pd.id">
               <img class="pd-img" :src="pd.pdImg" />
@@ -85,11 +74,7 @@
       </swiper-slide>
       <!-- 图书-->
       <swiper-slide>
-        <mescroll-vue
-          ref="mescroll3"
-          :up="getMescrollUp(3)"
-          @init="mescrollInit(3, arguments)"
-        >
+        <mescroll-vue ref="mescroll3" :up="getMescrollUp(3)" @init="mescrollInit(3, arguments)">
           <ul id="dataList3">
             <li class="data-li" v-for="pd in tabs[3].list" :key="pd.id">
               <img class="pd-img" :src="pd.pdImg" />
@@ -102,11 +87,7 @@
       </swiper-slide>
       <!-- 果汁-->
       <swiper-slide>
-        <mescroll-vue
-          ref="mescroll4"
-          :up="getMescrollUp(4)"
-          @init="mescrollInit(4, arguments)"
-        >
+        <mescroll-vue ref="mescroll4" :up="getMescrollUp(4)" @init="mescrollInit(4, arguments)">
           <ul id="dataList4">
             <li class="data-li" v-for="pd in tabs[4].list" :key="pd.id">
               <img class="pd-img" :src="pd.pdImg" />
@@ -119,11 +100,7 @@
       </swiper-slide>
       <!-- 奶瓶-->
       <swiper-slide>
-        <mescroll-vue
-          ref="mescroll5"
-          :up="getMescrollUp(5)"
-          @init="mescrollInit(5, arguments)"
-        >
+        <mescroll-vue ref="mescroll5" :up="getMescrollUp(5)" @init="mescrollInit(5, arguments)">
           <ul id="dataList5">
             <li class="data-li" v-for="pd in tabs[5].list" :key="pd.id">
               <img class="pd-img" :src="pd.pdImg" />
@@ -136,11 +113,7 @@
       </swiper-slide>
       <!-- 美素-->
       <swiper-slide>
-        <mescroll-vue
-          ref="mescroll6"
-          :up="getMescrollUp(6)"
-          @init="mescrollInit(6, arguments)"
-        >
+        <mescroll-vue ref="mescroll6" :up="getMescrollUp(6)" @init="mescrollInit(6, arguments)">
           <ul id="dataList6">
             <li class="data-li" v-for="pd in tabs[6].list" :key="pd.id">
               <img class="pd-img" :src="pd.pdImg" />
@@ -153,11 +126,7 @@
       </swiper-slide>
       <!-- 璐拉-->
       <swiper-slide>
-        <mescroll-vue
-          ref="mescroll7"
-          :up="getMescrollUp(7)"
-          @init="mescrollInit(7, arguments)"
-        >
+        <mescroll-vue ref="mescroll7" :up="getMescrollUp(7)" @init="mescrollInit(7, arguments)">
           <ul id="dataList7">
             <li class="data-li" v-for="pd in tabs[7].list" :key="pd.id">
               <img class="pd-img" :src="pd.pdImg" />
@@ -170,11 +139,7 @@
       </swiper-slide>
       <!-- 启赋-->
       <swiper-slide>
-        <mescroll-vue
-          ref="mescroll8"
-          :up="getMescrollUp(8)"
-          @init="mescrollInit(8, arguments)"
-        >
+        <mescroll-vue ref="mescroll8" :up="getMescrollUp(8)" @init="mescrollInit(8, arguments)">
           <ul id="dataList8">
             <li class="data-li" v-for="pd in tabs[8].list" :key="pd.id">
               <img class="pd-img" :src="pd.pdImg" />
@@ -187,11 +152,7 @@
       </swiper-slide>
       <!-- 雅培-->
       <swiper-slide>
-        <mescroll-vue
-          ref="mescroll9"
-          :up="getMescrollUp(9)"
-          @init="mescrollInit(9, arguments)"
-        >
+        <mescroll-vue ref="mescroll9" :up="getMescrollUp(9)" @init="mescrollInit(9, arguments)">
           <ul id="dataList9">
             <li class="data-li" v-for="pd in tabs[9].list" :key="pd.id">
               <img class="pd-img" :src="pd.pdImg" />
@@ -204,11 +165,7 @@
       </swiper-slide>
       <!-- 花王-->
       <swiper-slide>
-        <mescroll-vue
-          ref="mescroll10"
-          :up="getMescrollUp(10)"
-          @init="mescrollInit(10, arguments)"
-        >
+        <mescroll-vue ref="mescroll10" :up="getMescrollUp(10)" @init="mescrollInit(10, arguments)">
           <ul id="dataList10">
             <li class="data-li" v-for="pd in tabs[10].list" :key="pd.id">
               <img class="pd-img" :src="pd.pdImg" />
@@ -221,11 +178,7 @@
       </swiper-slide>
       <!-- 韩蜜-->
       <swiper-slide>
-        <mescroll-vue
-          ref="mescroll11"
-          :up="getMescrollUp(11)"
-          @init="mescrollInit(11, arguments)"
-        >
+        <mescroll-vue ref="mescroll11" :up="getMescrollUp(11)" @init="mescrollInit(11, arguments)">
           <ul id="dataList11">
             <li class="data-li" v-for="pd in tabs[11].list" :key="pd.id">
               <img class="pd-img" :src="pd.pdImg" />
@@ -243,10 +196,7 @@
 <script>
 // 轮播组件: https://github.com/surmon-china/vue-awesome-swiper
 import "al-mobile/components/common/swiper/dist/css/swiper.css";
-import {
-  swiper,
-  swiperSlide
-} from "al-mobile/components/common/swiper/swiper-vue";
+import { swiper, swiperSlide } from "al-mobile/components/common/swiper/swiper-vue";
 // 引入mescroll的vue组件
 import MescrollVue from "al-mobile/components/common/mescroll.js/mescroll.vue";
 // 模拟数据
@@ -268,7 +218,7 @@ export default {
         { name: "启赋", mescroll: null, list: [], isListInit: false },
         { name: "雅培", mescroll: null, list: [], isListInit: false },
         { name: "花王", mescroll: null, list: [], isListInit: false },
-        { name: "韩蜜", mescroll: null, list: [], isListInit: false }
+        { name: "韩蜜", mescroll: null, list: [], isListInit: false },
       ],
       tabWidth: 80, // 每个tab的宽度
       barWidth: 40, // tab底部红色线的宽度
@@ -279,15 +229,15 @@ export default {
         on: {
           transitionEnd: () => {
             this.changeTab(this.swiper.activeIndex);
-          }
-        }
-      }
+          },
+        },
+      },
     };
   },
   components: {
     swiper, // 轮播组件
     swiperSlide, // 轮播组件
-    MescrollVue // Mescroll组件
+    MescrollVue, // Mescroll组件
   },
   computed: {
     swiper() {
@@ -296,12 +246,8 @@ export default {
     },
     barLeft() {
       // 红线的位置
-      return (
-        this.tabWidth * this.curIndex +
-        (this.tabWidth - this.barWidth) / 2 +
-        "px"
-      );
-    }
+      return this.tabWidth * this.curIndex + (this.tabWidth - this.barWidth) / 2 + "px";
+    },
   },
   methods: {
     // 多mescroll的配置,需通过方法获取,保证每个配置是单例
@@ -309,7 +255,7 @@ export default {
       let isAuto = tabIndex === 0; // 第一个mescroll传入true,列表自动加载
       return {
         auto: isAuto,
-        callback: this.downCallback
+        callback: this.downCallback,
       };
     },
     // mescroll上拉加载的配置
@@ -327,12 +273,12 @@ export default {
           btnClick: function() {
             // 点击按钮的回调,默认null
             alert("点击了按钮,具体逻辑自行实现");
-          }
+          },
         },
         toTop: {
           // 配置回到顶部按钮
-          src: "http://www.mescroll.com/img/mescroll-totop.png" // 图片路径,默认null (建议写成网络图,不必考虑相对路径)
-        }
+          src: "http://www.mescroll.com/img/mescroll-totop.png", // 图片路径,默认null (建议写成网络图,不必考虑相对路径)
+        },
       };
     },
     // mescroll初始化的回调
@@ -353,10 +299,7 @@ export default {
         let tabsContent = this.$refs.tabsContent;
         let tabDom = tabsContent.getElementsByClassName("tab")[tabIndex];
         let star = tabsContent.scrollLeft; // 当前位置
-        let end =
-          tabDom.offsetLeft +
-          tabDom.clientWidth / 2 -
-          document.body.clientWidth / 2; // 居中
+        let end = tabDom.offsetLeft + tabDom.clientWidth / 2 - document.body.clientWidth / 2; // 居中
         this.tabScrollLeft = end;
         curTab.mescroll.getStep(star, end, function(step) {
           tabsContent.scrollLeft = step; // 从当前位置逐渐移动到中间位置,默认时长300ms
@@ -406,14 +349,12 @@ export default {
         curPageData => {
           mescroll.endSuccess(curPageData.length); // 联网成功的回调,隐藏下拉刷新和上拉加载的状态;
           if (page.num === 1) this.tabs[mescroll.tabIndex].list = []; // 如果是第一页需手动制空列表
-          this.tabs[mescroll.tabIndex].list = this.tabs[
-            mescroll.tabIndex
-          ].list.concat(curPageData); // 追加新数据
+          this.tabs[mescroll.tabIndex].list = this.tabs[mescroll.tabIndex].list.concat(curPageData); // 追加新数据
         },
         () => {
           if (page.num === 1) this.tabs[mescroll.tabIndex].isListInit = false;
           mescroll.endErr(); // 联网失败的回调,隐藏下拉刷新的状态
-        }
+        },
       );
     },
     /* 联网加载列表数据
@@ -421,24 +362,14 @@ export default {
           请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
           实际项目以您服务器接口返回的数据为准,无需本地处理分页.
           * */
-    getListDataFromNet(
-      tabIndex,
-      pageNum,
-      pageSize,
-      successCallback,
-      errorCallback
-    ) {
+    getListDataFromNet(tabIndex, pageNum, pageSize, successCallback, errorCallback) {
       // 延时一秒,模拟联网
       setTimeout(() => {
         try {
           var listData = [];
           if (tabIndex === 0) {
             // 全部商品 (模拟分页数据)
-            for (
-              var i = (pageNum - 1) * pageSize;
-              i < pageNum * pageSize;
-              i++
-            ) {
+            for (var i = (pageNum - 1) * pageSize; i < pageNum * pageSize; i++) {
               if (i === mockData.length) break;
               listData.push(mockData[i]);
             }
@@ -458,7 +389,7 @@ export default {
           errorCallback && errorCallback();
         }
       }, 1000);
-    }
+    },
   },
   beforeRouteEnter(to, from, next) {
     // 如果没有配置回到顶部按钮或isBounce,则beforeRouteEnter不用写
@@ -466,8 +397,7 @@ export default {
       let curMescroll = vm.$refs["mescroll" + vm.curIndex]; // 找到当前mescroll的ref,调用子组件mescroll-vue的beforeRouteEnter方法
       curMescroll && curMescroll.beforeRouteEnter(); // 进入路由时,滚动到原来的列表位置,恢复回到顶部按钮和isBounce的配置
       // 恢复水平菜单的滚动条位置
-      if (vm.$refs.tabsContent)
-        vm.$refs.tabsContent.scrollLeft = vm.tabScrollLeft;
+      if (vm.$refs.tabsContent) vm.$refs.tabsContent.scrollLeft = vm.tabScrollLeft;
     });
   },
   beforeRouteLeave(to, from, next) {
@@ -475,7 +405,7 @@ export default {
     let curMescroll = this.$refs["mescroll" + this.curIndex]; // 找到当前mescroll的ref,调用子组件mescroll-vue的beforeRouteEnter方法
     curMescroll && curMescroll.beforeRouteLeave(); // 退出路由时,记录列表滚动的位置,隐藏回到顶部按钮和isBounce的配置
     next();
-  }
+  },
 };
 </script>
 

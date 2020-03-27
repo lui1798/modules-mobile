@@ -1,9 +1,6 @@
 <template>
   <div class="demo-all-demo">
-    <al-all-head
-      :z-index="2"
-      v-if="runningEnvironment != 'AlipayJSBridge'"
-    ></al-all-head>
+    <al-all-head :z-index="2" backUrl="hybrid-back" v-if="runningEnvironment != 'AlipayJSBridge'"></al-all-head>
     <al-content
       class="demo-all-demo-content"
       ref="insureMessage"
@@ -44,17 +41,13 @@ export default {
     [AllHead.name]: AllHead,
     [Content.name]: Content,
     [Field.name]: Field,
-    [FieldItem.name]: FieldItem
+    [FieldItem.name]: FieldItem,
   },
   computed: {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
   },
   mounted() {
-    console.log(
-      "%c demo-生命周期-mounted",
-      "color:green;background-color:orange;",
-      ""
-    );
+    console.log("%c demo-生命周期-mounted", "color:green;background-color:orange;", "");
   },
   watch: {},
   data() {
@@ -69,10 +62,10 @@ export default {
           list: [],
           isListInit: false,
           isMescrollUp: true,
-          upCallbackFun: ""
-        }
+          upCallbackFun: "",
+        },
       ],
-      navList: NavConfig
+      navList: NavConfig,
     };
   },
   methods: {
@@ -84,8 +77,8 @@ export default {
       if (typeof item.handle == "string") {
         this.go(item.handle);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

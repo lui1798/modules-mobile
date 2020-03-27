@@ -31,7 +31,7 @@ export default {
     //[xxxx.name]: xxx,//引入组件样例如此
     [AllHead.name]: AllHead,
     [Content.name]: Content,
-    [Button.name]: Button
+    [Button.name]: Button,
   },
   computed: {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
@@ -52,9 +52,9 @@ export default {
           list: [],
           isListInit: false,
           isMescrollUp: true,
-          upCallbackFun: ""
-        }
-      ]
+          upCallbackFun: "",
+        },
+      ],
     };
   },
   methods: {
@@ -68,22 +68,18 @@ export default {
         { title: "亲", message: "你好", button: "确定" },
         "AlipayJSBridge_alert",
         success => {
-          console.log(
-            "%c PhoneImport Cordova_getContacts",
-            "color:green;",
-            success
-          );
+          console.log("%c PhoneImport Cordova_getContacts", "color:green;", success);
         },
         error => {
           window.utils.ui.toast({
             message: JSON.stringify(error || ""),
             position: "bottom",
-            duration: 3000
+            duration: 3000,
           });
-        }
+        },
       );
-    }
-  }
+    },
+  },
 };
 </script>
 

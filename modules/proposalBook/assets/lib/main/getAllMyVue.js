@@ -4,21 +4,15 @@ export default {
       screenWidth: document.documentElement.clientWidth,
       screenHeight: document.documentElement.clientHeight,
       allHeadTopPx:
-        window.utils.ui.isIPhoneX ||
-        window.utils.ui.isIPhoneXSMax ||
-        window.utils.ui.isIPhoneXR
+        window.utils.ui.isIPhoneX || window.utils.ui.isIPhoneXSMax || window.utils.ui.isIPhoneXR
           ? 88
-          : window.navigator.platform === "iPhone" &&
-            (window.cordova || window.globalConfig.platform == "phoneWeb")
+          : window.navigator.platform === "iPhone" && (window.cordova || window.globalConfig.platform == "phoneWeb")
           ? 64
           : 44,
       allHeadTopPxVideo:
-        window.utils.ui.isIPhoneX ||
-        window.utils.ui.isIPhoneXSMax ||
-        window.utils.ui.isIPhoneXR
+        window.utils.ui.isIPhoneX || window.utils.ui.isIPhoneXSMax || window.utils.ui.isIPhoneXR
           ? 0
-          : window.navigator.platform === "iPhone" &&
-            (window.cordova || window.globalConfig.platform == "phoneWeb")
+          : window.navigator.platform === "iPhone" && (window.cordova || window.globalConfig.platform == "phoneWeb")
           ? 20
           : 0,
       dealPxToVw: px => {
@@ -33,7 +27,7 @@ export default {
       runningEnvironment: window.globalConfig.runningEnvironment,
       routeParams: this.getRouteParams(),
       transitionTime: 300,
-      isVirtualKeyboardProduct: true //产品组件区是否开启自定义虚拟键盘
+      isVirtualKeyboardProduct: true, //产品组件区是否开启自定义虚拟键盘
     };
   },
   methods: {
@@ -81,20 +75,12 @@ export default {
               if (moduleList && moduleList.lenght > 0) {
                 if (moduleList.indexOf(routerList[i])) {
                   this.$router.go(routerList[i]);
-                  console.log(
-                    "%c 找出最近的位置-并跳转到位置",
-                    "color:green;",
-                    ""
-                  );
+                  console.log("%c 找出最近的位置-并跳转到位置", "color:green;", "");
                   return false;
                 }
               } else {
                 this.$router.go(-i);
-                console.log(
-                  "%c 找出最近的位置-并跳转到位置",
-                  "color:green;",
-                  ""
-                );
+                console.log("%c 找出最近的位置-并跳转到位置", "color:green;", "");
                 return false;
               }
               return false;
@@ -133,6 +119,6 @@ export default {
       } else {
         return "";
       }
-    }
-  }
+    },
+  },
 };

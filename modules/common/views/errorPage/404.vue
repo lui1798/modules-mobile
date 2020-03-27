@@ -6,26 +6,10 @@
       <div class="wscn-http404-container">
         <div class="wscn-http404">
           <div class="pic-404">
-            <img
-              class="pic-404__parent"
-              src="@/assets/images/404_images/404.png"
-              alt="404"
-            />
-            <img
-              class="pic-404__child left"
-              src="@/assets/images/404_images/404_cloud.png"
-              alt="404"
-            />
-            <img
-              class="pic-404__child mid"
-              src="@/assets/images/404_images/404_cloud.png"
-              alt="404"
-            />
-            <img
-              class="pic-404__child right"
-              src="@/assets/images/404_images/404_cloud.png"
-              alt="404"
-            />
+            <img class="pic-404__parent" src="@/assets/images/404_images/404.png" alt="404" />
+            <img class="pic-404__child left" src="@/assets/images/404_images/404_cloud.png" alt="404" />
+            <img class="pic-404__child mid" src="@/assets/images/404_images/404_cloud.png" alt="404" />
+            <img class="pic-404__child right" src="@/assets/images/404_images/404_cloud.png" alt="404" />
           </div>
           <div class="bullshit">
             <div class="bullshit__oops">OOPS!</div>
@@ -54,13 +38,13 @@ export default {
   },
   components: {
     [AllHead.name]: AllHead, //引入组件样例如此
-    [Content.name]: Content
+    [Content.name]: Content,
   },
   computed: {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
     message() {
       return "网管说这个页面你不能进......";
-    }
+    },
   },
   data() {
     return {};
@@ -71,7 +55,7 @@ export default {
     //    'USER_INFO',
     //]),
   },
-  watch: {}
+  watch: {},
 };
 </script>
 

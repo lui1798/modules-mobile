@@ -47,7 +47,7 @@ export default {
     //[xxxx.name]: xxx,//引入组件样例如此
     [AllHead.name]: AllHead,
     [ContentList.name]: ContentList,
-    [TabBar.name]: TabBar
+    [TabBar.name]: TabBar,
   },
   computed: {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
@@ -71,7 +71,7 @@ export default {
           list: [],
           isListInit: false,
           isMescrollUp: true,
-          upCallbackFun: ""
+          upCallbackFun: "",
         },
         {
           label: "bbbb",
@@ -80,9 +80,9 @@ export default {
           list: [],
           isListInit: false,
           isMescrollUp: true,
-          upCallbackFun: ""
-        }
-      ]
+          upCallbackFun: "",
+        },
+      ],
     };
   },
   methods: {
@@ -90,7 +90,7 @@ export default {
     //...mapMutations([//提交vuex-state更改样例
     //    'USER_INFO',
     //]),
-  }
+  },
 };
 </script>
 

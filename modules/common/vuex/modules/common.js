@@ -60,7 +60,7 @@ const types = {
   //是否第一次登入，firstLogin
   FIRSTlOGIN: "FIRSTlOGIN",
   //是否最后一次登入，lastLogin
-  LASTlOGIN: "LASTlOGIN"
+  LASTlOGIN: "LASTlOGIN",
 };
 
 const state = {
@@ -68,7 +68,7 @@ const state = {
   viewEndTime: "",
   routers: {
     to: {},
-    from: {}
+    from: {},
   }, // routers路由信息
   showlogin: false, // 是否显示登陆
   httpInvalid: false, // 接口请求成功错误标识
@@ -104,7 +104,7 @@ const state = {
   messageCache: utils.cache.get("messageCache") || {},
   saleType: utils.cache.get("saleType") || "",
   firstLogin: "",
-  lastLogin: ""
+  lastLogin: "",
 };
 
 const getters = {
@@ -122,14 +122,14 @@ const getters = {
   // },
   getfooter() {
     return state.showFooter;
-  }
+  },
 };
 
 const actions = {
   add({ commit, state }, product) {
     console.log("%c state", "color:green;", state);
     commit(types.ADD_PRODUCT, product);
-  }
+  },
   // async getUserInfo({
   // 	commit,state
   // }) {
@@ -161,11 +161,7 @@ const mutations = {
   },
   // 接口请求成功错误标识更改
   [types.HTTP_INVALID](state, httpInvalid) {
-    console.log(
-      "%c 全局common接口请求成功错误更改为",
-      "color:green;",
-      httpInvalid
-    );
+    console.log("%c 全局common接口请求成功错误更改为", "color:green;", httpInvalid);
     state.httpInvalid = httpInvalid;
   },
   // 路由信息
@@ -193,10 +189,7 @@ const mutations = {
     state.dialog = dialog;
   },
   // navigatorConnectionEffectiveType
-  [types.NAVIGATORCONNECTIONEFFECTIVETYPE](
-    state,
-    navigatorConnectionEffectiveType
-  ) {
+  [types.NAVIGATORCONNECTIONEFFECTIVETYPE](state, navigatorConnectionEffectiveType) {
     state.navigatorConnectionEffectiveType = navigatorConnectionEffectiveType;
   },
   // 设置加载loadding样式
@@ -219,11 +212,7 @@ const mutations = {
   },
   // 加载子router--默认不展示
   [types.IS_SHOW_ROUTER_VIEW](state, flag) {
-    console.log(
-      "%c common-vuex-加载子router--默认不展示",
-      "color:green;",
-      flag
-    );
+    console.log("%c common-vuex-加载子router--默认不展示", "color:green;", flag);
     state.isShowRouterView = flag;
   },
   // 设置底部导航属于active状态
@@ -276,12 +265,12 @@ const mutations = {
   // 是否最后一次登入
   [types.LASTlOGIN](state, lastLogin) {
     state.lastLogin = lastLogin;
-  }
+  },
 };
 
 export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 };

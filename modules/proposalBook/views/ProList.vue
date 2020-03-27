@@ -1,6 +1,6 @@
 <template>
   <div class="proposalBook-pro-list">
-    <al-all-head title="产品">
+    <al-all-head backUrl="hybrid-back" title="产品">
       <div slot="head_bottom">
         <!-- <div class="my-head-top">
           <div>aaa</div>
@@ -64,7 +64,7 @@ export default {
     // [Content.name]: Content,
     [ContentList.name]: ContentList,
     [TabBar.name]: TabBar,
-    [CommonList.name]: CommonList
+    [CommonList.name]: CommonList,
   },
   computed: {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
@@ -79,7 +79,7 @@ export default {
         money: 888,
         imgPath:
           "https://yidongzhanyebj-1254235118.cos.ap-beijing.myqcloud.com/GdUat/product/listPicture/JCSHS2-5Y.jpg",
-        id: "prolist" + i
+        id: "prolist" + i,
       });
     }
   },
@@ -96,7 +96,7 @@ export default {
           list: [],
           isListInit: false,
           isMescrollUp: true,
-          upCallbackFun: ""
+          upCallbackFun: "",
         },
         {
           label: "健康险",
@@ -105,7 +105,7 @@ export default {
           list: [],
           isListInit: false,
           isMescrollUp: true,
-          upCallbackFun: ""
+          upCallbackFun: "",
         },
         {
           label: "意外险",
@@ -114,7 +114,7 @@ export default {
           list: [],
           isListInit: false,
           isMescrollUp: true,
-          upCallbackFun: ""
+          upCallbackFun: "",
         },
         {
           label: "年金保险",
@@ -123,9 +123,9 @@ export default {
           list: [],
           isListInit: false,
           isMescrollUp: true,
-          upCallbackFun: ""
-        }
-      ]
+          upCallbackFun: "",
+        },
+      ],
     };
   },
   methods: {
@@ -135,14 +135,13 @@ export default {
     //]),
     changeTab(item, i, curIndex) {
       console.log("%c curIndex", "color:#00CD00", curIndex);
-      this.$refs.listSwiper.$children[0].changeTab &&
-        this.$refs.listSwiper.$children[0].changeTab(i);
+      this.$refs.listSwiper.$children[0].changeTab && this.$refs.listSwiper.$children[0].changeTab(i);
     },
     commonListGo() {
-      console.log("%c go", "color:#00CD00", 1);
+      console.log("%c go", "color:#00CD00", 4);
       this.go("proposalBook/dataEntry");
-    }
-  }
+    },
+  },
 };
 </script>
 

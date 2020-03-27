@@ -1,10 +1,5 @@
 <template>
-  <div
-    id="demo-app"
-    ref="app"
-    class="nprogress-wrap app_class"
-    :class="_module"
-  >
+  <div id="demo-app" ref="app" class="nprogress-wrap app_class" :class="_module">
     <al-all-head
       v-if="common.isShowRouterView && transitionName === 'slide-in'"
       :headBottom="false"
@@ -41,12 +36,12 @@ export default {
   name: "demo",
   provide() {
     return {
-      reload: this.reload
+      reload: this.reload,
     };
   },
   components: {
     [AllHead.name]: AllHead,
-    [Foot.name]: Foot
+    [Foot.name]: Foot,
   },
   data() {
     return {
@@ -57,7 +52,7 @@ export default {
           icon: "首页",
           go: "home",
           normal: require("@/assets/images/home/home.png"),
-          active: require("@/assets/images/home/home_active.png")
+          active: require("@/assets/images/home/home_active.png"),
         },
         {
           title: "例子",
@@ -65,7 +60,7 @@ export default {
           icon: "首页",
           go: "demo",
           normal: require("@/assets/images/home/insurance.png"),
-          active: require("@/assets/images/home/insurance_active.png")
+          active: require("@/assets/images/home/insurance_active.png"),
         },
         {
           title: "消息中心",
@@ -73,7 +68,7 @@ export default {
           icon: "首页",
           go: "/messageNoti",
           normal: require("@/assets/images/home/message.png"),
-          active: require("@/assets/images/home/message_active.png")
+          active: require("@/assets/images/home/message_active.png"),
         },
         {
           title: "我的",
@@ -81,8 +76,8 @@ export default {
           icon: "首页",
           go: "/centerHome",
           normal: require("@/assets/images/home/user.png"),
-          active: require("@/assets/images/home/user_active.png")
-        }
+          active: require("@/assets/images/home/user_active.png"),
+        },
       ],
       showlogin: false,
       showsearch: false,
@@ -94,11 +89,7 @@ export default {
       searchValue: "",
       activeDate: "",
       isShowBg: false,
-      hotSearchListProp: [
-        { desc: "保险营销技巧" },
-        { desc: "意外险" },
-        { desc: "客户指南与粘度" }
-      ]
+      hotSearchListProp: [{ desc: "保险营销技巧" }, { desc: "意外险" }, { desc: "客户指南与粘度" }],
     };
   },
   created() {
@@ -112,7 +103,7 @@ export default {
     ...mapMutations([
       //提交vuex-state更改样例
       "SHOWSEARCH",
-      "USER_INFO"
+      "USER_INFO",
     ]),
     gotoAddress(item) {
       this.back(item.go, "", "", "push");
@@ -151,7 +142,7 @@ export default {
       console.log(
         "%c 要搜索的内容逻辑--待完善！！！",
         "color:yellow;",
-        "要搜索的内容逻辑--待完善！！！" + this.searchValue
+        "要搜索的内容逻辑--待完善！！！" + this.searchValue,
       );
       //测试存入历史数据
       let searchHistoryList = window.utils.cache.get("searchHistoryList") || [];
@@ -192,7 +183,7 @@ export default {
       } else {
         console.log("%c res  responseCode数据有问题", "color:red;", res);
       }
-    }
+    },
   },
   computed: {
     ...mapState(["common"]),
@@ -217,44 +208,31 @@ export default {
     _module: {
       get: function() {
         if (
-          (window.utils.ui.isIPhoneX ||
-            window.utils.ui.isIPhoneXSMax ||
-            window.utils.ui.isIPhoneXR) &&
+          (window.utils.ui.isIPhoneX || window.utils.ui.isIPhoneXSMax || window.utils.ui.isIPhoneXR) &&
           window.globalConfig.platform === "native"
         ) {
           return "platform-ios-x";
         } else if (
-          (window.utils.ui.isIPhoneX ||
-            window.utils.ui.isIPhoneXSMax ||
-            window.utils.ui.isIPhoneXR) &&
+          (window.utils.ui.isIPhoneX || window.utils.ui.isIPhoneXSMax || window.utils.ui.isIPhoneXR) &&
           window.globalConfig.platform == "phoneWeb"
         ) {
           return "platform-ios-x-phoneWeb";
         } else if (
           window.navigator.platform === "iPhone" &&
-          (window.globalConfig.platform === "native" ||
-            window.globalConfig.platform == "phoneWeb")
+          (window.globalConfig.platform === "native" || window.globalConfig.platform == "phoneWeb")
         ) {
           return "platform-ios";
         } else {
           return "platform-android";
         }
-      }
-    }
+      },
+    },
   },
   mounted() {
-    console.log(
-      "%c window.navigator.platform",
-      "color:green;",
-      window.navigator.platform
-    );
+    console.log("%c window.navigator.platform", "color:green;", window.navigator.platform);
     console.log("%c this.$route", "color:green;", this.$route);
     this.$navigation.on("forward", (to, from) => {
-      console.log(
-        "%c window.performance--TO",
-        "color:green;",
-        window.performance
-      );
+      console.log("%c window.performance--TO", "color:green;", window.performance);
       // let aaaaa = {};
       // for (const key in window.performance.timing) {
       //   const aaaa = window.performance.timing[key];
@@ -274,18 +252,12 @@ export default {
         (this.transitionName = "slide-in");
     });
     this.$navigation.on("back", (to, from) => {
-      console.log(
-        "%c window.performance--BACK",
-        "color:green;",
-        window.performance
-      );
+      console.log("%c window.performance--BACK", "color:green;", window.performance);
       console.log("%c back", "color:green;", to);
       console.log("%c back", "color:green;", from);
       let toTra = to.route.meta.transition;
       let fromTra = from.route.meta.transition;
-      window.globalConfig.animation &&
-      (toTra || fromTra) &&
-      typeof fromTra == "boolean"
+      window.globalConfig.animation && (toTra || fromTra) && typeof fromTra == "boolean"
         ? (this.transitionName = "slide-out")
         : (this.transitionName = "n22-base-slide-down");
     });
@@ -323,11 +295,7 @@ export default {
     },
     getshowsearch(value) {
       console.log("%c 监听到getshowsearch改变xxxx", "color:#FF00FF;", value);
-      console.log(
-        "%c 监听到getshowsearch改变xxxx",
-        "color:#FF00FF;",
-        this.searchTransitionName
-      );
+      console.log("%c 监听到getshowsearch改变xxxx", "color:#FF00FF;", this.searchTransitionName);
       this.showsearch = value;
       if (!value) {
         this.searchTransitionName = "n22-base-fade";
@@ -349,20 +317,16 @@ export default {
     getNavigatorConnectionE: {
       //深度监听，可监听到对象、数组的变化
       handler(value) {
-        console.log(
-          "%c 监听到 getNavigatorConnection 改变xxxx",
-          "color:#FF00FF;",
-          value
-        );
+        console.log("%c 监听到 getNavigatorConnection 改变xxxx", "color:#FF00FF;", value);
         window.utils.ui.toast({
           message: `当前网络连接${value}`,
           position: "bottom",
-          duration: 3000
+          duration: 3000,
         });
       },
-      deep: true
-    }
-  }
+      deep: true,
+    },
+  },
 };
 </script>
 

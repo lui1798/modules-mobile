@@ -4,11 +4,11 @@ export default function(name = "", demos = []) {
     data() {
       return {
         demos,
-        nav: this.$route.query.nav
+        nav: this.$route.query.nav,
       };
     },
     moubted() {
       console.log("%c this.$route", "color:green;", this.$router);
-    }
+    },
   };
 }

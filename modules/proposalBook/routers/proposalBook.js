@@ -16,6 +16,8 @@
 const proposalBook = () => import( /* webpackChunkName: "ProposalBook" */ "@m/proposalBook/views/ProposalBook.vue")
 const proList = () => import( /* webpackChunkName: "ProList" */ "@m/proposalBook/views/ProList.vue")
 const dataEntry = () => import( /* webpackChunkName: "proposalBookdataEntry" */ "@m/proposalBook/views/DataEntry.vue")
+const planShow = () => import( /* webpackChunkName: "proposalBookplanShow" */ "@m/proposalBook/views/PlanShow.vue")
+const wordShow = () => import( /* webpackChunkName: "proposalBookwordShow" */ "@m/proposalBook/views/WordShow.vue")
 /* @init<%const ${viewKebabUpper} = () => import( ${webpackChunkName} "@m/${moduleKebabUpper}/views/${viewKebabNameUpper}.vue")%> */
 export default [
     {
@@ -55,7 +57,35 @@ export default [
                 path: "dataEntry",
                 component: dataEntry,
                 meta: {
-                    title: "建议书信息录入页面",//标题
+                    title: "信息录入",//建议书信息录入页面
+                    login: true, //是否需要登陆权限
+                    transition: true,//是否滑动切换页面
+                    footer: false,//是否需要底部footer菜单
+                    scrollToTop: false,//是否返回顶部
+                    zoom: false,//是否可缩放
+                    isquery: false,//是否可被全局search组件搜索到
+                }
+            },
+            {
+                name: "proposalBookPlanShow",
+                path: "planShow",
+                component: planShow,
+                meta: {
+                    title: "利益展示",//标题
+                    login: true, //是否需要登陆权限
+                    transition: true,//是否滑动切换页面
+                    footer: false,//是否需要底部footer菜单
+                    scrollToTop: false,//是否返回顶部
+                    zoom: false,//是否可缩放
+                    isquery: false,//是否可被全局search组件搜索到
+                }
+            },
+            {
+                name: "proposalBookWordShow",
+                path: "wordShow",
+                component: wordShow,
+                meta: {
+                    title: "文件展示",//标题
                     login: true, //是否需要登陆权限
                     transition: true,//是否滑动切换页面
                     footer: false,//是否需要底部footer菜单

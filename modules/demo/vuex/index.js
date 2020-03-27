@@ -11,8 +11,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   modules: {
     common,
-    demo
-  }
+    demo,
+  },
   // strict: debug,
   // plugins: debug ? [createLogger()] : []
 });

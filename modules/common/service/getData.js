@@ -15,7 +15,7 @@ export const dataService = {
   forgertPwd: "/member/updateMemberFindPwd", // 忘记密码接口
   getVerifyCode: "/member/getVerifyCode", //获取验证码获取验证码And注册
   homePage: "/app/homePage", //homePage
-  getMenu: "/member/getMenu" // getMenu
+  getMenu: "/member/getMenu", // getMenu
 };
 export const getData = dataService;
 
@@ -24,12 +24,7 @@ export const getData = dataService;
  * @param {*} 获取用户信息
  */
 export const login = validateForm =>
-  axiosHttp.post(
-    dataService.login,
-    validateForm,
-    localStorage.getItem(module + "Debug"),
-    module
-  );
+  axiosHttp.post(dataService.login, validateForm, localStorage.getItem(module + "Debug"), module);
 
 /**
  * app首页所有数据
@@ -39,12 +34,7 @@ export const login = validateForm =>
  * @module {String} 接口模块
  */
 export const homePage = param =>
-  axiosHttp.post(
-    dataService.homePage,
-    param,
-    localStorage.getItem(module + "Debug"),
-    module2
-  );
+  axiosHttp.post(dataService.homePage, param, localStorage.getItem(module + "Debug"), module2);
 
 /**
  * app首页菜单
@@ -55,12 +45,7 @@ export const homePage = param =>
  */
 
 export const getMenu = param =>
-  axiosHttp.post(
-    dataService.getMenu,
-    param,
-    localStorage.getItem(module2 + "Debug"),
-    module2
-  );
+  axiosHttp.post(dataService.getMenu, param, localStorage.getItem(module2 + "Debug"), module2);
 
 /**
  * app找回密码And注册--获取验证码
@@ -69,8 +54,7 @@ export const getMenu = param =>
  * @debug {*} mock虚拟数据debug-(如果调试debug数据即调用本地json虚拟数据则需要在/utils/mock.js中配置虚拟接口跟正式url一致即可)
  * @module {String} 接口模块
  */
-export const register = param =>
-  axiosHttp.post(dataService.register, param, false, module2);
+export const register = param => axiosHttp.post(dataService.register, param, false, module2);
 
 /*
  * @postJson {
@@ -80,12 +64,7 @@ export const register = param =>
  * 		}
  */
 export const getVerifyCode = param =>
-  axiosHttp.post(
-    dataService.getVerifyCode,
-    param,
-    localStorage.getItem(module2 + "Debug"),
-    module2
-  );
+  axiosHttp.post(dataService.getVerifyCode, param, localStorage.getItem(module2 + "Debug"), module2);
 
 /**
  * 忘记密码
@@ -95,9 +74,4 @@ export const getVerifyCode = param =>
  * @module {String} 接口模块
  */
 export const forgertPwd = param =>
-  axiosHttp.post(
-    dataService.forgertPwd,
-    param,
-    localStorage.getItem(module2 + "Debug"),
-    module2
-  );
+  axiosHttp.post(dataService.forgertPwd, param, localStorage.getItem(module2 + "Debug"), module2);

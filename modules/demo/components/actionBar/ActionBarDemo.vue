@@ -47,10 +47,7 @@
         >
           <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑--我是分割箭头--[客户search]--↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
           <template slot="right">
-            <n22-button
-              @click="getFunctionFlag(modelInput1)"
-              class="getbutd-svg"
-            >
+            <n22-button @click="getFunctionFlag(modelInput1)" class="getbutd-svg">
               <label class="slot-right-button-text">
                 <n22-icon name="search"></n22-icon>
               </label>
@@ -87,12 +84,8 @@
               type="primary"
               :inactive="!flagShow"
             >
-              <label v-if="flagShow" class="slot-right-button-text"
-                >获取短信</label
-              >
-              <label v-else class="slot-right-button-text"
-                >剩余{{ second }}s</label
-              >
+              <label v-if="flagShow" class="slot-right-button-text">获取短信</label>
+              <label v-else class="slot-right-button-text">剩余{{ second }}s</label>
             </n22-button>
           </template>
           <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑--我是分割箭头--[短信验证码]--↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
@@ -226,7 +219,7 @@ import {
   Popup,
   PopupTitleBar,
   Toast,
-  Icon
+  Icon,
 } from "al-mobile";
 import code from "@@/utils/code/";
 
@@ -247,7 +240,7 @@ export default {
     [Popup.name]: Popup, //
     [PopupTitleBar.name]: PopupTitleBar, //
     [Toast.name]: Toast, //
-    [Icon.name]: Icon //
+    [Icon.name]: Icon, //
   },
   data() {
     return {
@@ -289,9 +282,8 @@ export default {
       itemObject: {
         fieldname: "投保人签名",
         fieldValue: "",
-        commitment:
-          "本人已阅读保险条款、产品说明书和投保提示书，了解本产品的特点和保单利益的不确定性。",
-        childFileIdList: []
+        commitment: "本人已阅读保险条款、产品说明书和投保提示书，了解本产品的特点和保单利益的不确定性。",
+        childFileIdList: [],
       },
 
       //按钮组
@@ -300,14 +292,14 @@ export default {
         {
           text: "上一步",
           value: "submit",
-          onClick: this.onBtnClick
+          onClick: this.onBtnClick,
         },
         {
           text: "下一步",
           value: "create",
-          onClick: this.onBtnClick2
-        }
-      ]
+          onClick: this.onBtnClick2,
+        },
+      ],
     };
   },
   methods: {
@@ -334,7 +326,7 @@ export default {
         content: "功能暂未开放，敬请期待",
         // cancelText: '取消',
         confirmText: "确定",
-        onConfirm: () => console.log("[Dialog.alert] confirm clicked")
+        onConfirm: () => console.log("[Dialog.alert] confirm clicked"),
       });
     },
     //字段更改重新校验回调
@@ -353,11 +345,10 @@ export default {
     // eslint-disable-next-line
     async onBtnClick(event, action) {
       Toast({
-        content:
-          "亲我额人图有有哦鹏啊是的发个好将库在先长吧年吗请求！看看发顺丰粉丝地方粉丝地方发顺丰就是雷锋精神疗法",
+        content: "亲我额人图有有哦鹏啊是的发个好将库在先长吧年吗请求！看看发顺丰粉丝地方粉丝地方发顺丰就是雷锋精神疗法",
         maxTextNum: 200,
         position: "center",
-        duration: 3000
+        duration: 3000,
       });
       //判断如果当前为同一人则直接进行投保人赋值
       // console.log("%c 提交数据", "color:green;", this.modelRadio11);
@@ -402,7 +393,7 @@ export default {
           "111111111亲我额人图有有哦鹏啊是的发个好将库在先长吧年吗请求！看看发顺丰粉丝地方粉丝地方发顺丰就是雷锋精神疗法",
         maxTextNum: 10,
         position: "center",
-        duration: 3000
+        duration: 3000,
       });
     },
 
@@ -412,7 +403,7 @@ export default {
         content: "功能暂未开放，敬请期待",
         // cancelText: '取消',
         confirmText: "确定",
-        onConfirm: () => console.log("[Dialog.alert] confirm clicked")
+        onConfirm: () => console.log("[Dialog.alert] confirm clicked"),
       });
     },
     workClick() {
@@ -433,7 +424,7 @@ export default {
       const params = {
         messageType: "REGISTERED",
         receiveDeviceNo: "13455555551",
-        systemId: "APP"
+        systemId: "APP",
       };
       // getVerifyCode(params).then(
       //   //注册
@@ -496,8 +487,8 @@ export default {
           }
         }, 1000);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

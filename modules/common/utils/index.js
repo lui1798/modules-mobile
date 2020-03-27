@@ -35,7 +35,7 @@ const utils = {
   utilsPlugin,
   //码表-移植进行单独导入
   // code,
-  errorCode
+  errorCode,
 };
 
 export default utils;

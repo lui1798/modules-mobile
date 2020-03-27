@@ -5,10 +5,7 @@ date: 2014-12-01
 <template>
   <div class="n22-{{moduleName}}">
     <transition name="n22-base-fade">
-      <router-view
-        v-if="isShowRouterView"
-        class="n22-{{moduleName}}-child-view"
-      ></router-view>
+      <router-view v-if="isShowRouterView" class="n22-{{moduleName}}-child-view"></router-view>
     </transition>
   </div>
 </template>
@@ -39,7 +36,7 @@ export default {
   watch: {},
   data() {
     return {
-      isShowRouterView: false
+      isShowRouterView: false,
     };
   },
   methods: {
@@ -47,7 +44,7 @@ export default {
     //...mapMutations([//提交vuex-state更改样例
     //    'USER_INFO',
     //]),
-  }
+  },
 };
 </script>
 

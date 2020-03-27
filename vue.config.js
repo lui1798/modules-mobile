@@ -140,6 +140,8 @@ module.exports = {
         config.resolve.alias
             .set('@@', resolve('modules/common'));
         config.resolve.alias
+            .set('@t', resolve('modules/common/utils/tool'));
+        config.resolve.alias
             .set('@m', resolve('modules'));
         
         //进行处理html中挂在的cdn--创建模块的时候会进行询问是否挂载cdn-默认是挂载

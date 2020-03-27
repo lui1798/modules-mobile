@@ -1,1 +1,27 @@
-[{"category":"basic","name":"Basic","text":"基础","list":[]},{"category":"business","list":[{"name":"demo","path":"/demo","text":"例子","desc":"测试例子","port":"8180"},{"name":"proposalBook","path":"/proposalBook","text":"建议书模块","desc":"建议书展示模块","port":"8181"}]}]
+[
+    {
+        "category": "basic",
+        "name": "Basic",
+        "text": "基础",
+        "list": []
+    },
+    {
+        "category": "business",
+        "list": [
+            {
+                "name": "demo",
+                "path": "/demo",
+                "text": "例子",
+                "desc": "测试例子",
+                "port": "8180"
+            },
+            {
+                "name": "proposalBook",
+                "path": "/proposalBook",
+                "text": "建议书模块",
+                "desc": "建议书展示模块",
+                "port": "8181"
+            }
+        ]
+    }
+]

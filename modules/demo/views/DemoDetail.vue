@@ -15,12 +15,6 @@ import TabList from "../components/tabList/TabList";
 import mescrollSwiperNav from "../components/mescrollSwiperNav/mescroll-swiper-nav";
 
 export default {
-  ...createDemoModule("demo-demo-detail", [
-    ActionBarDemo,
-    NativeDemo,
-    GotoDemo,
-    TabList,
-    mescrollSwiperNav
-  ])
+  ...createDemoModule("demo-demo-detail", [ActionBarDemo, NativeDemo, GotoDemo, TabList, mescrollSwiperNav]),
 };
 </script>

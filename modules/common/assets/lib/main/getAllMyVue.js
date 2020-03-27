@@ -4,21 +4,15 @@ export default {
       screenWidth: document.documentElement.clientWidth,
       screenHeight: document.documentElement.clientHeight,
       allHeadTopPx:
-        window.utils.ui.isIPhoneX ||
-        window.utils.ui.isIPhoneXSMax ||
-        window.utils.ui.isIPhoneXR
+        window.utils.ui.isIPhoneX || window.utils.ui.isIPhoneXSMax || window.utils.ui.isIPhoneXR
           ? 88
-          : window.navigator.platform === "iPhone" &&
-            (window.cordova || window.globalConfig.platform == "phoneWeb")
+          : window.navigator.platform === "iPhone" && (window.cordova || window.globalConfig.platform == "phoneWeb")
           ? 64
-          : 44,
+          : 64,
       allHeadTopPxVideo:
-        window.utils.ui.isIPhoneX ||
-        window.utils.ui.isIPhoneXSMax ||
-        window.utils.ui.isIPhoneXR
+        window.utils.ui.isIPhoneX || window.utils.ui.isIPhoneXSMax || window.utils.ui.isIPhoneXR
           ? 0
-          : window.navigator.platform === "iPhone" &&
-            (window.cordova || window.globalConfig.platform == "phoneWeb")
+          : window.navigator.platform === "iPhone" && (window.cordova || window.globalConfig.platform == "phoneWeb")
           ? 20
           : 0,
       dealPxToVw: px => {
@@ -33,7 +27,7 @@ export default {
       runningEnvironment: window.globalConfig.runningEnvironment,
       routeParams: this.getRouteParams(),
       transitionTime: 300,
-      isVirtualKeyboardProduct: true //产品组件区是否开启自定义虚拟键盘
+      isVirtualKeyboardProduct: true, //产品组件区是否开启自定义虚拟键盘
     };
   },
   methods: {
@@ -51,9 +45,7 @@ export default {
               window.location.href = `${window.location.origin}/${module}/#/${url}/`;
             }
           } else if (moi === json[1].list.length - 1) {
-            console.error(
-              `>>>>模块/build/assets/module.json配置中,不存在当前${module}模块，请检查！！！`
-            );
+            console.error(`>>>>模块/build/assets/module.json配置中,不存在当前${module}模块，请检查！！！`);
             this.$router.push(`/404`).catch(err => {
               console.error(err);
             });
@@ -71,11 +63,9 @@ export default {
           });
         } else {
           if (url.indexOf("/") > -1 || type === "push") {
-            this.$router
-              .push(`${url.startsWith("/") ? "" : "/"}${url}`)
-              .catch(err => {
-                console.log(err);
-              });
+            this.$router.push(`${url.startsWith("/") ? "" : "/"}${url}`).catch(err => {
+              console.log(err);
+            });
           } else {
             this.$router.push({ name: url }).catch(err => {
               console.error(err);
@@ -86,6 +76,20 @@ export default {
     },
     back(urlName, moduleList, fullUrl, type) {
       console.log("点击返回=", urlName);
+      if (urlName && urlName === "hybrid-back") {
+        try {
+          var hybrid = `hybrid://MAJumpModule:401/invoke?${JSON.stringify({
+            url: "",
+            type: "99",
+          })}`;
+          // console.log("hybrid", hybrid);
+          // console.log(window.MAPlugin);
+          window.MAPlugin && window.MAPlugin.hybridCallAction(hybrid, null, null);
+        } catch (error) {
+          console.log("%c error", "color:red", error);
+        }
+        return;
+      }
       // utils.ui.closeLoadding()
       // 如果url存在 则跳转到对应的位置
       if (typeof urlName === "string" && urlName) {
@@ -97,20 +101,12 @@ export default {
               if (moduleList && moduleList.lenght > 0) {
                 if (moduleList.indexOf(routerList[i])) {
                   this.$router.go(routerList[i]);
-                  console.log(
-                    "%c 找出最近的位置-并跳转到位置",
-                    "color:green;",
-                    ""
-                  );
+                  console.log("%c 找出最近的位置-并跳转到位置", "color:green;", "");
                   return false;
                 }
               } else {
                 this.$router.go(-i);
-                console.log(
-                  "%c 找出最近的位置-并跳转到位置",
-                  "color:green;",
-                  ""
-                );
+                console.log("%c 找出最近的位置-并跳转到位置", "color:green;", "");
                 return false;
               }
               return false;
@@ -151,6 +147,6 @@ export default {
       } else {
         return "";
       }
-    }
-  }
+    },
+  },
 };

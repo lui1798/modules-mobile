@@ -4,7 +4,7 @@
 exports.getNpmParams = function() {
   let params = {
     buildModule: "",
-    buildPlatform: ""
+    buildPlatform: "",
   };
   if (process.env.npm_config_argv) {
     let npmParams = JSON.parse(process.env.npm_config_argv).original;

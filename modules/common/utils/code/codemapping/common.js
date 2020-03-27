@@ -36,17 +36,17 @@ const common = {
   // "address": "address",// 住址地址
   comProvince: "address", // 通讯地址
   holderBirthDate: {
-    defaultValue: new Date()
+    defaultValue: new Date(),
   },
   insuredBirthDate: {
-    defaultValue: new Date()
+    defaultValue: new Date(),
   },
 
   //产品相关
   chargeWay: {
     //缴费方式
     options: "payType",
-    defaultValue: "payTypeCode"
+    defaultValue: "payTypeCode",
   },
   // "chargeType": {//缴费期间类型
   //     "options": "payType",
@@ -55,7 +55,7 @@ const common = {
   chargePeriod: {
     //缴费期间
     options: "payTime",
-    defaultValue: "payTimeCode"
+    defaultValue: "payTimeCode",
   },
   // "coverageType": {//保障期间类型
   //     "options": "payType",
@@ -64,37 +64,37 @@ const common = {
   coveragePeriod: {
     //保障期间
     options: "insureTime",
-    defaultValue: "insureTimeCode"
+    defaultValue: "insureTimeCode",
   },
   drawAge: {
     //领取年龄
     options: "drawAge",
-    defaultValue: "drawAgeCode"
+    defaultValue: "drawAgeCode",
   },
   drawType: {
     //领取年龄方式
     options: "drawType",
-    defaultValue: "drawTypeCode"
+    defaultValue: "drawTypeCode",
   },
   overdue: {
     //保费逾期未付
     options: "overdue",
-    defaultValue: "overdueCode"
+    defaultValue: "overdueCode",
   },
   amount: {
     //保额
     defaultValue: "amount",
-    options: "amountList"
+    options: "amountList",
   },
   premium: {
     //保费
-    defaultValue: "premium"
+    defaultValue: "premium",
   },
   dividend: {
     //红利领取方式
     defaultValue: "dividend",
-    options: "dividendList"
-  }
+    options: "dividendList",
+  },
 
   // "holderCertificateType":"certificateType",
   // {//投保人证件类型

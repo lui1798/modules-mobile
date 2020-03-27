@@ -1,14 +1,15 @@
 const logger = require("./logger"); // 自定义工具-用于日志打印
 const { getNpmParams } = require("./npm-params"); // 获取打包命令参数
+// path
+const path = require("path");
+const CWD = process.cwd();
 //debug-测试模块打包参数--调试时候将上面注释-下面放开
 // const getNpmParams = function() {
 //   return {
 //     buildModule: ["demo", "home"]
 //   };
 // };
-const buildModule = getNpmParams().buildModule[
-  process.env.myModules === undefined ? 0 : process.env.myModules
-]; // 当前打包命令中的打包模块-数组
+const buildModule = getNpmParams().buildModule[process.env.myModules === undefined ? 0 : process.env.myModules]; // 当前打包命令中的打包模块-数组
 const fs = require("fs"); // 文件模块
 
 // console.log("%c getNpmParams", "color:#00CD00", getNpmParams());
@@ -43,11 +44,7 @@ exports.getPages = function() {
     title: process.env.VUE_APP_NAME || "vue",
     // 在这个页面中包含的块，默认情况下会包含
     // 提取出来的通用 chunk 和 vendor chunk。
-    chunks: [
-      "chunk-vendors",
-      "chunk-common",
-      `${buildModule}Index` || "commonIdex"
-    ]
+    chunks: ["chunk-vendors", "chunk-common", `${buildModule}Index` || "commonIdex"],
   };
   logger.log("输出pages " + JSON.stringify(pages));
   return pages;
@@ -73,15 +70,10 @@ exports.getBuildModuleList = function() {
  * html挂载cdn处理
  */
 exports.dealHtmlCdn = function(config) {
-  let cdn = {
-    js: [
-      "https://cdn.jsdelivr.net/npm/vue@2.6.11",
-      "https://unpkg.com/vue-router@3.1.5/dist/vue-router.js",
-      "https://unpkg.com/vuex@3.1.2"
-    ]
-  };
+  const jsonCdn = require(path.resolve(CWD, `./modules/${buildModule}/html/cdn.json`));
+  let cdn = jsonCdn;
   //只处理生产-因为本地运行会需要进行log调试
-  if (process.env.NODE_ENV === "production") {
+  if (cdn && process.env.NODE_ENV === "production") {
     //处理cdn
     logger.log("开始处理" + buildModule + "模块cdn");
     config.plugin(`html-${buildModule}Index`).tap(args => {

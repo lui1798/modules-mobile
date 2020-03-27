@@ -126,7 +126,7 @@ const cache = {
     //   "当前localStorage使用容量为" + (size / 1024).toFixed(2) + "KB"
     // );
     return (size / 1024).toFixed(2);
-  }
+  },
 };
 
 export default cache;

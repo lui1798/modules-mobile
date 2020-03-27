@@ -41,20 +41,20 @@ export default {
   encrypt: function(A, str) {
     var encrypted = TripleDES.encrypt(str, A ? EncUtf8.parse(A) : this.keyHex, {
       mode: ModeECB,
-      padding: PadPkcs7
+      padding: PadPkcs7,
     });
     return encrypted.ciphertext.toString(EncBase64);
   },
   decrypt: function(A, str) {
     var decrypted = TripleDES.decrypt(
       {
-        ciphertext: EncBase64.parse(str)
+        ciphertext: EncBase64.parse(str),
       },
       A ? EncUtf8.parse(A) : this.keyHex,
       {
         mode: ModeECB,
-        padding: PadPkcs7
-      }
+        padding: PadPkcs7,
+      },
     );
     return decrypted.toString(EncUtf8);
   },
@@ -63,9 +63,7 @@ export default {
     // : Base64.encode(JSON.stringify(str).replace(/\//g, "*"));
     return A
       ? EncBase64.stringify(EncUtf8.parse(str.replace(/\//g, "*")))
-      : EncBase64.stringify(
-          EncUtf8.parse(JSON.stringify(str).replace(/\//g, "*"))
-        );
+      : EncBase64.stringify(EncUtf8.parse(JSON.stringify(str).replace(/\//g, "*")));
   },
   base64Decode: function(A, str) {
     // ? Base64.decode(str).replace(/\*/g, "/")
@@ -82,5 +80,5 @@ export default {
     // let ss = mymd5(window.globalConfig.signKey, str);
     let ss = HmacMD5(str, window.globalConfig.signKey);
     return ss;
-  }
+  },
 };
