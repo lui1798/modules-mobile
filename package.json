@@ -36,7 +36,7 @@
     ]
   },
   "dependencies": {
-    "al-mobile": "0.0.15",
+    "al-mobile": "0.0.16",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "eruda": "^2.2.1",
