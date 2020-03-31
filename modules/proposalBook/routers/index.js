@@ -107,9 +107,11 @@ router.beforeEach((to, from, next) => {
 });
 router.afterEach((to, from) => {
   NProgress.done();
-  setTimeout(() => {
-    store.commit("IS_SHOW_ROUTER_VIEW", true);
-  }, 10);
+  if (to.name!==null && from.name!==null) {
+    setTimeout(() => {
+      store.commit("IS_SHOW_ROUTER_VIEW", true);
+    }, 10);
+  }
 });
 
 function callback() {

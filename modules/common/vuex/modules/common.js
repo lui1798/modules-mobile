@@ -3,6 +3,7 @@ import utils from "@@/utils";
 // 	getUser,
 // 	getAddressList
 // } from '@/service/getData'
+import _throttle from "lodash/throttle";
 
 /**
  * 注意
@@ -211,10 +212,10 @@ const mutations = {
     state.showFooter = flag;
   },
   // 加载子router--默认不展示
-  [types.IS_SHOW_ROUTER_VIEW](state, flag) {
+  [types.IS_SHOW_ROUTER_VIEW]: _throttle(function(state, flag) {
     console.log("%c common-vuex-加载子router--默认不展示", "color:green;", flag);
     state.isShowRouterView = flag;
-  },
+  }, 600),
   // 设置底部导航属于active状态
   [types.TAB_SELECTED](state, flag) {
     state.tabSelected = flag;

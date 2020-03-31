@@ -9,10 +9,13 @@
       :isToTop="true"
     >
       <n22-field class="insured-info-c" title="被保人信息">
+        <template #head_title_left>
+          <img class="title-left-img" src="../assets/images/list1.png" />
+        </template>
         <n22-input-item
           title="姓名"
-          id="name"
-          name="name"
+          id="insuredname"
+          name="insuredname"
           v-model="insured.name"
           data-vv-as="姓名"
           placeholder="请输入您的姓名"
@@ -67,6 +70,9 @@
         ></n22-drop-select>
       </n22-field>
       <n22-field class="holder-info-c" title="投保人信息" @headerClick="holderIsCheck = !holderIsCheck">
+        <template #head_title_left>
+          <img class="title-left-img" src="../assets/images/list1.png" />
+        </template>
         <div class="action-container" slot="action">
           <n22-icon :name="holderIsCheck ? 'checked' : 'check'"></n22-icon>
         </div>
@@ -74,8 +80,8 @@
           <div v-if="holderIsCheck">
             <n22-input-item
               title="姓名"
-              id="name"
-              name="name"
+              id="holdername"
+              name="holdername"
               v-model="holder.name"
               data-vv-as="姓名"
               placeholder="请输入您的姓名"
@@ -126,6 +132,9 @@
         </transition>
       </n22-field>
       <n22-field title="险种设置">
+        <template #head_title_left>
+          <img class="title-left-img" src="../assets/images/list2.png" />
+        </template>
         <proposal-book-pro-show
           :tableTitle="['险种', '保额', '保费', '交费期']"
           :masterProData="masterProData"
@@ -229,7 +238,7 @@
 </template>
 
 <script>
-//import { mapState, mapActions } from "vuex";//引入组件样例--★★此处为引入vuex推荐此方法引入vuex的各个方法属性使用
+import { mapMutations } from "vuex"; //引入组件样例--★★此处为引入vuex推荐此方法引入vuex的各个方法属性使用
 import {
   AllHead,
   Content,
@@ -395,9 +404,10 @@ export default {
   },
   methods: {
     //...mapActions(["getUserInfo"]),//vuex-action引入样例>>>通过this.getUserInfo()可直接调用获取state数据可异步
-    //...mapMutations([//提交vuex-state更改样例
-    //    'USER_INFO',
-    //]),
+    ...mapMutations([
+      //提交vuex-state更改样例
+      "WORKSHOWURL",
+    ]),
     $_onFocus(name) {
       console.log("%c $_onFocus", "color:green;", name);
       this.$emit("focus", name);
@@ -446,6 +456,9 @@ export default {
       }
     },
     goWordShow() {
+      const outLink =
+        "http://yidongzhanyebj-1254235118.cos.ap-beijing.myqcloud.com/GdUat/product/termsPicture/2MT023.jpg";
+      this.WORKSHOWURL(outLink);
       this.go("proposalBook/wordShow");
     },
     riskMaskClick() {
@@ -482,6 +495,12 @@ export default {
     }
   }
   .proposalBook-data-entry-content {
+    .title-left-img {
+      float: left;
+      height: 19px;
+      width: 16px;
+      margin: 0 10px;
+    }
     .my-birthday-c {
       width: 200px;
       float: left;
@@ -513,7 +532,7 @@ export default {
       }
     }
     .doc-info {
-      margin-bottom: 55px;
+      margin-bottom: 45px;
       .doc-arrea {
         display: flex;
         div {
@@ -539,8 +558,8 @@ export default {
   .action-bar-c {
     ::v-deep .n22-button {
       flex: none;
-      height: 46px;
-      width: 125px;
+      // height: 46px;
+      width: 140px;
       margin-left: 50px;
     }
     .bar-text-desc {
@@ -553,10 +572,10 @@ export default {
       height: auto;
     }
     ::v-deep .n22-button-content span {
-      font-size: 16px;
+      // font-size: 16px;
     }
     .price {
-      margin-top: 5px;
+      // margin-top: 5px;
       // margin-bottom: 8px;
       // height: 50px;
       font-weight: 500;
@@ -564,7 +583,7 @@ export default {
       color: #ff4002;
       small {
         margin-left: 2px;
-        font-size: 16px;
+        font-size: 14px;
         color: #ff4002;
       }
     }

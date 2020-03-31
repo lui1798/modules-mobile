@@ -3,7 +3,7 @@ import globalConfig from "@@/assets/lib/main/getGlobalConfig.js";
 //判定最大版本号=>得到当前系统版本号
 import { getV } from "@@/assets/lib/main/getVersion.js";
 globalConfig.systemVersion = getV(globalConfig);
-globalConfig.isDebug = false;
+globalConfig.isDebug = true;
 window.globalConfig = globalConfig;
 console.log(
   "%c window.globalConfig" + window.globalConfig.httpEnvironment + ">>>>",
@@ -15,7 +15,7 @@ import Vue from "vue";
 import Navigation from "@/components/navigation";
 import App from "./App.vue";
 import router from "./routers";
-import store from "@m/demo/vuex/";
+import store from "@m/proposalBook/vuex/";
 import utils from "@@/utils";
 //注册全局utils
 window.utils = utils;
@@ -71,6 +71,34 @@ if (process.env.NODE_ENV != "production" && window.globalConfig.isDebug) {
     });
 }
 /*↑↑↑↑↑↑↑↑↑--浏览器日志显示debug模式--[配置window.globalConfig.isDebug]--↑↑↑↑↑↑↑↑↑↑↑*/
+console.log("%c window.preformace", "color:green;", window.performance);
+// require("@m/proposalBook/assets/lib/sa/autotrack.js");
+
+var ua = window.navigator.userAgent.toLowerCase(); // 获取判断用的对象
+window.document.addEventListener(
+  "blur",
+  function() {
+    console.log("%c 全局监听input输入框--blur", "color:green;", "全局监听input输入框xxxxxxx");
+    if (!window.cordova && ua.match(/MicroMessenger/i) == "micromessenger") {
+      setTimeout(() => {
+        let ua = navigator.userAgent.toLowerCase();
+        let u = navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+        if (ua.match(/MicroMessenger/i) == "micromessenger" && !!u) {
+          //在iphone 微信中
+          let currentPosition, timer;
+          let speed = 1; //页面滚动距离
+          timer = setInterval(function() {
+            currentPosition = document.documentElement.scrollTop || document.body.scrollTop;
+            currentPosition -= speed;
+            window.scrollTo(0, currentPosition); //页面向上滚动
+            clearInterval(timer);
+          }, 1);
+        }
+      }, 200);
+    }
+  },
+  true,
+);
 
 Vue.config.productionTip = false;
 

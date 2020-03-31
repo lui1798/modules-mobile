@@ -1,11 +1,29 @@
 <template>
   <div class="proposalBook-pro-list">
-    <al-all-head backUrl="hybrid-back" title="产品">
+    <al-all-head back-url="hybrid-back" title="产品">
+      <template slot="left-children">
+        <transition name="n22-base-fade">
+          <span @click="goProposalList" class="prolist-small" v-if="isShowSmallSvg">
+            <!-- <img src="../assets/images/family_plan.png" /> -->
+            <img src="../assets/images/proposal_list.png" />
+            <!-- <n22-icon class="prolist-small-svg" name="proccess" size="lg"></n22-icon>
+            <n22-icon class="prolist-small-svg" name="edit" size="lg"></n22-icon> -->
+          </span>
+        </transition>
+      </template>
       <div slot="head_bottom">
-        <!-- <div class="my-head-top">
-          <div>aaa</div>
-          <div>aaa</div>
-        </div> -->
+        <!-- <transition name="n22-base-fade"> -->
+        <div v-if="!isShowSmallSvg" class="my-head-top">
+          <!-- <div>
+            <img src="../assets/images/family_plan.png" />
+            <span class="type-text">家庭计划</span>
+          </div> -->
+          <div @click="goProposalList">
+            <img src="../assets/images/proposal_list.png" />
+            <span class="type-text">建议书列表</span>
+          </div>
+        </div>
+        <!-- </transition> -->
         <n22-tab-bar
           ref="listMenu"
           v-model="curIndex"
@@ -20,12 +38,13 @@
       class="proposalBook-pro-list-content"
       v-model="curIndex"
       ref="listSwiper"
-      :needSwiper="true"
-      :swiperTop="44"
+      :swiperTop="isShowSmallSvg ? 44 : 143"
       :tabs="tabs"
+      :needSwiper="true"
       :isMescrollDown="true"
       :isToTop="true"
       isMescrollLoadList
+      @handleScroll="handleScroll"
     >
       <common-list
         @commonListGo="commonListGo"
@@ -47,8 +66,9 @@
 <script>
 //import { mapState, mapActions } from "vuex";//引入组件样例--★★此处为引入vuex推荐此方法引入vuex的各个方法属性使用
 import CommonList from "../components/CommonList";
-import { AllHead, ContentList, TabBar } from "al-mobile";
+import { AllHead, ContentList, TabBar, Icon } from "al-mobile";
 import _number from "lodash/number";
+import _throttle from "lodash/throttle";
 
 export default {
   name: "proposal-book-pro-list", //使用xx-xx-xx命名方式具体看操作文档
@@ -64,6 +84,7 @@ export default {
     // [Content.name]: Content,
     [ContentList.name]: ContentList,
     [TabBar.name]: TabBar,
+    [Icon.name]: Icon,
     [CommonList.name]: CommonList,
   },
   computed: {
@@ -86,6 +107,7 @@ export default {
   watch: {},
   data() {
     return {
+      isShowSmallSvg: false,
       curIndex: 0,
       tabs: [
         //content组件对象
@@ -128,11 +150,22 @@ export default {
       ],
     };
   },
+  // eslint-disable-next-line
   methods: {
     //...mapActions(["getUserInfo"]),//vuex-action引入样例>>>通过this.getUserInfo()可直接调用获取state数据可异步
     //...mapMutations([//提交vuex-state更改样例
     //    'USER_INFO',
     //]),
+    handleScroll: _throttle(function(mescroll, y, isUp) {
+      const top = y || document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;
+      // console.log("%c top", "color:green;", top);
+      if (isUp && top > 80) {
+        this.isShowSmallSvg = true;
+      }
+      if (!isUp && top < 20) {
+        this.isShowSmallSvg = false;
+      }
+    }, 200),
     changeTab(item, i, curIndex) {
       console.log("%c curIndex", "color:#00CD00", curIndex);
       this.$refs.listSwiper.$children[0].changeTab && this.$refs.listSwiper.$children[0].changeTab(i);
@@ -140,6 +173,10 @@ export default {
     commonListGo() {
       console.log("%c go", "color:#00CD00", 4);
       this.go("proposalBook/dataEntry");
+    },
+    goProposalList() {
+      console.log("%c go", "color:#00CD00", 4);
+      this.go("proposalBook/bookList");
     },
   },
 };
@@ -155,6 +192,40 @@ export default {
       color: #333333;
       font-size: 16px;
       font-weight: 400;
+    }
+  }
+  .prolist-small {
+    img {
+      height: 20px;
+      width: 20px;
+      margin-top: 12px;
+      margin-left: 10px;
+      position: absolute;
+    }
+    img:nth-child(2) {
+      margin-left: 40px;
+    }
+    .n22-icon {
+      margin-left: 10px;
+    }
+  }
+  .my-head-top {
+    line-height: 30px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    display: flex;
+    img {
+      height: 30px;
+      width: 30px;
+      // margin: 20px 20px 0px;
+    }
+    div {
+      margin: 10px 20px;
+    }
+    .type-text {
+      display: block;
+      font-size: 14px;
+      color: #333333;
     }
   }
   .proposalBook-pro-list-content {

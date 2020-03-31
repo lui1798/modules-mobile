@@ -46,7 +46,7 @@
 <script>
 //import { mapState, mapActions } from "vuex";//引入组件样例--★★此处为引入vuex推荐此方法引入vuex的各个方法属性使用
 import {
-  ContentLoader
+  ContentLoader,
   //   FacebookLoader,
   //   CodeLoader,
   //   BulletListLoader,
@@ -59,11 +59,11 @@ export default {
     typeSvg: {
       //props定义样例
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   components: {
-    ContentLoader
+    ContentLoader,
   },
   computed: {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
@@ -78,7 +78,7 @@ export default {
     //]),
   },
   mounted() {},
-  watch: {}
+  watch: {},
 };
 </script>
 

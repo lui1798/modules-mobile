@@ -12,9 +12,17 @@ import ActionBarDemo from "../components/actionBar/ActionBarDemo";
 import NativeDemo from "../components/native/NativeDemo";
 import GotoDemo from "../components/goTo/GotoDemo";
 import TabList from "../components/tabList/TabList";
+import DecoratorDemo from "../components/decorator/DecoratorDemo";
 import mescrollSwiperNav from "../components/mescrollSwiperNav/mescroll-swiper-nav";
 
 export default {
-  ...createDemoModule("demo-demo-detail", [ActionBarDemo, NativeDemo, GotoDemo, TabList, mescrollSwiperNav]),
+  ...createDemoModule("demo-demo-detail", [
+    ActionBarDemo,
+    NativeDemo,
+    GotoDemo,
+    TabList,
+    DecoratorDemo,
+    mescrollSwiperNav,
+  ]),
 };
 </script>

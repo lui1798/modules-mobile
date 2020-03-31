@@ -18,7 +18,7 @@ const proList = () => import( /* webpackChunkName: "ProList" */ "@m/proposalBook
 const dataEntry = () => import( /* webpackChunkName: "proposalBookdataEntry" */ "@m/proposalBook/views/DataEntry.vue")
 const planShow = () => import( /* webpackChunkName: "proposalBookplanShow" */ "@m/proposalBook/views/PlanShow.vue")
 const wordShow = () => import( /* webpackChunkName: "proposalBookwordShow" */ "@m/proposalBook/views/WordShow.vue")
-/* @init<%const ${viewKebabUpper} = () => import( ${webpackChunkName} "@m/${moduleKebabUpper}/views/${viewKebabNameUpper}.vue")%> */
+const bookList = () => import( /* webpackChunkName: "proposalBookbookList" */ "@m/proposalBook/views/BookList.vue")/* @init<%const ${viewKebabUpper} = () => import( ${webpackChunkName} "@m/${moduleKebabUpper}/views/${viewKebabNameUpper}.vue")%> */
 export default [
     {
         name: "proposalBook",
@@ -94,7 +94,20 @@ export default [
                     isquery: false,//是否可被全局search组件搜索到
                 }
             },
-/* @children<%            {
+            {
+                name: "proposalBookBookList",
+                path: "bookList",
+                component: bookList,
+                meta: {
+                    title: "计划书列表",//标题
+                    login: true, //是否需要登陆权限
+                    transition: true,//是否滑动切换页面
+                    footer: false,//是否需要底部footer菜单
+                    scrollToTop: false,//是否返回顶部
+                    zoom: false,//是否可缩放
+                    isquery: false,//是否可被全局search组件搜索到
+                }
+            },/* @children<%            {
                 name: "${routerName}",
                 path: "${viewKebabUpper}",
                 component: ${viewKebabUpper},

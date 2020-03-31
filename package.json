@@ -1,6 +1,6 @@
 {
   "name": "n22-mobile-vue-mpaas",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "build:codedata": "webpack --config build/build-code-data",
@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "al-mobile": "0.0.16",
+    "alloyfinger": "^0.1.16",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "eruda": "^2.2.1",
@@ -45,6 +46,7 @@
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
     "vue": "^2.6.11",
+    "vue-class-component": "^7.2.3",
     "vue-content-loader": "^0.2.3",
     "vue-lazyload": "^1.3.3",
     "vue-router": "^3.1.5",
@@ -52,6 +54,8 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
     "@vue/cli-plugin-babel": "~4.2.0",
     "@vue/cli-plugin-eslint": "~4.2.0",
     "@vue/cli-plugin-router": "~4.2.0",

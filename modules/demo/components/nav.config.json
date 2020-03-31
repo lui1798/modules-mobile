@@ -23,5 +23,10 @@
         "name": "item1-3",
         "title": "mescroll-swiper-nav",
         "handle": "/demo/demoDetail/?nav=mescroll-swiper-nav"
+    },
+    {
+        "name": "item1-3",
+        "title": "DecoratorDemo",
+        "handle": "/demo/demoDetail/?nav=DecoratorDemo"
     }
 ]

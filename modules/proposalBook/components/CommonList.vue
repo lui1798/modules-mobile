@@ -41,14 +41,14 @@
                     {{ item.className }}
                   </slot>
                 </p>
-                <p v-if="$scopedSlots.top_right_two">
+                <p class="top-right-two" v-if="$scopedSlots.top_right_two">
                   <!-- 上右2 -->
                   <slot name="top_right_two" :item="item" :index="$index">
                     <span class="fas fa-user"></span>
                     <span>{{ item.headmasterName }}</span>
                   </slot>
                 </p>
-                <p v-if="$scopedSlots.top_right_three">
+                <p class="top-right-three" v-if="$scopedSlots.top_right_three">
                   <!-- 上右3 -->
                   <slot name="top_right_three" :item="item" :index="$index"> </slot>
                 </p>
@@ -246,8 +246,8 @@ export default {
     },
   },
   mounted() {
-    console.log("%c this.$slots", "color:green;", this.$slots);
-    console.log("%c this.$scopedSlots", "color:green;", this.$scopedSlots);
+    // console.log("%c this.$slots", "color:green;", this.$slots);
+    // console.log("%c this.$scopedSlots", "color:green;", this.$scopedSlots);
   },
   watch: {
     swiperIndex(val) {

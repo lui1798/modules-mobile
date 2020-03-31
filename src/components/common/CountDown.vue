@@ -1,11 +1,5 @@
 <template>
-  <span
-    class="count_down"
-    :style="textClass"
-    :endTime="endTime"
-    :callback="callback"
-    :endText="endText"
-  >
+  <span class="count_down" :style="textClass" :endTime="endTime" :callback="callback" :endText="endText">
     <!-- <slot name="title">
       <span v-if="!isShowContent">{{ descText }}</span>
     </slot>
@@ -101,7 +95,7 @@ export default {
       min: "",
       sec: "",
       textClass: "",
-      allTime: this.endTime + "-" + this.startTime
+      allTime: this.endTime + "-" + this.startTime,
     };
   },
   components: {
@@ -118,96 +112,76 @@ export default {
     // ss-出入秒数
     endTimeType: {
       type: String,
-      default: "yyyy-mm-dd hh:mm:ss"
+      default: "yyyy-mm-dd hh:mm:ss",
     },
     endText: {
       type: String,
-      default: "已结束"
+      default: "已结束",
     },
     beginText: {
       type: String,
-      default: "进行中"
+      default: "进行中",
     },
     descText: {
       type: String,
-      default: "倒计时："
+      default: "倒计时：",
     },
     endTextClass: {
       type: Object,
       default: () => {
         return {
-          color: "#999999"
+          color: "#999999",
         };
-      }
+      },
     },
     onGoingTextClass: {
       type: Object,
       default: () => {
         return {
-          color: "#4091fb"
+          color: "#4091fb",
         };
-      }
+      },
     },
     beginTextClass: {
       type: Object,
       default: () => {
         return {
-          color: "#ffab3f"
+          color: "#ffab3f",
         };
-      }
+      },
     },
     timeRemind: {
       type: Array,
       default: () => {
         return [];
-      }
+      },
     },
     callback: {
-      type: Function
+      type: Function,
     },
     // 传入时间格式(yyyy-MM-dd-hh-mm-ss)--默认传入的为dd-hh-mm-ss
     formatProps: {
       type: String,
-      default: "dd-hh-mm-ss"
+      default: "dd-hh-mm-ss",
     },
     anm: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   watch: {
     endTime() {
-      console.log(
-        "%c this.startTime this.endTime",
-        "color:green;",
-        this.startTime + "---" + this.endTime
-      );
-      this.countdowm(
-        this.getDealTime(this.startTime),
-        this.getDealTime(this.endTime),
-        this.nowTime
-      );
-    }
+      console.log("%c this.startTime this.endTime", "color:green;", this.startTime + "---" + this.endTime);
+      this.countdowm(this.getDealTime(this.startTime), this.getDealTime(this.endTime), this.nowTime);
+    },
   },
   mounted() {
-    console.log(
-      "%c this.startTime this.endTime",
-      "color:green;",
-      this.startTime + "---" + this.endTime
-    );
-    this.countdowm(
-      this.getDealTime(this.startTime),
-      this.getDealTime(this.endTime),
-      this.nowTime
-    );
+    console.log("%c this.startTime this.endTime", "color:green;", this.startTime + "---" + this.endTime);
+    this.countdowm(this.getDealTime(this.startTime), this.getDealTime(this.endTime), this.nowTime);
   },
   activated() {
     console.log("%c 当前 CountDown 页面 ", "color:yellow;", "活跃");
-    this.countdowm(
-      this.getDealTime(this.startTime),
-      this.getDealTime(this.endTime),
-      this.nowTime
-    );
+    this.countdowm(this.getDealTime(this.startTime), this.getDealTime(this.endTime), this.nowTime);
   },
   //组件的销毁考虑到正常跳转、返回和历史跳转、返回---需要两个销毁方法进行处理销毁的逻辑
   deactivated() {
@@ -227,10 +201,7 @@ export default {
       let time = "";
       if (stamp) {
         if (typeof stamp == "string") {
-          time =
-            this.endTimeType == "ss"
-              ? new Date(stamp * 1000)
-              : moment(stamp, moment.ISO_8601).toDate();
+          time = this.endTimeType == "ss" ? new Date(stamp * 1000) : moment(stamp, moment.ISO_8601).toDate();
         } else if (typeof stamp == "object") {
           time = stamp;
         }
@@ -282,9 +253,7 @@ export default {
         let nowTime = nowtimestamp ? new Date(nowtimestamp) : new Date();
         //处理传入开始or结束or开始结束时间
         let endtimestamp = endtimepram;
-        let nowtimels = self.getDealTime(
-          nowtimestamp ? new Date(nowtimestamp) : new Date()
-        );
+        let nowtimels = self.getDealTime(nowtimestamp ? new Date(nowtimestamp) : new Date());
         if (starttimepram && starttimepram < endtimepram) {
           if (nowtimels < starttimepram) {
             //现在时间-->开始时间-->结束时间
@@ -306,11 +275,7 @@ export default {
             self.isShowContent = false;
           }
         } else if (starttimepram && starttimepram > endtimepram) {
-          console.log(
-            "%c 开始时间不能大于结束时间",
-            "color:red;",
-            starttimepram + "-" + endtimepram
-          );
+          console.log("%c 开始时间不能大于结束时间", "color:red;", starttimepram + "-" + endtimepram);
           return;
         } else {
           self.textClass = self.beginTextClass;
@@ -365,13 +330,7 @@ export default {
           // self.format = 'yyyy-MM'
           self.isShowContent = true;
           self.content = self.endText;
-          self._callback(
-            parseInt(t / 1000),
-            "end",
-            self.item,
-            self.list,
-            self.index
-          );
+          self._callback(parseInt(t / 1000), "end", self.item, self.list, self.index);
         }
       }, 1000);
     },
@@ -379,8 +338,8 @@ export default {
       if (this.callback && this.callback instanceof Function) {
         this.callback(p, type, item, list, index);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

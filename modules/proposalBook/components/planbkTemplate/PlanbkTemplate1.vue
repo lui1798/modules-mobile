@@ -151,7 +151,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex"; //引入组件样例--★★此处为引入vuex推荐此方法引入vuex的各个方法属性使用
+import { mapState, mapMutations } from "vuex"; //引入组件样例--★★此处为引入vuex推荐此方法引入vuex的各个方法属性使用
 import { Slider, ActionBar, Icon, Button } from "al-mobile";
 import productDefObject from "../../assets/data/productDefObject";
 import ProShow from "../ProShow";
@@ -392,10 +392,14 @@ export default {
   },
   methods: {
     //...mapActions(["getUserInfo"]),//vuex-action引入样例>>>通过this.getUserInfo()可直接调用获取state数据可异步
-    //...mapMutations([//提交vuex-state更改样例
-    //    'USER_INFO',
-    //]),
+    ...mapMutations([
+      //提交vuex-state更改样例
+      "WORKSHOWURL",
+    ]),
     goWordShow() {
+      const outLink =
+        "http://yidongzhanyebj-1254235118.cos.ap-beijing.myqcloud.com/GdUat/product/termsPicture/2MT023.jpg";
+      this.WORKSHOWURL(outLink);
       this.go("proposalBook/wordShow");
     },
     seePlanbkTb() {

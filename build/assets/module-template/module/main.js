@@ -14,7 +14,7 @@ import Vue from "vue";
 import Navigation from "@/components/navigation";
 import App from "./App.vue";
 import router from "./routers";
-import store from "@m/demo/vuex/";
+import store from "@m/{{moduleKebabUpper}}/vuex/";
 import utils from "@@/utils";
 //注册全局utils
 window.utils = utils;
