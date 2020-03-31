@@ -40,7 +40,7 @@ npm run int -m-{module} -p-{platform}
 - 同`int`模式
 
 
-## 创建模块
+## 创建模、页面、vuex块命令
 - 运行
   - [ ] `npm run create`
 - 选择

@@ -36,7 +36,7 @@
     ]
   },
   "dependencies": {
-    "al-mobile": "0.0.16",
+    "al-mobile": "0.0.17",
     "alloyfinger": "^0.1.16",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
