@@ -1,9 +1,7 @@
 {
   "js": [
-    "static/platform_www/cordova.js",
     "https://cdn.jsdelivr.net/npm/vue@2.6.11",
     "https://cdn.jsdelivr.net/npm/vue-router@3.1.5",
-    "https://cdn.jsdelivr.net/npm/vuex@3.1.2",
-    "https://cdn.jsdelivr.net/npm/pinch-zoom-js@2.3.4"
+    "https://cdn.jsdelivr.net/npm/vuex@3.1.2"
   ]
 }

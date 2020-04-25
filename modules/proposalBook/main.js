@@ -3,7 +3,7 @@ import globalConfig from "@@/assets/lib/main/getGlobalConfig.js";
 //判定最大版本号=>得到当前系统版本号
 import { getV } from "@@/assets/lib/main/getVersion.js";
 globalConfig.systemVersion = getV(globalConfig);
-globalConfig.isDebug = true;
+globalConfig.isDebug = false;
 window.globalConfig = globalConfig;
 console.log(
   "%c window.globalConfig" + window.globalConfig.httpEnvironment + ">>>>",
