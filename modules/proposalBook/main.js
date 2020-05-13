@@ -1,3 +1,10 @@
+const linkSupported = ref => {
+  const link = document.createElement("link");
+  const relList = link.relList;
+  if (!relList || !relList.supports) return false;
+  return relList.supports(ref);
+};
+alert(`当前运行环境是否支持preload: ${linkSupported("preload")}, 浏览器是否支持prefetch: ${linkSupported("prefetch")}`);
 //创建全局globalConfig对象
 import globalConfig from "@@/assets/lib/main/getGlobalConfig.js";
 //判定最大版本号=>得到当前系统版本号
