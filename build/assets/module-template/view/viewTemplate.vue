@@ -2,12 +2,13 @@
 title: 页面模版
 date: 2014-12-01
 ---
+
 <template>
   <div class="{{moduleKebabUpper}}-{{viewName}}">
     <al-all-head></al-all-head>
     <al-content
       class="{{moduleKebabUpper}}-{{viewName}}-content"
-      ref="insureMessage"
+      ref="contentMessage"
       :tabs="tabs"
       :isMescrollDown="true"
       :isToTop="true"
