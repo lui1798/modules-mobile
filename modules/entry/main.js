@@ -5,7 +5,7 @@ if (globalConfig.httpEnvironment === "local") {
   globalConfig.signKey = "N2APPINTERFACE2018#@!%99"; // 接口数据交互加密key
   globalConfig.comId = "N2O2O20180912"; // 保险公司编码--保险公司IdN2O2O20180912
   globalConfig.caChannel = "999999"; //2018-07-16新增额外渠道--测试账号为99999--生产账户为30010320
-  globalConfig.rootUrl = "http://31h08091d5.qicp.vip:48152/api"; //process.env.VUE_APP_ROOTURL
+  // globalConfig.rootUrl = "http://31h08091d5.qicp.vip:48152/api"; //process.env.VUE_APP_ROOTURL
   globalConfig.rootFileUrl = "http://show.n22.com.cn:8787/fileservice"; //文件上传地址
   globalConfig.wechatUrl = "http://show.n22.com.cn:8783";
   globalConfig.gBucket = "spoongsb-1253997188";
