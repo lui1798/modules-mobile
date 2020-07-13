@@ -1,3 +1,6 @@
+::v-deep .mescroll{
+  overflow: hidden;
+}
 @media only screen and (min-width: $max-width) {
   .router-view{
     max-width: $max-width;

@@ -263,6 +263,7 @@ export default {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
   },
   mounted() {
+    alert("版本：0.0.4");
     console.log("%c basic-infor-more-entry>生命周期>mounted", "color:green;", "");
     this.initPageData();
   },
@@ -317,7 +318,7 @@ export default {
           mescroll: null,
           list: [],
           isListInit: false,
-          isMescrollUp: true,
+          isMescrollUp: false,
           upCallbackFun: "",
         },
       ],
