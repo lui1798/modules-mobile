@@ -11,11 +11,6 @@
         ></router-view>
       </navigation>
     </transition>
-    <transition name="n22-base-fade">
-      <div class="app_login_popup" v-if="showlogin">
-        <!-- <login v-if="showlogin"></login> -->
-      </div>
-    </transition>
   </div>
 </template>
 
