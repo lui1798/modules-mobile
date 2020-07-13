@@ -11,14 +11,6 @@
         ></router-view>
       </navigation>
     </transition>
-    <n22-tab-picker
-      title="请选择"
-      describe="请选择您所在的省份、城市"
-      large-radius
-      :data="address"
-      v-model="show"
-      @change="handleChange"
-    />
   </div>
 </template>
 
@@ -28,8 +20,6 @@ const __isEmpty = require("@t/isEmpty");
 import { getToken } from "@@/utils/auth";
 import Login from "@@/views/Login";
 import __getUrlParams from "@t/getUrlParams";
-import { address } from "./assets/code/codes.js";
-import { TabPicker } from "al-mobile";
 
 export default {
   name: "join-company",
@@ -39,13 +29,10 @@ export default {
     };
   },
   components: {
-    [TabPicker.name]: TabPicker,
     [Login.name]: Login,
   },
   data() {
     return {
-      show: true,
-      address,
       showlogin: false,
       isShowFooter: false,
       transitionName: "",
@@ -55,7 +42,7 @@ export default {
     };
   },
   created() {
-    alert("版本：0.0.7");
+    alert("版本：0.0.9");
     // console.log("%c this.$store.state", "color:green;", this.$store.state);
     console.log("%c App-router", "color:green;", this.$route.query);
     //判断是否分享挂载token
@@ -64,7 +51,6 @@ export default {
     }
   },
   methods: {
-    handleChange({ options }) {},
     ...mapMutations([
       //提交vuex-state更改样例
       "USER_INFO",

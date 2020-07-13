@@ -1,15 +1,8 @@
 <template>
   <div class="entry-basic-infor-more-entry">
-    <n22-tab-picker
-      title="请选择"
-      describe="请选择您所在的省份、城市"
-      large-radius
-      :data="addressOptions"
-      v-model="show"
-      @change="handleChange"
-    />
     <al-all-head></al-all-head>
     <al-content
+      v-show="!show"
       class="entry-basic-infor-more-entry-content"
       ref="insureMessage"
       :tabs="tabs"
@@ -188,6 +181,14 @@
         </div>
       </div>
     </al-content>
+    <n22-tab-picker
+      title="请选择"
+      describe="请选择您所在的省份、城市"
+      large-radius
+      :data="addressOptions"
+      v-model="show"
+      @change="handleChange"
+    />
   </div>
 </template>
 
