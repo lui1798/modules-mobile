@@ -1,13 +1,13 @@
-::v-deep .mescroll{
-  overflow: hidden;
-}
+// ::v-deep .mescroll{
+//   overflow: hidden;
+// }
 @media only screen and (min-width: $max-width) {
   .router-view{
     max-width: $max-width;
   }
 }
 .router-view{
-  // overflow-y: hidden;
+  overflow-y: hidden;
   max-width: $max-width;
   width: 100%;
   background-color: $theme-bg-color;
