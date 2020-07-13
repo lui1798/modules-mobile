@@ -44,6 +44,10 @@ const createType = [
     desc: "创建页面"
   },
   {
+    key: "service",
+    desc: "创建请求接口"
+  },
+  {
     key: "vuex",
     desc: "创建vuex"
   },
@@ -338,7 +342,7 @@ function syncToComponentJson(answers) {
   let l = json[index].list.length;
   let nextPort = "8180";
   if(json[index].list[l-1]&&json[index].list[l-1].port){
-    nextPort = Number(json[index].list[l-1].port)+1;
+    nextPort = 8180 + json[index].list.length;
   }
   json[index].list.push({
     name: answers.moduleKebabUpper,
@@ -501,11 +505,11 @@ function init(answersFirst) {
         type: 'list',
         choices: [
           "basic",
-          "business",
+          "modules",
         ],
         name: 'componentType',
         message: '模块类型',
-        default: "business",
+        default: "modules",
       },
       {
         type: 'input',

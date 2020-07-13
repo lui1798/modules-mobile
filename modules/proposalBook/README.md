@@ -1,3 +1,5 @@
-# 模块proposal-book
+---
+title: 模块proposal-book
+---
 
-[简介:建议书展示模块]
+建议书展示模块

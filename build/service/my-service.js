@@ -2,6 +2,7 @@ const fs = require("fs"); // 文件模块
 const chalk = require("chalk");
 const logger = require("../lib/logger"); // 自定义工具-用于日志打印
 const path = require("path");
+const { exec } = require("child_process");
 // path
 const CWD = process.cwd();
 // const MODULE_PATH = path.resolve(CWD, "./modules");
@@ -9,6 +10,7 @@ const COMPONENT_JSON = path.resolve(CWD, "./build/assets/modules.json");
 const { semver, done, info, error } = require("@vue/cli-shared-utils");
 const requiredVersion = require("../../package.json").engines.node;
 const { getBuildModuleList } = require("../lib/auto-modules"); //获取打包命令
+const { getNpmParams } = require("../lib/npm-params"); // 获取打包命令参数
 
 if (!semver.satisfies(process.version, requiredVersion)) {
   error(
@@ -65,10 +67,10 @@ const dealRun = function(modulels) {
     process.env.myModules = i;
     run();
   } else {
-    info(`成功:${successModules.length} 失败:${errorModules.length} 共:${i}`);
-    done("打包成功模块：" + chalk.bgGreen.black(successModules));
+    info(`成功: ${successModules.length}, 失败: ${errorModules.length}, 共: ${i}`);
+    done(`打包成功模块：${chalk.bgGreen.black(successModules)}`);
     errorModules.length > 0 &&
-      error("打包失败模块:" + chalk.bgRed.black(errorModules) + ",请检查日志并重新打相关模块包！");
+      error(`打包失败模块:${chalk.bgRed.black(errorModules)},请检查日志并重新打包相关模块包！`);
     // process.exit();
   }
 };
@@ -130,16 +132,35 @@ if (command === "build" || command === "lint") {
       );
       process.exit();
     }
+  } else {
+    error(`模块${getBuildModuleList()[i]}启动失败！！！`);
+    logger.warn("请在运行命令后面拼接 -m- 加模块名称");
+    process.exit();
   }
   let port;
-  for (let i = 0; i < json[1].list.length; i++) {
-    const mo = json[1].list[i];
-    if (mo.name === startModule) {
-      port = mo.port;
-      break;
+  if (getNpmParams().buildPort) {
+    port = getNpmParams().buildPort;
+  } else {
+    for (let i = 0; i < json[1].list.length; i++) {
+      const mo = json[1].list[i];
+      if (mo.name === startModule) {
+        port = mo.port;
+        break;
+      }
     }
   }
   console.log(chalk.bgMagenta.black(" >>>>>>>>>>>启动模块" + getBuildModuleList()[0] + " >>>>>>>>>>>"));
+  // 启动开发文档
+  if (getNpmParams().buildSite) {
+    exec("cd site && npm start", (error, stdout, stderr) => {
+      if (error) {
+        console.error(`开发文档启动执行出错: ${error}`);
+        return;
+      }
+      logger.success(`stdout: ${stdout}`);
+      logger.success(`stderr: ${stderr}`);
+    });
+  }
   // info("启动模块" + getBuildModuleList()[0]);
   if (port) {
     args.port = port;

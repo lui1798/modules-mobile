@@ -238,8 +238,8 @@
         var mtx = element.matrix3D
           .identity()
           .appendTransform(
-            element.translateX,
-            element.translateY,
+            element.scaleX === 1 ? 0 : element.translateX,
+            element.scaleY === 1 ? (element.translateY > 0 ? 0 : element.translateY) : element.translateY,
             element.translateZ,
             element.scaleX,
             element.scaleY,
@@ -259,7 +259,7 @@
           "px) matrix3d(" +
           Array.prototype.slice.call(mtx.elements).join(",") +
           ")";
-        console.log("%c mtx", "color:#00CD00", element.style.height);
+        // console.log("%c mtx", "color:#00CD00", element.style.height);
       },
     );
 
@@ -270,7 +270,7 @@
         "px) matrix3d(" +
         Array.prototype.slice.call(element.matrix3D.elements).join(",") +
         ")";
-      console.log("%c mtx2222", "color:#00CD00", element.style.top);
+      // console.log("%c mtx2222", "color:#00CD00", element.style.top);
     });
 
     element.matrix3D = new Matrix3D();

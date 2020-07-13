@@ -2,7 +2,7 @@
  * @Author: aliang
  * @Date: 2018-01-06 21:45:22
  * @Last Modified by: aliang
- * @Last Modified time: 2019-12-17 19:14:43
+ * @Last Modified time: 2020-05-21 17:54:44
  */
 import {
   // address,
@@ -16,9 +16,10 @@ import {
   education,
   bank,
   nation,
+  relation,
   product,
 } from "./json";
-const CodeData = {
+const codeData = {
   // 性别
   sex: [
     { text: "男", value: "1" },
@@ -26,6 +27,7 @@ const CodeData = {
   ],
   // 民族
   nation: nation,
+  relation: relation,
   // 银行
   bank: bank,
   cardType: [
@@ -35,8 +37,8 @@ const CodeData = {
   ],
   // 是否有社保
   social: [
-    { text: "有", value: "1" },
-    { text: "无", value: "2" },
+    { text: "是", value: true },
+    { text: "否", value: false },
   ],
   //婚姻
   marriage: [
@@ -89,4 +91,4 @@ const CodeData = {
 //如果有json进行合并
 // Object.assign(CodeData, jsonModal);
 
-export default CodeData;
+export default codeData;

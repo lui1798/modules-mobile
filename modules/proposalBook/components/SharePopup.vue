@@ -3,7 +3,8 @@
     <div class="types_container">
       <a class="needsclickllll link_to" v-for="item in shareModal" :key="item.id">
         <figure class="needsclickxxxxxxx al_figure" @click="$_onBtnClick($event, item)">
-          <n22-icon class="back_icon_share" :name="item.svg" size="lg"></n22-icon>
+          <n22-icon v-if="icon" class="back_icon_share" :name="item.svg" size="lg"></n22-icon>
+          <img v-else :src="item.svg" />
           <figcaption>{{ item.desc }}</figcaption>
         </figure>
       </a>
@@ -12,20 +13,26 @@
 </template>
 
 <script>
-//import { mapState, mapActions } from "vuex";//引入组件样例--★★此处为引入vuex推荐此方法引入vuex的各个方法属性使用
+import { mapState } from "vuex"; //引入组件样例--★★此处为引入vuex推荐此方法引入vuex的各个方法属性使用
 import { Popup, Icon } from "al-mobile";
 export default {
   name: "share-popup", //使用xx-xx-xx命名方式具体看操作文档
   props: {
     value: {
-      //props定义样例
       type: Boolean,
       default: false,
     },
     shareModal: {
-      //props定义样例
       type: Array,
       required: true,
+    },
+    wechatMessage: {
+      type: [String, Object],
+      default: "",
+    },
+    icon: {
+      type: Array,
+      required: false,
     },
   },
   components: {
@@ -34,6 +41,7 @@ export default {
   },
   computed: {
     //...mapState(["common"])//引入vuex state样例>>>可通过this.common.userInfo获取vuex-state数据
+    ...mapState(["proposalBook"]),
   },
   mounted() {},
   watch: {
@@ -89,48 +97,99 @@ export default {
     //]),
     //share
     $_onBtnClick(event, action) {
-      action.onClick && action.onClick(event, action);
+      if (action.onClick) {
+        action.onClick(event, action);
+      } else {
+        this.wechatShare(event, action);
+      }
       this.$emit("click", event, action);
     },
-    // $_onBtnClick(item) {
-    //   console.log("%c item", "color:green;", item);
-    //   if (item.type === "wechat") {
-    //     let shareMes = {
-    //       message: {
-    //         title: item.title || "N22",
-    //         description: item.description || "欢迎使用",
-    //         thumb: item.thumb || "http://show.n22.com.cn:8787/fileservice/local/preview/2019/8/a9cfb159-1b0a-4b4c-9c59-8cfbc0e46636.jpg?ts=1571825848&sign=453208254bcc75c4132d81249fb0c3cc",
-    //         mediaTagName: item.mediaTagName||"TEST-TAG-001",
-    //         messageExt: item.messageExt||"1",
-    //         messageAction: item.messageAction||"<action>dotalist</action>",
-    //         media: {
-    //           type: Wechat.Type.WEBPAGE,
-    //           webpageUrl: item.url
-    //         }
-    //       },
-    //       scene: Wechat.Scene.SESSION
-    //     };
-    //     // 微信分享 好友
-    //     window.utils.native
-    //       .wechatShare(shareMes)
-    //       .then(
-    //         result => {
-    //           utils.ui.toast({
-    //             message: result,
-    //             position: "middle",
-    //             duration: 3000
-    //           });
-    //         },
-    //         error => {
-    //           utils.ui.toast({
-    //             message: error,
-    //             position: "middle",
-    //             duration: 3000
-    //           });
-    //         }
-    //       );
-    //   }
-    // }
+    shareStart(action) {
+      console.log("%c window.Wechat", "color:#00CD00", window.Wechat);
+      if (!(this.wechatMessage && this.wechatMessage.webpageUrl)) {
+        console.log("%c 请注入分享对象", "color:red;", "");
+        return;
+      }
+      let shareMessage = this.wechatMessage || {
+        title: "保险规划书",
+        description: "石磊峰规划师为您制定的专属规划书",
+        webpageUrl:
+          "https://mitphone.sunlife-everbright.com:8010/com.ifp.ipartner/proposalBook/#/proposalBook/planShow?isShare=2",
+        thumb: "http://yidongzhanyebj-1254235118.cos.ap-beijing.myqcloud.com/GdPre/product/listPicture/NPT016.jpg",
+      };
+      console.log("%c shareMessage", "color:green;", shareMessage);
+      if (this.os === "ios" && !(window.GDIJSBridge || window.WebViewJavascriptBridge)) {
+        if (!window.Wechat) {
+          window.location.href = shareMessage.webpageUrl;
+        } else {
+          window.Wechat.share({
+            message: {
+              title: shareMessage.title,
+              description: shareMessage.description,
+              thumb:
+                "https://xinyidongzhanyeguangsubao-st-1254235118.cos.ap-beijing.myqcloud.com/Default/share.jpg" ||
+                shareMessage.thumb,
+              mediaTagName: "链接",
+              media: {
+                type: window.Wechat.Type.WEBPAGE,
+                webpageUrl: shareMessage.webpageUrl,
+              },
+            },
+            scene: action.type === "wechat" ? window.Wechat.Scene.SESSION : window.Wechat.Scene.TIMELINE, // share to Timeline
+          });
+        }
+      } else {
+        this.native.shareWeChat(
+          {
+            platform: action.type === "wechat" ? "1" : "2",
+            webPageUrl: shareMessage.webpageUrl,
+            iconUrl:
+              "https://xinyidongzhanyeguangsubao-st-1254235118.cos.ap-beijing.myqcloud.com/Default/share.jpg" ||
+              shareMessage.thumb,
+            title: shareMessage.title,
+            desc: shareMessage.description,
+          },
+          content => {
+            alert(JSON.stringify(content));
+          },
+          error => {
+            alert(error);
+          },
+        );
+      }
+    },
+    wechatShare(event, action) {
+      console.log("%c action", "color:#00CD00", action);
+      this.$DataPoint("", {
+        value: { aa: { module: "PROPOSAl", eventId: "1005", createBy: this.proposalBook.agentCode }, postParms: true },
+      });
+      if (action.type === "wechat" || action.type === "wechatf") {
+        this.shareStart(action);
+      } else {
+        if (window.GDIJSBridge || window.WebViewJavascriptBridge) {
+          this.native.sendMsg(
+            {
+              phoneNumber: "18311260338",
+              msgInfo:
+                "石磊峰规划师为您制定的专属规划书:https://yidongzhanyebj-1254235118.cos.ap-beijing.myqcloud.com/GdSit/pdf.jpg",
+            },
+            content => {
+              alert(JSON.stringify(content));
+            },
+            error => {
+              alert(error);
+            },
+          );
+        } else {
+          this.$dialog.alert({
+            title: "提示",
+            content: "功能暂未开放敬请期待！",
+            confirmText: "确定",
+            onConfirm: () => {},
+          });
+        }
+      }
+    },
   },
 };
 </script>

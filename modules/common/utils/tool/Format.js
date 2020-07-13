@@ -13,6 +13,7 @@ Date.prototype.Format = function(fmt = "yyyy-MM-dd") {
     "q+": Math.floor((this.getMonth() + 3) / 3), //季度
     S: this.getMilliseconds(), //毫秒
   };
+  console.log("%c o o o o o ", "color:green;", o);
   if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, String(this.getFullYear()).substr(4 - RegExp.$1.length));
   for (let k in o)
     if (new RegExp("(" + k + ")").test(fmt))

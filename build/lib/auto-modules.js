@@ -54,7 +54,7 @@ exports.getPages = function() {
  * 获取模块配置输出目录
  */
 exports.getOutputDir = function() {
-  let outputDir = `../dist/${buildModule}`;
+  let outputDir = `${getNpmParams().buildGDist ? "./gsb_app_dist" : "../gsb_app_dist"}/${buildModule}`;
   logger.log("当前打包输出目录>>>>>>>>  " + outputDir);
   return outputDir;
 };

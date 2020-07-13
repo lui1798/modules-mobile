@@ -7,6 +7,7 @@
           v-wechat-title="$route.meta.title"
           :key="activeDate"
           class="router-view"
+          id="router-view"
           ref="appChildren"
         ></router-view>
       </navigation>

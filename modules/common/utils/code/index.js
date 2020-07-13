@@ -14,10 +14,10 @@ import codeData from "allCodeData";
 //   });
 //******2020-01-02修改 codeData取不到值
 // require('allCodeData')
-console.log("%c commonCodeDatacommonCodeData", "color:green;", window.allCodeData);
+console.log("%c commonCodeDatacommonCodeData", "color:green;", codeData);
 // console.log("%c commonCodeDatacommonCodeData", "color:green;", allCodeData);
 
-const code = {};
+let code = {};
 /**
  * 扩充后台对象的options码表
  * @param {*} 对象 流程化的字段对象-fieldCode为key-fieldValue为value-item
@@ -25,7 +25,7 @@ const code = {};
  * @return retValue
  */
 //eslint-disable-next-line
-code.getCodeData = function(item, retValue, type, product, value, whereFrom) {
+code.getCodeData = function(type, item, retValue, product) {
   // console.log('%c 当前字段','color:green;',item,product,retValue,value);
   if (item) {
     if (
@@ -266,10 +266,19 @@ code.getCodeTextOrVal = function(tv, codeType, getType = "text", comType = "valu
   }
   for (let ti = 0; ti < codeArray.length; ti++) {
     const tie = codeArray[ti];
-    if (tie[comType] === tv) {
-      return tie[getType];
-    } else if (tie[getType] === tv) {
-      return tie[comType];
+    //如果后台返回的是跟码表的字符串相同的number类型，则进行转换==比对
+    if (typeof tie[comType] === "string" && typeof tv === "number") {
+      if (tie[comType] == tv) {
+        return tie[getType];
+      } else if (tie[getType] == tv) {
+        return tie[comType];
+      }
+    } else {
+      if (tie[comType] === tv) {
+        return tie[getType];
+      } else if (tie[getType] === tv) {
+        return tie[comType];
+      }
     }
   }
 };

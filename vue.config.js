@@ -44,7 +44,7 @@ module.exports = {
                 maxAssetSize: 1024*1024,
             };
             config.externals = {//提高首屏加载速度--使用cdn加载，不将以下库打入chunk-vendors文件。从而减小chunk-vendors文件大小。
-                'allCodeData': 'allCodeData',
+                'allCodeData': 'AllCodeData',
                 'jquery': 'jQuery',
                 'vue': 'Vue',
                 'vue-router': 'VueRouter',
@@ -80,7 +80,7 @@ module.exports = {
         } else {
             // 为开发环境修改配置...
             config.externals = {//提高首屏加载速度--使用cdn加载，不将以下库打入chunk-vendors文件。从而减小chunk-vendors文件大小。
-                'allCodeData': 'allCodeData',
+                'allCodeData': 'AllCodeData',
                 'jquery': 'jQuery',
             };
             return {
@@ -88,6 +88,11 @@ module.exports = {
             }
         }
     },
+    transpileDependencies: [
+        'fuse.js',
+        'js-native-n22',
+        'al-mobile',
+    ],
     pages: getPages(),
     //----默认情况下 babel-loader 会忽略所有 node_modules 中的文件。如果你想要通过 Babel 显式转译一个依赖，可以在这个选项中列出来。
     //跨域设置
@@ -95,7 +100,7 @@ module.exports = {
         // 设置代理
         proxy: {
             '/apn': {
-                target: 'http://show.n22.com.cn:8785/',
+                target: 'http://3f0566757y.51vip.biz/',
                 changeOrigin: true,
                 ws: true,
                 pathRewrite: {
@@ -143,7 +148,7 @@ module.exports = {
             .set('@t', resolve('modules/common/utils/tool'));
         config.resolve.alias
             .set('@m', resolve('modules'));
-        
+
         //进行处理html中挂在的cdn--创建模块的时候会进行询问是否挂载cdn-默认是挂载
         dealHtmlCdn(config);
     },

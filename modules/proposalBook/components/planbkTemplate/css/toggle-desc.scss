@@ -1,0 +1,35 @@
+/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓--我是分割箭头--[展开]--↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
+.toggle-desc {
+  position: relative;
+  display: block;
+  height: 22px;
+  padding-top: 10px;
+  text-align: center;
+  outline: none;
+}
+// 展开
+.toggle-table {
+  padding: 5px 0;
+  margin: -1px 15px 0;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  outline: 0;
+  color: #333;
+  > span {
+    font-size: 13px;
+    color: #333333;
+    vertical-align: middle;
+  }
+  .svg_icon {
+    height: 16px;
+    width: 16px;
+    margin-top: 3px;
+    position: absolute;
+    margin-left: 3px;
+    .n22-icon {
+      color: #34324B;
+      font-weight: 600;
+    }
+  }
+}
+/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑--我是分割箭头--[展开]--↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/

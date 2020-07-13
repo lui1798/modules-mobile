@@ -1,0 +1,28 @@
+export default {
+  "drawType":{
+    "year": "年领",
+    "month": "月领"
+  },
+  "payFreq": {
+    "single": "趸交",
+    "year": "年交",
+    "month": "月交",
+    "season": "季交",
+    "half_year": "半年交",
+    "none": "-",
+    "period": "期交",
+    "parent": "同主险",
+    "insure": "同保险期间",
+    "exempt": "豁免期间",
+    "exempt1": "豁免期间",
+    "draw": "交至领取",
+    "period_1": "月交",
+    "period_3": "季度交",
+    "period_6": "半年度交",
+    "to_full": "终身",
+    "to_101": "终身",
+    "full_105": "终身",
+    "full_106": "终身",
+    "full_110": "终身"
+  }
+}

@@ -1,11 +1,11 @@
 <template>
   <div id="proposal-book-app" ref="app" class="proposal-book-app nprogress-wrap app_class" :class="_module">
-    <al-all-head
+    <!-- <al-all-head
       v-if="common.isShowRouterView && transitionName === 'slide-in'"
       :headBottom="false"
       :zIndex="5"
       :title="$route.meta.title"
-    />
+    /> -->
     <transition :name="transitionName">
       <navigation>
         <router-view
@@ -13,9 +13,16 @@
           v-wechat-title="$route.meta.title"
           :key="activeDate"
           class="router-view"
+          id="router-view"
           ref="appChildren"
         ></router-view>
       </navigation>
+    </transition>
+    <transition name="n22-base-fade">
+      <div class="app_login_popup" v-if="showlogin">
+        <login v-if="httpEnvironment === 'local' || $route.query.isLogin == 8"></login>
+        <n22-invalid-html v-else></n22-invalid-html>
+      </div>
     </transition>
   </div>
 </template>
@@ -23,6 +30,11 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import { AllHead } from "al-mobile";
+const __isEmpty = require("@t/isEmpty");
+import { getToken } from "@@/utils/auth";
+import Login from "@@/views/Login";
+import Invalid from "@@/views/errorPage/Invalid";
+import __getUrlParams from "@t/getUrlParams";
 
 export default {
   name: "proposal-book",
@@ -33,9 +45,12 @@ export default {
   },
   components: {
     [AllHead.name]: AllHead,
+    [Login.name]: Login,
+    [Invalid.name]: Invalid,
   },
   data() {
     return {
+      httpEnvironment: window.globalConfig.httpEnvironment,
       showlogin: false,
       isShowFooter: false,
       transitionName: "",
@@ -49,7 +64,8 @@ export default {
     console.log("%c App-router", "color:green;", this.$route.query);
     //判断是否分享挂载token
     if (this.$route && this.$route.query && this.$route.query.isShare == "2") {
-      window.utils.cache.set("token", this.$route.query.token);
+      // window.utils.cache.set("token", this.$route.query.token);
+      window.globalConfig.platform = "web";
     }
   },
   methods: {
@@ -68,17 +84,14 @@ export default {
   },
   computed: {
     ...mapState(["common"]),
-    getUserInfo() {
-      return this.$store.state.common.userInfo;
-    },
     getshowlogin() {
-      return this.$store.state.common.showlogin;
+      return this.common.showlogin;
     },
     getisRouterAlive() {
-      return this.$store.state.common.isRouterAlive;
+      return this.common.isRouterAlive;
     },
     getTransition() {
-      return this.$store.state.toRouter.meta.transition;
+      return this.toRouter.meta.transition;
     },
     _module: {
       get: function() {
@@ -103,7 +116,13 @@ export default {
       },
     },
   },
-  mounted() {
+  async mounted() {
+    if (__isEmpty(await getToken()) && __getUrlParams("isShare") != 2) {
+      this.showlogin = true;
+    }
+    setTimeout(() => {
+      window.StatusBar && window.StatusBar.styleDefault();
+    }, 3000);
     console.log("%c this.$route", "color:green;", this.$route);
     this.$navigation.on("forward", (to, from) => {
       console.log("%c window.performance--TO", "color:green;", window.performance);
@@ -145,9 +164,7 @@ export default {
     // },
     getshowlogin(value) {
       console.log("%c 监听到getshowlogin改变xxxx", "color:#FF00FF;", value);
-      // if (this.common&&window.utils.utilsPlugin.isEmptyObject(this.common.userInfo)&&this.$route.meta.login) {
       this.showlogin = value;
-      // }
     },
     getisRouterAlive(value) {
       console.log("%c 监听到getisRouterAlive改变xxxx", "color:#FF00FF;", value);
@@ -158,16 +175,10 @@ export default {
         this.activeDate = new Date().getTime();
       });
     },
-    "$store.state.common.routers.to.meta.transition"(newval) {
+    "common.routers.to.meta.transition"(newval) {
       console.log("%c 监听到 getTransition 改变xxxx", "color:#FF00FF;", newval);
       if (newval && typeof newval == "string") {
         this.transitionName = newval;
-      }
-    },
-    getUserInfo(value) {
-      console.log("%c 监听到 getUserInfo 改变xxxxx", "color:#FF00FF;", value);
-      if (!window.utils.utilsPlugin.isEmptyObject(value)) {
-        this.showlogin = false;
       }
     },
   },

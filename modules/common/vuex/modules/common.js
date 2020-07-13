@@ -71,7 +71,7 @@ const state = {
     to: {},
     from: {},
   }, // routers路由信息
-  showlogin: false, // 是否显示登陆
+  showlogin: true, // 是否显示登陆
   httpInvalid: false, // 接口请求成功错误标识
   isRouterAlive: true, // 是否重载页面
   showsearch: false, // 是否显示搜索
@@ -158,6 +158,7 @@ const mutations = {
   },
   // 设置显示是否登陆
   [types.SHOWLOGIN](state, showlogin) {
+    console.log("%c 全局common设置显示是否登陆", "color:green;", showlogin);
     state.showlogin = showlogin;
   },
   // 接口请求成功错误标识更改

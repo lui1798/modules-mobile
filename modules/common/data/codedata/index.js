@@ -4,12 +4,12 @@
  * @Last Modified by: aliang
  * @Last Modified time: 2019-12-18 18:11:04
  */
-import commonCodeData from "./common";
+import codeData from "./common";
 
 //如果有不同模块的进行合并
-Object.assign(commonCodeData);
+// Object.assign(commonCodeData);
 
-var allCodeData = commonCodeData;
+// let allCodeData = JSON.parse(JSON.stringify(commonCodeData));
 // module.exports = allCodeData;
 // window.allCodeData = commonCodeData
-export default allCodeData;
+export default codeData;

@@ -11,7 +11,7 @@
             <slot name="top_left_all" :item="item" :index="$index">
               <li>
                 <!-- <img src="static/images/train2/test/zhanwei.jpg"> -->
-                <img v-lazy="item.imgPath" />
+                <img v-lazy="`${imgPathTag}${item[imgPath]}`" />
                 <div v-if="item.istag" :style="{ top: '3.458vw', 'background-color': '#4091fb' }" class="common_status">
                   已参加
                 </div>
@@ -55,7 +55,7 @@
                 <!-- 上右3-默认 -->
                 <span v-else class="top-price" :class="[item.money == '0' ? 'price_c' : 'price_c_no']">
                   <span v-if="item.money != '0'" class="tag">¥</span>
-                  <n22-amount
+                  <!-- <n22-amount
                     class="bottom_right_all_amount"
                     v-if="isInitNumAnm"
                     :value="item.money"
@@ -66,7 +66,15 @@
                     :duration="800"
                     transition
                     amountNumSty
-                  ></n22-amount>
+                  ></n22-amount> -->
+                  <slot
+                    v-if="$scopedSlots.top_right_three_money"
+                    name="top_right_three_money"
+                    :item="item"
+                    :index="$index"
+                  >
+                  </slot>
+                  <span v-else class="money">{{ item.money }}</span>
                   <span class="tag-wz">起</span>
                 </span>
               </li>
@@ -150,6 +158,14 @@ export default {
     swiperIndex: {
       //   type: String,
       default: "0",
+    },
+    imgPath: {
+      type: String,
+      default: "imgPath",
+    },
+    imgPathTag: {
+      type: String,
+      default: "",
     },
   },
   components: {
@@ -248,6 +264,7 @@ export default {
   mounted() {
     // console.log("%c this.$slots", "color:green;", this.$slots);
     // console.log("%c this.$scopedSlots", "color:green;", this.$scopedSlots);
+    console.log("%c this.$listeners", "color:green;", this.$listeners);
   },
   watch: {
     swiperIndex(val) {
@@ -366,6 +383,10 @@ export default {
   .tag {
     font-size: 12px;
     margin-right: 1px;
+  }
+  .money {
+    font-size: 19px;
+    font-weight: 500;
   }
   .tag-wz {
     font-size: 12px;

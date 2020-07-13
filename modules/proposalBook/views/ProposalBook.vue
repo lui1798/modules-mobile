@@ -7,6 +7,18 @@
 </template>
 
 <script>
+//注入模块级别this
+import Vue from "vue";
+import { Toast, Dialog } from "al-mobile";
+Vue.prototype.$toast = Toast;
+Vue.prototype.$dialog = Dialog;
+// Vue.prototype.$actionsheet = ActionSheet
+
+import DataPoint from "../directive/DataPoint";
+console.log(DataPoint);
+Vue.directive("data-point", DataPoint);
+Vue.prototype.$DataPoint = DataPoint.inserted;
+
 //import { mapState, mapActions } from "vuex";//引入组件样例--★★此处为引入vuex推荐此方法引入vuex的各个方法属性使用
 export default {
   name: "proposal-book", //使用xx-xx-xx命名方式具体看操作文档

@@ -35,7 +35,7 @@ function importExcel(filename, allFileDir) {
   const fileDir = path.resolve(allFileDir, filename);
   wb = XLSX.readFile(fileDir, {
     //手动转化
-    type: "base64"
+    type: "base64",
   });
   //wb.SheetNames[0]是获取Sheets中第一个Sheet的名字
   //wb.Sheets[Sheet名]获取第一个Sheet的数据
@@ -56,10 +56,7 @@ function createFile(files, allFileDir, outputLibDir) {
       }
       // const fileLibDir = path.resolve(outputLibDir, file.replace("xls", "js"))
       // fs.createWriteStream(fileLibDir).write('export const insuredBankType = '+JSON.stringify(data))
-      const fileLibDir = path.resolve(
-        outputLibDir,
-        file.replace("xls", "json")
-      );
+      const fileLibDir = path.resolve(outputLibDir, file.replace("xls", "json"));
       fs.createWriteStream(fileLibDir).write(JSON.stringify(data));
     });
 
@@ -71,14 +68,8 @@ function createFile(files, allFileDir, outputLibDir) {
 }
 
 function getFileLsit(answers) {
-  const allFileDir = path.resolve(
-    __dirname,
-    "./assets/codetables/" + answers.module + "/excel"
-  );
-  const outputLibDir = path.resolve(
-    __dirname,
-    "../src/data/codedata/" + answers.module + "/json"
-  );
+  const allFileDir = path.resolve(__dirname, "./assets/codetables/" + answers.module + "/excel");
+  const outputLibDir = path.resolve(__dirname, "../modules/common/data/codedata/" + answers.module + "/json");
   let pathName = path.resolve(allFileDir, "");
   fs.readdir(pathName, function(err, files) {
     var dirs = [];
@@ -90,7 +81,7 @@ function getFileLsit(answers) {
       }
       console.log(pathName);
       fs.stat(path.join(pathName, files[i]), function(err, data) {
-        if (data.isFile()) {
+        if (data.isFile() && !files[i].startsWith("~$")) {
           dirs.push(files[i]);
         }
         iterator(i + 1);
@@ -110,8 +101,8 @@ function getModuleList(answers) {
         choices: files.splice(0, files.length - 1),
         name: "module",
         message: "Which module do you want to run?",
-        required: true
-      }
+        required: true,
+      },
     ];
     return Promise.resolve(promptparamType);
   });

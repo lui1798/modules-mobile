@@ -5,13 +5,17 @@ import utils from "@@/utils";
  * token直接存储在storage中 永久缓存
  */
 const types = {
-  WORKSHOWURL: "WORKSHOWURL",//文件展示url
-/* @init<%  ${vuexType}: "${vuexType}",//${vuexDesc}%> */
+  WORDSHOW: "WORDSHOW", //文件展示url
+  LSPRODATA: "LSPRODATA", //临时险种信息缓存
+  /* @init<%  ${vuexType}: "${vuexType}",//${vuexDesc}%> */
+  AGENTCODE: "AGENTCODE", //代理人工号
 };
 
 const state = {
-  workShowUrl: utils.cache.get("vuex-workShowUrl") || "",//文件展示url
-/* @init<%  ${vuexStateKebabUpper}: "${vuexStateDefault}",//${vuexDesc}%> */
+  wordShow: utils.cache.get("vuex-wordShow") || "", //文件展示url
+  lsProData: utils.cache.get("vuex-lsProData") || "", //临时险种信息缓存
+  /* @init<%  ${vuexStateKebabUpper}: "${vuexStateDefault}",//${vuexDesc}%> */
+  agentCode: "",
 };
 
 const getters = {};
@@ -19,12 +23,21 @@ const getters = {};
 const actions = {};
 
 const mutations = {
-  [types.WORKSHOWURL](state, value) {
-    console.log('%c 文件展示url', 'color:green;backgroundColor:black;', value);
-    utils.cache.set("vuex-workShowUrl", value);
-    state.workShowUrl = value;
+  [types.AGENTCODE](state, value) {
+    console.log("%c 代理人工号", "color:green;", value);
+    state.agentCode = value;
   },
-/* @moreLine<%  [types.${vuexType}](state, value) {
+  [types.WORDSHOW](state, value) {
+    console.log("%c 文件展示对象", "color:green;backgroundColor:black;", value);
+    utils.cache.set("vuex-wordShow", value);
+    state.wordShow = value;
+  },
+  [types.LSPRODATA](state, value) {
+    console.log("%c 临时险种信息缓存", "color:green;", value);
+    utils.cache.set("vuex-lsProData", value);
+    state.lsProData = value;
+  },
+  /* @moreLine<%  [types.${vuexType}](state, value) {
     console.log('%c ${vuexDesc}', 'color:green;', value);
     state.${vuexStateKebabUpper} = value;
   },moreLine%> */
@@ -34,5 +47,5 @@ export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 };

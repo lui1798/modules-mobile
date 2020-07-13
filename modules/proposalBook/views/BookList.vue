@@ -53,7 +53,7 @@ export default {
   },
   mounted() {
     console.log("%c book-list>生命周期>mounted", "color:green;", "");
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 3; i++) {
       let index = 0;
       this.tabs[index].list.push({
         name: `光大永明福运连年(A款)${this.tabs[index].label}`,

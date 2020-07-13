@@ -3,11 +3,28 @@
         "category": "basic",
         "name": "Basic",
         "text": "基础",
-        "list": []
+        "list": [
+            {
+                "name": "common",
+                "path": "/common",
+                "text": "公共基础模块",
+                "desc": "内置公共基础模块",
+                "port": "8100"
+            }
+        ]
     },
     {
-        "category": "business",
+        "category": "modules",
+        "name": "Modules",
+        "text": "模块",
         "list": [
+            {
+                "name": "brokerageKpi",
+                "path": "/brokerageKpi",
+                "text": "佣金考核",
+                "desc": "佣金考核模块",
+                "port": "8183"
+            },
             {
                 "name": "demo",
                 "path": "/demo",
@@ -16,11 +33,32 @@
                 "port": "8180"
             },
             {
+                "name": "entry",
+                "path": "/entry",
+                "text": "入职管理",
+                "desc": "入职管理",
+                "port": "8182"
+            },
+            {
                 "name": "proposalBook",
                 "path": "/proposalBook",
                 "text": "建议书模块",
                 "desc": "建议书展示模块",
                 "port": "8181"
+            },
+            {
+              "name": "renewal",
+              "path": "/renewal",
+              "text": "续期管理",
+              "desc": "续期管理",
+              "port": "8184"
+            },
+            {
+              "name": "riskAssess",
+              "path": "/riskAssess",
+              "text": "风险评估",
+              "desc": "风险评估-分析",
+              "port": "8185"
             }
         ]
     }

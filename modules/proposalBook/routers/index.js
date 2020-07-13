@@ -2,8 +2,11 @@
 import Vue from "vue";
 import Router from "vue-router";
 import store from "@m/proposalBook/vuex";
-import NProgress from "nprogress";
-NProgress.configure({ showSpinner: false });
+// import NProgress from "nprogress";
+import NProgress from "@@/components/nprogress/nprogress.js";
+NProgress.configure({
+  showSpinner: false,
+});
 
 Vue.use(Router);
 const router = new Router({
@@ -59,6 +62,21 @@ const router = new Router({
     }
   ]
 });
+
+/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓--我是分割箭头--[解决-发到服务器导致文件加载失败的情况-暂未验证]--↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
+router.onError((error) => {
+  console.error(error);
+  const pattern = /Loading chunk (.*) failed/g;
+  const isChunkLoadFailed = error.message.match(pattern);
+  const targetPath = router.history.pending.fullPath;
+  if (isChunkLoadFailed) {
+    router.replace(targetPath);
+  }else{
+    console.error(error);
+  }
+});
+/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑--我是分割箭头--[解决-发到服务器导致文件加载失败的情况-暂未验证]--↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
+
 console.log("%c router", "color:green;", router);
 // 监听路由变化
 router.beforeEach((to, from, next) => {
@@ -101,12 +119,16 @@ router.beforeEach((to, from, next) => {
     setTimeout(() => {
       store.commit("IS_SHOW_ROUTER_VIEW", false);
     }, 600);
-    NProgress.start();
-    next();
+    NProgress.start(window.globalConfig.isHistoryBack);
+    // $('#loading-head').css('display', 'block');
+    setTimeout(() => {
+      next();
+    }, 100);
   }
 });
 router.afterEach((to, from) => {
   NProgress.done();
+  // $('#loading-head').css('display', 'none');
   if (to.name!==null && from.name!==null) {
     setTimeout(() => {
       store.commit("IS_SHOW_ROUTER_VIEW", true);

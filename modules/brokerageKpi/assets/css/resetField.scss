@@ -1,0 +1,73 @@
+::v-deep .n22-icon-back {
+  color: #ffba03;
+}
+::v-deep .n22-nav-bar {
+  background-color: #ffffff!important;
+}
+::v-deep .n22-tab-bar{
+  background-color: #ffffff;
+}
+::v-deep .n22-tab-bar-item {
+  color: rgba(102, 102, 102, 1);
+}
+::v-deep .n22-tab-bar-item.is-active {
+  color: rgba(51, 51, 51, 1) !important;
+}
+::v-deep .n22-nav-bar__left {
+  padding-right: 20px;
+}
+::v-deep .n22-nav-bar__title {
+  color: #333333;
+  font-size: 19px;
+}
+::v-deep .size-xs span {
+  font-weight: 400;
+}
+
+::v-deep .n22-field-item-content-line:before {
+  border: none;
+}
+
+::v-deep .n22-field {
+  color: #333333;
+  margin: 12px;
+  border-radius: 5px;
+  .n22-field-header {
+    margin-left: -20px;
+    .n22-field-heading {
+      // border-left: 3px solid #ffba01;
+      // border-radius: 1.5px;
+      background-color: #ffffff;
+    }
+    .n22-field-title {
+      color: #333333;
+      margin-left: 8px;
+      font-size: 18px;
+    }
+  }
+  .n22-show-required-star {
+      margin-left: -7px;
+      padding-right: 0;
+  }
+  .n22-field-item-title {
+    color: #565656;
+    margin-left: 5px;
+  }
+  .n22-radio {
+    margin: 10px 0 10px 10px;
+  }
+  .n22-drop-select {
+    .n22-field-item-right {
+      border: 1px solid #dadada;
+      padding: 6px;
+      border-radius: 3px;
+      .n22-field-item-right-addon {
+        font-size: 12px;
+        // color: #dadada;
+      }
+      .n22-icon {
+        color: #cccccc;
+      }
+    }
+  }
+}

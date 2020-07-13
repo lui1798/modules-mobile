@@ -1,5 +1,17 @@
 //创建全局globalConfig对象
 import globalConfig from "@@/assets/lib/main/getGlobalConfig.js";
+if (globalConfig.httpEnvironment === "local") {
+  globalConfig.isDebug = false;
+  globalConfig.signKey = ""; // 接口数据交互加密key
+  globalConfig.comId = "N2O2O20180912"; // 保险公司编码--保险公司IdN2O2O20180912
+  globalConfig.caChannel = "999999"; //2018-07-16新增额外渠道--测试账号为99999--生产账户为30010320
+  // globalConfig.rootUrl = "http://follow.com:9000/api"; //process.env.VUE_APP_ROOTURL
+  // globalConfig.rootUrl = "http://3f0566757y.51vip.biz/api"; //process.env.VUE_APP_ROOTURL
+  globalConfig.rootUrl = "https://mitphone.sunlife-everbright.com/api"; //process.env.VUE_APP_ROOTURL
+  // globalConfig.rootFileUrl = 'http://ydpt-int.boc-samsunglife.cn/fileservice/int'; //文件上传地址
+  globalConfig.rootFileUrl = "http://show.n22.com.cn:8787/fileservice"; //文件上传地址
+  globalConfig.wechatUrl = "http://show.n22.com.cn:8783";
+}
 //判定最大版本号=>得到当前系统版本号
 import { getV } from "@@/assets/lib/main/getVersion.js";
 globalConfig.systemVersion = getV(globalConfig);

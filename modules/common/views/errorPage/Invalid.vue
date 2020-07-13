@@ -3,7 +3,7 @@
     <!-- 手写签名测试区 -->
     <!-- <n22-sign ref="signcfun" :data-params="itemObject"></n22-sign> -->
     <!-- 头部信息 -->
-    <al-all-head leftText=" " @click-left="goBack" :zIndex="3" title="链接已失效~ " />
+    <al-all-head leftText=" " @click-left="goBack" :zIndex="3" title="无访问权限~ " />
     <al-content ref="invalid" :headBottom="false">
       <div class="invalid-content">
         <svg-icon icon-class="warning"></svg-icon>
@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      message: "亲爱的用户，您访问的页面已失效，请联系您的销售人员！",
+      message: "无访问权限！",
     };
   },
   methods: {

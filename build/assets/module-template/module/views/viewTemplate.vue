@@ -2,6 +2,7 @@
 title: 页面模版
 date: 2014-12-01
 ---
+
 <template>
   <div class="{{moduleKebabUpper}}-{{viewName}}">
     <al-all-head></al-all-head>
@@ -51,7 +52,7 @@ export default {
           mescroll: null,
           list: [],
           isListInit: false,
-          isMescrollUp: true,
+          isMescrollUp: false,
           upCallbackFun: "",
         },
       ],
