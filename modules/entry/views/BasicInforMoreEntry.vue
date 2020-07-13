@@ -2,7 +2,6 @@
   <div class="entry-basic-infor-more-entry">
     <al-all-head></al-all-head>
     <al-content
-      v-show="!show"
       class="entry-basic-infor-more-entry-content"
       ref="insureMessage"
       :tabs="tabs"
@@ -10,7 +9,7 @@
       :isToTop="true"
     >
       <div class="basic-infor-more-entry-box">
-        <n22-field-item
+        <!-- <n22-field-item
           title="联系地址："
           arrow="arrow-right"
           @click="show = !show"
@@ -22,7 +21,18 @@
           <div slot="right" style="margin-right: 8px;">
             <n22-icon name="right_arrow"></n22-icon>
           </div>
-        </n22-field-item>
+        </n22-field-item> -->
+        <n22-drop-select
+          v-model="personalInformation.contactAddressCode"
+          title="联系地址："
+          pickerTitle="请选择联系地址"
+          :options="addressOptions"
+          ispickerValue="请选择联系地址"
+          type="address"
+          :isAppendTo="true"
+          cutMark=","
+          is-show-required
+        ></n22-drop-select>
         <item-line />
         <n22-input-item
           title="详细地址："
@@ -330,6 +340,7 @@ export default {
     //    'USER_INFO',
     //]),
     next() {
+      console.log("%c this.personalInformation", "color:#00CD00", this.personalInformation);
       let result = this.checkData(this.personalInformation);
       if (result) {
         this.requestUpdateEntryUserInfoTwo(
