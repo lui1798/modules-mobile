@@ -55,7 +55,7 @@ export default {
     };
   },
   created() {
-    alert("版本：0.0.6");
+    alert("版本：0.0.7");
     // console.log("%c this.$store.state", "color:green;", this.$store.state);
     console.log("%c App-router", "color:green;", this.$route.query);
     //判断是否分享挂载token
