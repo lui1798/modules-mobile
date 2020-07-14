@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="" v-show="$route.query.rrweb !== '2'">
     <al-all-head title="action-bar" :headBottom="true"></al-all-head>
     <al-content>
       <n22-field ref="myinput" :isOnlyErrorLine="true">
@@ -235,8 +235,10 @@ import {
   Icon,
 } from "al-mobile";
 import code from "@@/utils/code/";
-import { entryUserEdu } from "@@/service/getData";
+import { login } from "@@/service/getData";
 import simple from "al-mobile/components/picker/demo/data/simple";
+const rrweb = require("rrweb");
+const rrwebPlayer = require("rrweb-player");
 
 export default {
   name: "demo-action-bar-demo",
@@ -264,10 +266,38 @@ export default {
       this.modelDropSelectSingle = "T2019002";
     }, 2000);
     //接口请求
-    this.entryUserEduResGet();
+    // this.entryUserEduResGet();
+    if (this.$route.query.rrweb !== "2") {
+      console.log("%c >>>>>>>>>>>>>>>>!2", "color:#00CD00");
+      let _this = this;
+      rrweb.record({
+        emit(event) {
+          // 将 event 存入 events 数组中
+          // console.log("%c event", "color:#00CD00", event);
+          _this.events.push(event);
+        },
+      });
+
+      // 每 10 秒调用一次 save 方法，避免请求过多
+      this.interval = setInterval(this.save, 10 * 1000);
+    } else {
+      const events = window.utils.cache.get("rrwebEvents").events;
+      new rrwebPlayer.default({
+        target: document.body, // 可以自定义 DOM 元素
+        data: {
+          events,
+        },
+      });
+    }
+  },
+  destroyed() {
+    clearInterval(this.interval);
   },
   data() {
     return {
+      interval: "",
+      startTime: new Date().getTime(),
+      events: [],
       //input
       modelInput0: "",
       modelInput1: "",
@@ -322,7 +352,7 @@ export default {
           onClick: this.onBtnClick,
         },
         {
-          text: "下一步",
+          text: "结束录屏",
           value: "create",
           onClick: this.onBtnClick2,
         },
@@ -330,6 +360,21 @@ export default {
     };
   },
   methods: {
+    // save 函数用于将 events 发送至后端存入，并重置 events 数组
+    save() {
+      let events = this.events;
+      // console.log("%c save-events", "color:green;", events);
+      if (window.utils.cache.get("rrwebEvents")) {
+        const lsbody = window.utils.cache.get("rrwebEvents");
+        events = events.concat(lsbody.events);
+      }
+      let body = JSON.stringify({ events });
+      window.utils.cache.set("rrwebEvents", body);
+      if (new Date().getTime() - this.startTime > 60000) {
+        clearInterval(this.interval);
+        return;
+      }
+    },
     // onBtnClick(event, action) {
     //   Dialog.alert({
     //     content: `${action.text}点击`
@@ -420,14 +465,16 @@ export default {
       // }
     },
     onBtnClick2() {
-      Toast({
-        content:
-          "111111111亲我额人图有有哦鹏啊是的发个好将库在先长吧年吗请求！看看发顺丰粉丝地方粉丝地方发顺丰就是雷锋精神疗法",
-        maxTextNum: 10,
-        position: "center",
-        duration: 3000,
-      });
-      this.entryUserEduResPost();
+      clearInterval(this.interval);
+      this.go("demo/demoDetail?nav=action-bar-demo&rrweb=2", "", "");
+      // Toast({
+      //   content:
+      //     "111111111亲我额人图有有哦鹏啊是的发个好将库在先长吧年吗请求！看看发顺丰粉丝地方粉丝地方发顺丰就是雷锋精神疗法",
+      //   maxTextNum: 10,
+      //   position: "center",
+      //   duration: 3000,
+      // });
+      // this.entryUserEduResPost();
     },
     //get请求
     entryUserEduResGet() {
@@ -439,7 +486,7 @@ export default {
       let testlogin = {
         number: "2",
       };
-      entryUserEdu({ data: testlogin, config: axiosParams, method: "get" }).then(
+      login({ data: testlogin, config: axiosParams, method: "get" }).then(
         data => {
           console.log("%c data--demo", "color:#00CD00", data);
         },
@@ -465,7 +512,7 @@ export default {
         major: "",
         witness: "",
       };
-      entryUserEdu({ data: testlogin, config: axiosParams }).then(
+      login({ data: testlogin, config: axiosParams }).then(
         data => {
           console.log("%c data--demo", "color:#00CD00", data);
         },
@@ -580,5 +627,14 @@ export default {
     font-size: 16px;
     color: #858B9C;
   }
+}
+</style>
+
+<style>
+.replayer-wrapper {
+  transform: scale(1) translate(-2px, -2px) !important;
+}
+.rr-controller {
+  position: absolute;
 }
 </style>
