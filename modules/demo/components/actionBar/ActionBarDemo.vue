@@ -638,6 +638,9 @@ export default {
 .replayer-wrapper {
   transform: scale(1) translate(-2px, -2px) !important;
 }
+.replayer-mouse {
+  background-image: none !important;
+}
 .rr-controller {
   position: absolute;
   background-color: #00ffad;
