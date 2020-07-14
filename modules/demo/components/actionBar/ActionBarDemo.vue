@@ -1,7 +1,7 @@
 <template>
   <div class="" v-show="$route.query.rrweb !== '2'">
-    <al-all-head title="action-bar" :headBottom="true"></al-all-head>
-    <al-content>
+    <!-- <al-all-head title="action-bar" :headBottom="true"></al-all-head> -->
+    <al-content :isAutoTopMargin="false">
       <n22-field ref="myinput" :isOnlyErrorLine="true">
         <n22-input-item
           title="简单输入"
@@ -631,10 +631,10 @@ export default {
 </style>
 
 <style>
-.replayer-wrapper {
+/* .replayer-wrapper {
   transform: scale(1) translate(-2px, -2px) !important;
 }
 .rr-controller {
   position: absolute;
-}
+} */
 </style>
