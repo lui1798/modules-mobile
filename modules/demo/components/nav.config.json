@@ -1,32 +1,37 @@
 [
     {
         "name": "item1-0",
-        "title": "native",
+        "title": "native（原生）",
         "handle": "/demo/demoDetail/?nav=native-demo"
     },
     {
         "name": "item1-1",
-        "title": "actionBar(包含各种UI库表单、表单提交、录屏功能)",
+        "title": "actionBar(ui组件库表单、提交表单、录屏)",
         "handle": "/demo/demoDetail/?nav=action-bar-demo"
     },
     {
         "name": "item1-2",
-        "title": "goTo",
+        "title": "goTo（跳转、模块跳转）",
         "handle": "/demo/demoDetail/?nav=go-to-demo"
     },
     {
         "name": "item1-3",
-        "title": "tabList",
+        "title": "tabList（content-list）",
         "handle": "/demo/demoDetail/?nav=tab-list-demo"
     },
     {
-        "name": "item1-3",
+        "name": "item1-4",
         "title": "mescroll-swiper-nav",
         "handle": "/demo/demoDetail/?nav=mescroll-swiper-nav"
     },
     {
-        "name": "item1-3",
-        "title": "DecoratorDemo",
+        "name": "item1-5",
+        "title": "DecoratorDemo（测试）",
         "handle": "/demo/demoDetail/?nav=DecoratorDemo"
+    },
+    {
+        "name": "item1-6",
+        "title": "EchartDemo（图表）",
+        "handle": "/demo/demoDetail/?nav=echart-demo"
     }
 ]

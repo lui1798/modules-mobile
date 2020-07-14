@@ -9,6 +9,7 @@
 <script>
 import createDemoModule from "../components/create-demo-module";
 import ActionBarDemo from "../components/actionBar/ActionBarDemo";
+import EchartDemo from "../components/echart/EchartDemo";
 import NativeDemo from "../components/native/NativeDemo";
 import GotoDemo from "../components/goTo/GotoDemo";
 import TabList from "../components/tabList/TabList";
@@ -18,6 +19,7 @@ import mescrollSwiperNav from "../components/mescrollSwiperNav/mescroll-swiper-n
 export default {
   ...createDemoModule("demo-demo-detail", [
     ActionBarDemo,
+    EchartDemo,
     NativeDemo,
     GotoDemo,
     TabList,

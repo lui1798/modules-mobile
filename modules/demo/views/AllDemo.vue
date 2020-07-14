@@ -48,6 +48,7 @@ export default {
   },
   mounted() {
     console.log("%c demo-生命周期-mounted", "color:green;background-color:orange;", "");
+    window.utils.cache.set("rrwebEvents", "");
   },
   watch: {},
   data() {

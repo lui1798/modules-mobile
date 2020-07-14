@@ -240,6 +240,20 @@ import simple from "al-mobile/components/picker/demo/data/simple";
 const rrweb = require("rrweb");
 const rrwebPlayer = require("rrweb-player");
 
+import RecordApp from "recorder-core/src/app-support/app";
+//可选开启IOS上微信录音支持，需要引入此文件
+import "recorder-core/src/app-support/app-ios-weixin-support";
+//必须引入的核心。所有文件都需要自行引入，否则app.js会尝试用script来请求需要的这些文件，进而导致错误，引入后会检测到组件已自动加载，就不会去请求了
+import "recorder-core";
+//需要使用到的音频格式编码引擎的js文件统统加载进来
+import "recorder-core/src/engine/mp3";
+import "recorder-core/src/engine/mp3-engine";
+
+//由于大部分情况下ios-weixin的支持需要用到amr解码器，应当把amr引擎也加载进来
+import "recorder-core/src/engine/beta-amr";
+import "recorder-core/src/engine/beta-amr-engine";
+// import mywx from "./ios-weixin-config.js";
+
 export default {
   name: "demo-action-bar-demo",
   components: {
@@ -280,6 +294,8 @@ export default {
 
       // 每 10 秒调用一次 save 方法，避免请求过多
       this.interval = setInterval(this.save, 10 * 1000);
+
+      this.beginREC();
     } else {
       const events = window.utils.cache.get("rrwebEvents").events;
       new rrwebPlayer.default({
@@ -288,8 +304,29 @@ export default {
           events,
         },
       });
+      const blob = window.myblob;
+      if (blob) {
+        var audio = document.createElement("audio");
+        audio.controls = true;
+        document.body.appendChild(audio);
+        //简单利用URL生成播放地址，注意不用了时需要revokeObjectURL，否则霸占内存
+        audio.src = (window.URL || webkitURL).createObjectURL(blob);
+        audio.play();
+      }
     }
   },
+  // updated() {
+  //   console.log("%c >>>>>>>>>>>>>>>>>A", "color:#00CD00");
+  //   const blob = window.myblob;
+  //   if (blob) {
+  //     var audio = document.createElement("audio");
+  //     audio.controls = true;
+  //     document.body.appendChild(audio);
+  //     //简单利用URL生成播放地址，注意不用了时需要revokeObjectURL，否则霸占内存
+  //     audio.src = (window.URL || webkitURL).createObjectURL(blob);
+  //     audio.play();
+  //   }
+  // },
   destroyed() {
     clearInterval(this.interval);
   },
@@ -298,6 +335,7 @@ export default {
       interval: "",
       startTime: new Date().getTime(),
       events: [],
+      rec: "",
       //input
       modelInput0: "",
       modelInput1: "",
@@ -370,10 +408,69 @@ export default {
       }
       let body = JSON.stringify({ events });
       window.utils.cache.set("rrwebEvents", body);
-      if (new Date().getTime() - this.startTime > 60000) {
+      if (new Date().getTime() - this.startTime > 80000) {
         clearInterval(this.interval);
         return;
       }
+    },
+    beginREC() {
+      //请求录音权限
+      RecordApp.RequestPermission(
+        function() {
+          //dialog&&dialog.Cancel(); 如果开启了弹框，此处需要取消
+          RecordApp.Start(
+            {
+              //如果需要的组件还在延迟加载，Start调用会等待这些组件加载完成后才会调起底层平台的Start方法，可通绑定RecordApp.Current.OnLazyReady事件来确定是否已完成组件的加载，或者设置RecordApp.UseLazyLoad=false来关闭延迟加载（会阻塞Install导致RequestPermission变慢）
+              type: "mp3",
+              sampleRate: 16000,
+              bitRate: 16, //mp3格式，指定采样率hz、比特率kbps，其他参数使用默认配置；注意：是数字的参数必须提供数字，不要用字符串；需要使用的type类型，需提前把支持文件到Platforms.Default内注册
+              onProcess: function(buffers, powerLevel, bufferDuration, bufferSampleRate, newBufferIdx, asyncEnd) {
+                //如果当前环境支持实时回调（RecordApp.Current.CanProcess()），收到录音数据时就会实时调用本回调方法
+                //可利用extensions/waveview.js扩展实时绘制波形
+                //可利用extensions/sonic.js扩展实时变速变调，此扩展计算量巨大，onProcess需要返回true开启异步模式
+              },
+            },
+            function() {
+              setTimeout(function() {
+                // RecordApp.Stop(
+                //   function(blob, duration) {
+                //     //到达指定条件停止录音和清理资源
+                //     console.log(blob, (window.URL || webkitURL).createObjectURL(blob), "时长:" + duration + "ms");
+                //     //已经拿到blob文件对象想干嘛就干嘛：立即播放、上传
+                //     window.utils.cache.set("voice", blob);
+                //   },
+                //   function(msg) {
+                //     console.log("录音失败:" + msg);
+                //   },
+                // );
+              }, 3000);
+            },
+            function(msg) {
+              console.log("开始录音失败：" + msg);
+            },
+          );
+        },
+        function(msg, isUserNotAllow) {
+          //用户拒绝未授权或不支持
+          //dialog&&dialog.Cancel(); 如果开启了弹框，此处需要取消
+
+          console.log((isUserNotAllow ? "UserNotAllow，" : "") + "无法录音:" + msg);
+        },
+      );
+    },
+    voiceStop() {
+      RecordApp.Stop(
+        function(blob, duration) {
+          //到达指定条件停止录音和清理资源
+          console.log(blob, (window.URL || webkitURL).createObjectURL(blob), "时长:" + duration + "ms");
+
+          //已经拿到blob文件对象想干嘛就干嘛：立即播放、上传
+          window.myblob = blob;
+        },
+        function(msg) {
+          console.log("录音失败:" + msg);
+        },
+      );
     },
     // onBtnClick(event, action) {
     //   Dialog.alert({
@@ -466,6 +563,8 @@ export default {
     },
     onBtnClick2() {
       clearInterval(this.interval);
+      this.save();
+      this.voiceStop();
       this.go("demo/demoDetail?nav=action-bar-demo&rrweb=2", "", "");
       // Toast({
       //   content:

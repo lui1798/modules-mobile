@@ -5,6 +5,7 @@ export default function(name = "", demos = []) {
       return {
         demos,
         nav: this.$route.query.nav,
+        blob: "",
       };
     },
     moubted() {
