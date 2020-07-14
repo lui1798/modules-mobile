@@ -85,6 +85,9 @@ export default {
 <style lang="scss" scoped>
 .demo-all-demo {
   .demo-all-demo-content {
+    ::v-deep .n22-field-item-title {
+      max-width: 340px;
+    }
   }
 }
 </style>

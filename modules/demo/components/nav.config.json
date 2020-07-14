@@ -6,7 +6,7 @@
     },
     {
         "name": "item1-1",
-        "title": "actionBar",
+        "title": "actionBar(包含各种UI库表单、表单提交、录屏功能)",
         "handle": "/demo/demoDetail/?nav=action-bar-demo"
     },
     {
