@@ -631,10 +631,14 @@ export default {
 </style>
 
 <style>
-/* .replayer-wrapper {
+/* .rr-player {
+  width: 375px !important;
+  height: 667px !important;
+} */
+.replayer-wrapper {
   transform: scale(1) translate(-2px, -2px) !important;
 }
 .rr-controller {
   position: absolute;
-} */
+}
 </style>
