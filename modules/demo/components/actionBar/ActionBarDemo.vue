@@ -640,5 +640,90 @@ export default {
 }
 .rr-controller {
   position: absolute;
+  background-color: #00ffad;
+  bottom: 20px;
+}
+.rr-controller__btns.svelte-1cgfpn0 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+.rr-controller__btns.svelte-1cgfpn0 button.svelte-1cgfpn0 {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.rr-controller__btns.svelte-1cgfpn0 button.svelte-1cgfpn0:active {
+  background: #e0e1fe;
+}
+.rr-controller__btns.svelte-1cgfpn0 button.active.svelte-1cgfpn0 {
+  color: #fff;
+  background: rgb(73, 80, 246);
+}
+.rr-controller__btns.svelte-1cgfpn0 button.svelte-1cgfpn0:disabled {
+  cursor: not-allowed;
+}
+.switch.svelte-a6h7w7 {
+  height: 1em;
+  display: flex;
+  align-items: center;
+}
+.switch.disabled.svelte-a6h7w7 {
+  opacity: 0.5;
+}
+.label.svelte-a6h7w7 {
+  margin: 0 8px;
+}
+.switch.svelte-a6h7w7 input[type="checkbox"].svelte-a6h7w7 {
+  position: absolute;
+  opacity: 0;
+}
+.switch.svelte-a6h7w7 label.svelte-a6h7w7 {
+  width: 2em;
+  height: 1em;
+  position: relative;
+  cursor: pointer;
+  display: block;
+}
+.switch.disabled.svelte-a6h7w7 label.svelte-a6h7w7 {
+  cursor: not-allowed;
+}
+.switch.svelte-a6h7w7 label.svelte-a6h7w7:before {
+  content: "";
+  position: absolute;
+  width: 2em;
+  height: 1em;
+  left: 0.1em;
+  transition: background 0.1s ease;
+  background: rgba(73, 80, 246, 0.5);
+  border-radius: 50px;
+}
+.switch.svelte-a6h7w7 label.svelte-a6h7w7:after {
+  content: "";
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  border-radius: 50px;
+  left: 0;
+  transition: all 0.2s ease;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+  background: #fcfff4;
+  animation: switch-off 0.2s ease-out;
+  z-index: 2;
+}
+.switch input[type="checkbox"]:checked + label.svelte-a6h7w7:before {
+  background: rgb(73, 80, 246);
+}
+.switch input[type="checkbox"]:checked + label.svelte-a6h7w7:after {
+  animation: switch-on 0.2s ease-out;
+  left: 1.1em;
 }
 </style>
